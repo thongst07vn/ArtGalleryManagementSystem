@@ -1153,7 +1153,7 @@ body.dark .show > .btn-outline-dark.dropdown-toggle:focus {
 body.dark .btn.focus, body.dark .btn:focus {
   box-shadow: none;
 }
-body.dark .btn-success:focus, body.dark .btn-info:focus, body.dark .btn-danger:focus, body.dark .btn-warning:focus, body.dark .btn-secondary:focus, body.dark .btn-dark:focus, body.dark .btn-outline-success:focus, body.dark .btn-outline-info:focus, body.dark .btn-outline-danger:focus, body.dark .btn-outline-warning:focus, body.dark .btn-outline-secondary:focus, body.dark .btn-outline-dark:focus body.dark .btn-light-default:focus, body.dark .btn-light-primary:focus, body.dark .btn-light-success:focus, body.dark .btn-light-info:focus, body.dark .btn-light-danger:focus, body.dark .btn-light-warning:focus, body.dark .btn-light-secondary:focus, body.dark .btn-light-dark:focus {
+body.dark .btn-success:focus, body.dark .btn-info:focus, body.dark .btn-danger:focus, body.dark .btn-warning:focus, body.dark .btn-secondary:focus, body.dark .btn-dark:focus, body.dark .btn-outline-success:focus, body.dark .btn-outline-info:focus, body.dark .btn-outline-danger:focus, body.dark .btn-outline-warning:focus, body.dark .btn-outline-secondary:focus, body.dark .btn-outline-dark:focus body.dark .btn-light-default:focus, body.dark .btn-light-primary:focus, body.dark .btn-light-success:focus, body.dark .btn-light-info:focus, body.dark .btn-light-danger:focus, body.dark .btn-light-warning:focus, body.dark .btn-light-secondary:focus, body.dark .btn-light-dark,body.dark .btn-noBg:focus {
   box-shadow: none;
 }
 body.dark .btn-primary {
@@ -2051,6 +2051,16 @@ body.dark .btn-light-secondary:hover {
   border: 1px solid #1d1a3b !important;
   color: #a46edb !important;
 }
+body.dark .btn-noBg {
+  color: #abacb2;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+body.dark .btn-noBg:hover {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  color: #abacb2 !important;
+}
 body.dark .btn-light-dark {
   color: #abacb2;
   background-color: #181e2e;
@@ -2109,6 +2119,7 @@ body.dark .btn-light-secondary.dropdown-toggle.show {
   background-color: #805dca !important;
   color: #fff !important;
 }
+
 body.dark .btn-check:active + .btn-light-dark, body.dark .btn-check:checked + .btn-light-dark {
   background-color: #3b3f5c !important;
   color: #fff !important;

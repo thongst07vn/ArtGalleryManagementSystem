@@ -3,21 +3,27 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
+import { FormsModule } from '@angular/forms';
+// import { FilePondModule } from 'angular-filepond';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,FormsModule],
   templateUrl: './profile-edit.component.html',
   host:{
     'collision': 'ProfileEditComponent'
   }
 })
 export class ProfileEditComponent implements OnInit {
+  avt:string
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
     private conectActive : ConectActive
-  ){}
+  ){
+    this.avt='src/assets/img/drag-1.jpeg'
+
+  }
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(
       params => {
@@ -80,5 +86,6 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
 
     // this.conect.reloadPage()
+    console.log(this.avt)
   }
 }

@@ -1243,7 +1243,7 @@ select.form-control.form-custom {
   box-shadow: none;
 }
 
-.btn-success:focus, .btn-info:focus, .btn-danger:focus, .btn-warning:focus, .btn-secondary:focus, .btn-dark:focus, .btn-outline-success:focus, .btn-outline-info:focus, .btn-outline-danger:focus, .btn-outline-warning:focus, .btn-outline-secondary:focus, .btn-outline-dark:focus .btn-light-default:focus, .btn-light-primary:focus, .btn-light-success:focus, .btn-light-info:focus, .btn-light-danger:focus, .btn-light-warning:focus, .btn-light-secondary:focus, .btn-light-dark:focus {
+.btn-success:focus, .btn-info:focus, .btn-danger:focus, .btn-warning:focus, .btn-secondary:focus, .btn-dark:focus, .btn-outline-success:focus, .btn-outline-info:focus, .btn-outline-danger:focus, .btn-outline-warning:focus, .btn-outline-secondary:focus, .btn-outline-dark:focus .btn-light-default:focus, .btn-light-primary:focus, .btn-light-success:focus, .btn-light-info:focus, .btn-light-danger:focus, .btn-light-warning:focus, .btn-light-secondary:focus, .btn-light-dark:focus,.btn-noBg:focus {
   box-shadow: none;
 }
 
@@ -2234,7 +2234,16 @@ fieldset:disabled .btn {
   border: 1px solid #f2eafa !important;
   color: #805dca !important;
 }
-
+.btn-noBg {
+  color: #3b3f5c;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.btn-noBg:hover {
+  background-color: transparent !important;
+  border: 1px solid transparent !important;
+  color: #3b3f5c !important;
+}
 .btn-light-dark {
   color: #3b3f5c;
   background-color: #eaeaec;

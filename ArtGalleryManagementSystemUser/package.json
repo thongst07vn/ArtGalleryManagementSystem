@@ -21,6 +21,7 @@
     "@splidejs/splide": "^4.1.4",
     "@types/nouislider": "^9.0.10",
     "angular-oauth2-oidc": "^17.0.2",
+    "filepond": "^4.31.4",
     "glightbox": "^3.3.0",
     "jquery": "^3.7.1",
     "js-base64": "^3.7.7",
