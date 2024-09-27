@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
+import flatpickr from 'flatpickr';
+
 
 @Component({
   standalone: true,
@@ -36,6 +38,21 @@ export class SignUpComponent implements OnInit {
 
     this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
+
+    this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
+    this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
+
+    flatpickr(document.getElementById('rangeCalendarFlatpickr'), {
+      mode: "range"
+    });
     this.conect.reloadPage()
   }
+
+  ngAfterViewInit(): void {
+    // Khởi tạo flatpickr
+    flatpickr('#rangeCalendarFlatpickr', {
+      mode: 'range'
+    });
+  }
+  
 }

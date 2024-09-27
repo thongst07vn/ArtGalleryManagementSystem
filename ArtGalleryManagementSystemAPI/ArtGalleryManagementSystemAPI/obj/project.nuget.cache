@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vadM7N62NJo=",
+  "dgSpecHash": "N6DvalAUz90=",
   "success": true,
-  "projectFilePath": "D:\\DoAnKy3\\Main\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj",
+  "projectFilePath": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
@@ -53,6 +53,7 @@
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\mono.texttemplating\\3.0.0-preview-0052-g5d0f76c785\\mono.texttemplating.3.0.0-preview-0052-g5d0f76c785.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",

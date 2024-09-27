@@ -4,8 +4,11 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { FormsModule } from '@angular/forms';
-// import { FilePondModule } from 'angular-filepond';
-
+import * as FilePond from 'filepond';
+import 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-crop';
+import 'filepond-plugin-image-resize';
+import 'filepond-plugin-image-transform';
 @Component({
   standalone: true,
   imports: [RouterOutlet,FormsModule],
@@ -83,9 +86,34 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addScriptAsync("src/plugins/src/filepond/filepondPluginFileValidateSize.min.js")
     this.conect.addScriptAsync("src/plugins/src/notification/snackbar/snackbar.min.js")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-    this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
+    // this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
 
     // this.conect.reloadPage()
     console.log(this.avt)
-  }
+    console.log(
+       FilePond.create(document.querySelector('.filepond'),
+      {
+        imagePreviewHeight: 170,
+        imageCropAspectRatio: '1:1',
+        imageResizeTargetWidth: 200,
+        imageResizeTargetHeight: 200,
+        stylePanelLayout: 'compact circle',
+        styleLoadIndicatorPosition: 'center bottom',
+        styleProgressIndicatorPosition: 'right bottom',
+        styleButtonRemoveItemPosition: 'left bottom',
+        styleButtonProcessItemPosition: 'right bottom',
+        files: [
+            {
+                // the server file reference
+                source : this.avt,
+                options: {
+                  type: 'input',
+                }
+                // set type to limbo to tell FilePond this is a temp file
+            },
+        ],
+      })
+    )
+   
+    }
 }

@@ -55,9 +55,9 @@
 
                                                     <div class="img-uploader-content">
                                                         <input type="file" class="filepond" name="filepond"
-                                                            accept="image/png, image/jpeg, image/gif" [(ngModel)]="avt"/>
+                                                            accept="image/png, image/jpeg, image/gif"/>
                                                     </div>
-                                                    {{avt}}
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
@@ -278,8 +278,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" placeholder="Enter email">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" class="form-control" placeholder="Enter phone">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -291,12 +291,21 @@
                                         <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">City</label>
-                                                <input type="text" class="form-control" placeholder="Enter city">
+                                                <select class="form-select">
+                                                    <option selected>Choose...</option>
+                                                    <option value="united-states">United States</option>
+                                                    <option value="brazil">Brazil</option>
+                                                    <option value="indonesia">Indonesia</option>
+                                                    <option value="turkey">Turkey</option>
+                                                    <option value="russia">Russia</option>
+                                                    <option value="india">India</option>
+                                                    <option value="germany">Germany</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="mb-3">
-                                                <label class="form-label">Country</label>
+                                                <label class="form-label">Ward</label>
                                                 <select class="form-select">
                                                     <option selected>Choose...</option>
                                                     <option value="united-states">United States</option>
@@ -328,12 +337,11 @@
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addAddressModalLabel">Edit Billing Address</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    <h5 class="modal-title" id="addAddressModalLabel">Add Billing Address</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                                 </div>
                                 <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="padding: 30px;">
-                                    <p>Update your <span class="text-success">Billing</span> Information.</p>
+                                    <p>Changes to your New <span class="text-success">Billing</span> Information.</p>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -344,8 +352,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" placeholder="Enter email">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" class="form-control" placeholder="Enter phone">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -357,12 +365,21 @@
                                         <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">City</label>
-                                                <input type="text" class="form-control" placeholder="Enter city">
+                                                <select class="form-select">
+                                                    <option selected>Choose...</option>
+                                                    <option value="united-states">United States</option>
+                                                    <option value="brazil">Brazil</option>
+                                                    <option value="indonesia">Indonesia</option>
+                                                    <option value="turkey">Turkey</option>
+                                                    <option value="russia">Russia</option>
+                                                    <option value="india">India</option>
+                                                    <option value="germany">Germany</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="mb-3">
-                                                <label class="form-label">Country</label>
+                                                <label class="form-label">Ward</label>
                                                 <select class="form-select">
                                                     <option selected>Choose...</option>
                                                     <option value="united-states">United States</option>
@@ -382,7 +399,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                        <button class="btn btn-primary">Update</button>
+                                        <button class="btn btn-primary" style="padding-right: 30px; padding-left: 30px;">Add</button>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,32 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
-app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors();
+
+//cau hinh auto mapper
+builder.Services.AddAutoMapper(typeof(MappingDto));
+
+builder.Services.AddControllers();
+//ket noi database
+string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"].ToString();
+builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(connectionString));
+
+
+
+var app = builder.Build();
+app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()
+            );
+
+app.UseStaticFiles();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action}");
 
 app.Run();
