@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS [users]  
 GO
 
 CREATE TABLE [users] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
   [role] integer,
   [avatar] nvarchar(255),
   [first_name] nvarchar(255),
@@ -43,13 +43,14 @@ GO
 
 CREATE TABLE [sellers](
 	[id] int primary key,
+	[income] float,
 	[created_at] datetime,
 	[deleted_at] datetime,
 	FOREIGN KEY ([id]) REFERENCES  [users]([id])
 )
 
 CREATE TABLE [addresses] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
   [user_id] integer,
   [name] nvarchar(255),
   [address_line] nvarchar(255),
@@ -64,7 +65,7 @@ CREATE TABLE [addresses] (
 GO
 
 CREATE TABLE [categories] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
   [name] nvarchar(255),
   [description] nvarchar(255),
   [created_at] datetime,
@@ -73,14 +74,13 @@ CREATE TABLE [categories] (
 GO
 
 CREATE TABLE [products] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
   [seller_id] integer,
   [name] nvarchar(255),
   [description] nvarchar(255),
   [summary] nvarchar(255),
   [cover] nvarchar(255),
   [category_id] integer, 
-  [sku] nvarchar(255),
   [price] Float,
   [quantity] integer,
   [created_at] datetime,
@@ -98,7 +98,8 @@ CREATE TABLE [product_attributes] (
 GO
 
 CREATE TABLE [wishlist] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
+  [user_id] integer,
   [product_id] integer,
   [created_at] datetime,
   [deleted_at] datetime
@@ -106,15 +107,15 @@ CREATE TABLE [wishlist] (
 GO
 
 CREATE TABLE [cart] (
-  [id] integer PRIMARY KEY,
-  [total] FLOAT,  
+  [id] integer PRIMARY KEY ,
+  [total] FLOAT,
   [created_at] datetime,
   [updated_at] datetime
 )
 GO
 
 CREATE TABLE [cart_item] (
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[cart_id] integer,
 	[product_id] integer,
 	[quantity] integer,
@@ -124,7 +125,7 @@ CREATE TABLE [cart_item] (
 GO
 
 CREATE TABLE [order_details] (
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[user_id] integer,
 	[payment_id] integer,
 	[total] FLOAT,  
@@ -134,7 +135,7 @@ CREATE TABLE [order_details] (
 GO
 
 CREATE TABLE [order_item] (
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[order_id] integer,
 	[product_id] integer,
 	[quantity] integer,
@@ -144,7 +145,7 @@ CREATE TABLE [order_item] (
 GO
 
 CREATE TABLE [payment_details] (
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[amount] FLOAT,  
 	[provider] nvarchar(255),
 	[status] integer,
@@ -154,7 +155,7 @@ CREATE TABLE [payment_details] (
 GO
 
 CREATE TABLE [bid_order] (
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[bidder_id] integer,
 	[product_id] integer,
 	[bid_start_time] datetime,
@@ -169,14 +170,15 @@ CREATE TABLE [bid_order] (
 )
 GO
 CREATE TABLE [reviews](
-	[id] integer PRIMARY KEY,
+	[id] integer PRIMARY KEY IDENTITY,
 	[product_id] integer,
 	[user_id] integer,
 	[rating] integer,
 	[review_text] nvarchar(255)
 )
 GO
-CREATE TABLE provinces (
+CREATE TABLE provinces 
+(
 	[code] nvarchar(20) NOT NULL,
 	[name] nvarchar(255) NOT NULL,
 	[name_en] nvarchar(255) NULL,
@@ -235,23 +237,15 @@ GO
 
 ALTER TABLE [products] ADD FOREIGN KEY ([seller_id]) REFERENCES [sellers] ([id])
 GO
-CREATE TABLE [wishlist_users] (
-	[wishlist_user_id] integer,
-	[users_id] integer,
-	PRIMARY KEY ([wishlist_user_id], [users_id])
-);
-GO
 
-ALTER TABLE [wishlist_users] ADD FOREIGN KEY ([wishlist_user_id]) REFERENCES [wishlist] ([id]);
-GO
 
-ALTER TABLE [wishlist_users] ADD FOREIGN KEY ([users_id]) REFERENCES [users] ([id]);
+ALTER TABLE [wishlist] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id]);
 GO
 
 CREATE TABLE [wishlist_products] (
-[wishlist_product_id] integer,
-[products_id] integer,
-PRIMARY KEY ([wishlist_product_id], [products_id])
+	[wishlist_product_id] integer,
+	[products_id] integer,
+	PRIMARY KEY ([wishlist_product_id], [products_id])
 );
 GO
 
@@ -261,7 +255,7 @@ GO
 ALTER TABLE [wishlist_products] ADD FOREIGN KEY ([products_id]) REFERENCES [products] ([id]);
 GO
 
-ALTER TABLE [users] ADD FOREIGN KEY ([id]) REFERENCES [cart] ([id])
+ALTER TABLE [cart] ADD FOREIGN KEY ([id]) REFERENCES [users] ([id])
 GO
 
 ALTER TABLE [cart_item] ADD FOREIGN KEY ([cart_id]) REFERENCES [cart] ([id])

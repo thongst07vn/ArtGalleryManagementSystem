@@ -56,7 +56,15 @@
             <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="avatar-container">
                     <div class="avatar avatar-sm avatar-indicators avatar-online">
-                        <img alt="avatar" src="{{user[0].avatar}}" class="rounded-circle">
+                        @if(user != null ){
+                            @if(user.avatar.substring(0,5)=="https"){
+                                <img alt="avatar" src="{{user.avatar}}" class="rounded-circle">
+                            }
+                            @else{
+                                <img src="images/{{user.avatar}}"  class="rounded-circle">
+                            }
+                        }
+                        
                     </div>
                 </div>
             </a>
@@ -68,8 +76,15 @@
                             <img src="../src/assets/img/waving-hand.svg" style="border: none;">
                         </div>
                         <div class="media-body">
-                            <h5>{{user[0].username}}</h5>
-                            <p>Project Leader</p>
+                            @if(user != null ){
+                                <h5>{{user.username}}</h5>
+                                @if(user.role == 1){
+                                    <p>User</p>
+                                }
+                                @else if(user.role == 2){
+                                    <p>Seller</p>                    
+                                }
+                            }
                         </div>
                     </div>
                 </div>

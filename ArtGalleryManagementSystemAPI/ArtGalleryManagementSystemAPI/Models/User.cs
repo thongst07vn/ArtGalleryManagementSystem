@@ -30,11 +30,11 @@ public partial class User
 
     public virtual ICollection<BidOrder> BidOrders { get; set; } = new List<BidOrder>();
 
-    public virtual Cart IdNavigation { get; set; } = null!;
+    public virtual Cart? Cart { get; set; }
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Seller? Seller { get; set; }
 
-    public virtual ICollection<Wishlist> WishlistUsers { get; set; } = new List<Wishlist>();
+    public virtual ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
 }

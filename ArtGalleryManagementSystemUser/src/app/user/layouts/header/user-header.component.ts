@@ -2,6 +2,7 @@ declare var google : any
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'user-header',
@@ -16,10 +17,12 @@ export class UserHeaderComponent implements OnInit {
   user:any
   theme:boolean
   constructor(
-    private conect : Conect
+    private conect : Conect,
+    private userService : UserService
   ){}
-  ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem("loggedInUser"))
+  async ngOnInit() {
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.user = userResult['result'];
     console.log(this.user)
     setTimeout(() => {
       const hasDarkClass = document.body.classList.contains('dark');

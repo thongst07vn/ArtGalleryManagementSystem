@@ -7,6 +7,7 @@ import { NgClass } from '@angular/common';
 import * as JSBase64 from 'js-base64'
 import { HttpClient } from '@angular/common/http';  
 import Swal from 'sweetalert2'
+import { UserService } from '../services/user.service';
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
   password: string
   wrong:string
   constructor(
-    private conect: Conect
+    private conect: Conect,
+    private http : HttpClient,
+    private userService: UserService,
   ){}
   ngOnInit(): void {
 
@@ -47,9 +50,9 @@ export class LoginComponent implements OnInit {
 
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
 
-    this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
-    this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
-    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
+    // this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
+    // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
 
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
@@ -64,57 +67,70 @@ export class LoginComponent implements OnInit {
     })
     google.accounts.id.renderButton(document.getElementById("google-btn"),{
       type: 'icon',
-      // text: 'signin_with',
-      // theme:'filled_blue',
       shape:'circle',
       size:'large',
-      // logo_alignment: 'center'
     })
     this.wrong='icon-error'
     
   }
   login(){
-
-    // console.log("hehe")
-    if(this.username == 'user' && this.password == '123'){
-      window.location.href = '/user/home'
-      // this.router.navigate(['/admin/dashboard'])
-    }
-    else{
-      document.querySelector('.icon-error').addEventListener('click', function() {
-        Swal.fire({
-            icon: 'error',
-            title: 'Email or Password is Incorrect',
-        })
-      })
-    }
-  }
-  loginWithGG(){
-    
-    // google.accounts.id.prompt();
+    this.userService.findbyemail(this.username).then(
+      res => {
+        if(res['result']){
+          this.userService.login(this.username,this.password).then(
+            res => {
+              if(res['result']){
+                sessionStorage.setItem("loggedInUser",JSON.stringify([this.username]))
+                window.location.href = 'user/home'
+              }
+            }
+          )
+        }
+      }
+    )
   }
   decodeToken(token:string){
     const base64URL = token.split(".")[1]
     const base64 = base64URL.replace(/-/g,'+').replace(/_/g,'/')
-    // console.log(JSON.parse(atob(token.split(".")[1])))
-    // decodeURIComponent(JSON.parse(atob(base64).split('').map(function(c){
-    //   return c.charCodeAt(0).toString(16).slice(-2)
-    // }).join('')))
 
     return JSON.parse(JSBase64.decode(base64))
   }
   handleLogin(resp:any){
-    // this.authService.login()
     const payLoad = this.decodeToken(resp.credential)
-    // const file = this.convertToFile(payLoad.picture)
-    // this.downloadImage(payLoad.picture)
+
     const account = {
       email: payLoad.email,
       username: payLoad.name,
       avatar: payLoad.picture,
       role: 1 
     }
-    sessionStorage.setItem("loggedInUser",JSON.stringify([account]))
-    window.location.href = 'user/home'
+    this.userService.findbyemail(account.email).then(
+      res=>{
+        if(res['result']){
+          sessionStorage.setItem("loggedInUser",JSON.stringify(account.email))
+          window.location.href = 'user/home'
+        }else{
+              let s = JSON.stringify(account);
+              let formData = new FormData();
+              formData.append('avt', payLoad.picture);
+              formData.append('usergg',s);
+              this.userService.siginWithGG(formData).then(
+                res =>{
+                    if(res['result']){
+                      // console.log(account)
+                      sessionStorage.setItem("loggedInUser",JSON.stringify(account.email))
+                      window.location.href = 'user/home' 
+                    } else {
+                        console.log('failed');
+                    }
+                },
+                error => {
+                    console.log(error);
+                }
+              )
+            }
+          }
+        )
   }
 }
+

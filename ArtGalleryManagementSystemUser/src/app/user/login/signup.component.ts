@@ -31,10 +31,14 @@ export class SignUpComponent implements OnInit {
           [Validators.required]
         ],
         firstName:['',
-          [Validators.required]
+          [Validators.required,
+            Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+          ]
         ],
         lastName:['',
-          [Validators.required]
+          [Validators.required,
+            Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+          ]
         ],
         birthOfDate:['',
           [Validators.required,
@@ -85,12 +89,12 @@ export class SignUpComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/authentication/auth-cover.css")
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
 
-    this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
-    this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
-    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
+    // this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
+    // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
 
     this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
-    this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
+    // this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
 
@@ -111,9 +115,9 @@ export class SignUpComponent implements OnInit {
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
-  Register(){
+  async Register(){
     console.log(this.registerForm.value)
-    this.userService.findbyemail(this.registerForm.value.email).then(
+    await this.userService.findbyemail(this.registerForm.value.email).then(
       res => {
         if(res['result']){
           document.querySelector('.icon-error').addEventListener('click', function() {
@@ -141,7 +145,6 @@ export class SignUpComponent implements OnInit {
                       title: 'Register Fail',
                   })
                 })
-                // console.log('Register Fail')
               } 
             },
             error => {

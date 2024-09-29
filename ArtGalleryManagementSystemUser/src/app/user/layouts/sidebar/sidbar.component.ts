@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ConectActive } from '../../services/conectActive';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'sidbar',
@@ -28,7 +29,8 @@ export class SidbarComponent implements OnInit {
   user:any
 
   constructor(
-    private conectActive:ConectActive
+    private conectActive:ConectActive,
+    private userService:UserService
   ) {
     this.conectActive.data$.subscribe((data) => {
       console.log(data)
@@ -37,8 +39,9 @@ export class SidbarComponent implements OnInit {
       }
     });
   }
-  ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem("loggedInUser"))
-    
+  async ngOnInit() {
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.user = userResult['result'];
+
   }
 }

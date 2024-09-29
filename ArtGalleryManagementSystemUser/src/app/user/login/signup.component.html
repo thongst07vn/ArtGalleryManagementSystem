@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="mb-4" style="text-align: center;">
-                                   <img style="width: auto; height: 100px;" class="navbar-logo" src="../src/assets/img/logo2.svg" alt="">
+                                   <img style="width: auto; height: 100px;" src="../src/assets/img/logo2.svg" alt="">
                                 </div>
                             </div>
                             <div style="text-align: center;" class="col-md-12 mb-3">
@@ -43,7 +43,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Username: </label>
-                                        <input type="text" class="form-control add-billing-address-input" formControlName="username">\
+                                        <input type="text" class="form-control add-billing-address-input" formControlName="username">
                                         @if(registerForm.get('username').touched){
                                             <ul>
                                                 @if(registerForm.hasError('required',['username'])){
@@ -63,6 +63,9 @@
                                                 @if(registerForm.hasError('required',['firstName'])){
                                                     <li style="padding-top: 5px; color: red;">First Name is blank</li>
                                                 }
+                                                @else if(registerForm.hasError('pattern',['firstName'])){
+                                                    <li style="padding-top: 5px; color: red;">First Name invalid</li>
+                                                }
                                             </ul>
                                         }
                                     </div>
@@ -76,6 +79,9 @@
                                             <ul>
                                                 @if(registerForm.hasError('required',['lastName'])){
                                                     <li style="padding-top: 5px; color: red;">Last Name is blank</li>
+                                                }
+                                                @else if(registerForm.hasError('pattern',['lastName'])){
+                                                    <li style="padding-top: 5px; color: red;">Last Name invalid</li>
                                                 }
                                             </ul>
                                         }
@@ -159,7 +165,7 @@
                                                 @if(registerForm.hasError('required',['phoneNumber'])){
                                                     <li style="padding-top: 5px; color: red;">Phone Number is blank</li>
                                                 }
-                                                @else if(registerForm?.errors?.['mismatch']){
+                                                @else if(registerForm.hasError('pattern',['phoneNumber'])){
                                                     <li style="padding-top: 5px; color: red;">Phone Number invalid</li>
                                                 }
                                             </ul>

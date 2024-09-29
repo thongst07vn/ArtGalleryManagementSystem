@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ArtGalleryManagementSystemAPI.Models;
+﻿namespace ArtGalleryManagementSystemAPI.Models;
 
 public partial class Seller
 {
     public int Id { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public double? Income { get; set; }
+
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
