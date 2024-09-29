@@ -1,5 +1,6 @@
 using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Models;
+using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 //ket noi database
 string connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"].ToString();
 builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(connectionString));
+builder.Services.AddScoped<UserService, UserServiceImpl>();
 
 
 

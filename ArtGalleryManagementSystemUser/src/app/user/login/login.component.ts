@@ -45,8 +45,12 @@ export class LoginComponent implements OnInit {
     this.conect.addStyle("layouts/horizontal-light-menu/css/light/plugins.css")
     this.conect.addStyle("src/assets/css/light/authentication/auth-cover.css")
 
+    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
+
     this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
+    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
     // this.conect.addScriptAsync("layouts/horizontal-light-menu/alert.js")

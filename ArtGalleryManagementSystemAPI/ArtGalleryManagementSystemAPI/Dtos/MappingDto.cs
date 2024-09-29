@@ -33,7 +33,7 @@ public class MappingDto : Profile
             )
             .ForMember(
                 des => des.DeletedAt,
-                src => src.MapFrom(src => DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+                src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
         CreateMap<Address, AddressDto>()
             .ForMember(

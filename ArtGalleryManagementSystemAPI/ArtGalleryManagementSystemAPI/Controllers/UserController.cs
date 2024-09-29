@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace DecorVistaApi.Controllers;
+namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/user")]
 public class UserController : Controller
 {
@@ -53,7 +53,7 @@ public class UserController : Controller
     public IActionResult Register(string userinfo)
     {
         var setting = new JsonSerializerSettings();
-        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd/MM/yyyy" });
+        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd-MM-yyyy" });
 
         var userDto = JsonConvert.DeserializeObject<UserDto>(userinfo);
         userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
