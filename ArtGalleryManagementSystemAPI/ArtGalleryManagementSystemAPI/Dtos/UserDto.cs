@@ -17,6 +17,7 @@ public class UserDto
     public string Email { get; set; } = null!;
 
     public string? Password { get; set; }
+    public int? Gender { get; set; }
 
     public string BirthOfDate { get; set; }
 

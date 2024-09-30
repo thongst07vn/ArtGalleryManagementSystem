@@ -60,4 +60,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   buy(){
   }
+  contactUs(){
+    window.location.href = '/user/contact-us'
+  }
 }

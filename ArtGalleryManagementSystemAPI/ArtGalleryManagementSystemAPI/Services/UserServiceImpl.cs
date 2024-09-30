@@ -77,9 +77,19 @@ public class UserServiceImpl : UserService
             db.Users.Add(user);
             if (db.SaveChanges() > 0)
             {
+                if (user.Role == 2)
+                {
+                    var seller = new Seller();
+                    seller.Id = user.Id;
+                    seller.Income = 0;
+                    seller.CreatedAt = user.CreatedAt;
+                    db.Sellers.Add(seller);
+                }
                 var cart = new Cart();
                 cart.Id = user.Id;
                 cart.Total = 0;
+                cart.CreatedAt = user.CreatedAt;
+
                 db.Carts.Add(cart);
             }
             return db.SaveChanges() > 0;

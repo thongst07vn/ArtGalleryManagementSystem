@@ -58,7 +58,7 @@
                     <div class="avatar avatar-sm avatar-indicators avatar-online">
                         @if(user != null ){
                             @if(user.avatar.substring(0,5)=="https"){
-                                <img alt="avatar" src="{{user.avatar}}" class="rounded-circle">
+                                <img alt="avatar" src="{{user.avatar}}" referrerpolicy="no-referrer" class="rounded-circle">
                             }
                             @else{
                                 <img src="images/{{user.avatar}}"  class="rounded-circle">

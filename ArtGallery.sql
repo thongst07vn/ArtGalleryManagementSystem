@@ -1,6 +1,7 @@
 
 USE ARTGALLERY
 GO
+
 DROP TABLE IF EXISTS [reviews]
 DROP TABLE IF EXISTS [product_attributes_products]
 DROP TABLE IF EXISTS [wishlist_products]
@@ -8,9 +9,9 @@ DROP TABLE IF EXISTS [wishlist_users]
 DROP TABLE IF EXISTS [cart_item_products]
 DROP TABLE IF EXISTS [order_item_products]
 DROP TABLE IF EXISTS [bid_order]
-DROP TABLE IF EXISTS [payment_details]
 DROP TABLE IF EXISTS [order_item]
 DROP TABLE IF EXISTS [order_details]
+DROP TABLE IF EXISTS [payment_details]
 DROP TABLE IF EXISTS [cart_item]
 DROP TABLE IF EXISTS [cart]
 DROP TABLE IF EXISTS [wishlist]
@@ -34,6 +35,8 @@ CREATE TABLE [users] (
   [username] nvarchar(255) UNIQUE NOT NULL,
   [email] nvarchar(255) UNIQUE NOT NULL,
   [password] nvarchar(255),
+  [gender] integer,
+  [status] bit,
   [birth_of_date] date,
   [phone_number] nvarchar(255),
   [created_at] datetime,
@@ -78,8 +81,6 @@ CREATE TABLE [products] (
   [seller_id] integer,
   [name] nvarchar(255),
   [description] nvarchar(255),
-  [summary] nvarchar(255),
-  [cover] nvarchar(255),
   [category_id] integer, 
   [price] Float,
   [quantity] integer,
@@ -89,7 +90,7 @@ CREATE TABLE [products] (
 GO
 
 CREATE TABLE [product_attributes] (
-  [id] integer PRIMARY KEY,
+  [id] integer PRIMARY KEY IDENTITY,
   [type] nvarchar(255) NOT NULL,
   [value] nvarchar(255),
   [created_at] datetime,

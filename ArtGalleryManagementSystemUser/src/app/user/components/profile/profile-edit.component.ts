@@ -1,33 +1,92 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as FilePond from 'filepond';
 import 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-crop';
 import 'filepond-plugin-image-resize';
 import 'filepond-plugin-image-transform';
+import flatpickr from 'flatpickr';
+import { UserService } from '../../services/user.service';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+// import { BrowserModule } from '@angular/platform-browser';
+
 @Component({
   standalone: true,
-  imports: [RouterOutlet,FormsModule],
+  imports: [RouterOutlet,FormsModule,ReactiveFormsModule,FilePondModule],
   templateUrl: './profile-edit.component.html',
   host:{
     'collision': 'ProfileEditComponent'
   }
 })
 export class ProfileEditComponent implements OnInit {
-  avt:string
+  avt:any
+  user:any
+  birthOfDay:any
+  phoneNumber:any
+  gender:any
+  editProfileForm:FormGroup
+  selectedFile:File
+  @ViewChild('myPond') myPond: any;
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
-    private conectActive : ConectActive
+    private conectActive : ConectActive,
+    private userService : UserService,
+    private formBuilder : FormBuilder
   ){
-    this.avt='src/assets/img/drag-1.jpeg'
-
+    this.editProfileForm = this.formBuilder.group({
+      username:['',
+        [Validators.required]
+      ],
+      firstName:['',
+        [Validators.required,
+          Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+        ]
+      ],
+      lastName:['',
+        [Validators.required,
+          Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+        ]
+      ],
+      birthOfDate:['',
+        [Validators.required,
+          // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+        ]
+      ],
+      email:['',
+        [Validators.required,
+        Validators.email]
+      ],
+      password:['',
+        [Validators.required,
+        Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+      ],
+      rePassword:['',[
+        Validators.required
+      ]],
+      phoneNumber:['',
+        [Validators.required,
+        Validators.pattern(/^0\d{9}$/)]
+      ],
+      role:['',
+        [Validators.required]
+      ],
+      gender:['',
+        [Validators.required]
+      ],
+      avatar:[''],
+    },
+    {
+        validator: this.CheckP
+    }
+  )
+    
   }
-  ngOnInit(): void {
+  async ngOnInit() {
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -51,9 +110,6 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addStyle("src/assets/css/dark/scrollspyNav.css");
     this.conect.addStyle("src/assets/css/dark/components/carousel.css");
     this.conect.addStyle("src/assets/css/dark/components/modal.css");
-
-
-
 
     this.conect.addStyle("src/plugins/src/filepond/filepond.min.css")
     this.conect.addStyle("src/plugins/src/filepond/FilePondPluginImagePreview.min.css")
@@ -86,34 +142,146 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addScriptAsync("src/plugins/src/filepond/filepondPluginFileValidateSize.min.js")
     this.conect.addScriptAsync("src/plugins/src/notification/snackbar/snackbar.min.js")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-    // this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
-
+    this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
+    this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
+    this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
     // this.conect.reloadPage()
-    console.log(this.avt)
-    console.log(
-       FilePond.create(document.querySelector('.filepond'),
-      {
-        imagePreviewHeight: 170,
-        imageCropAspectRatio: '1:1',
-        imageResizeTargetWidth: 200,
-        imageResizeTargetHeight: 200,
-        stylePanelLayout: 'compact circle',
-        styleLoadIndicatorPosition: 'center bottom',
-        styleProgressIndicatorPosition: 'right bottom',
-        styleButtonRemoveItemPosition: 'left bottom',
-        styleButtonProcessItemPosition: 'right bottom',
-        files: [
-            {
-                // the server file reference
-                source : this.avt,
-                options: {
-                  type: 'input',
-                }
-                // set type to limbo to tell FilePond this is a temp file
-            },
-        ],
-      })
-    )
-   
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.user = userResult['result'];
+    
+    // FilePond.create(document.querySelector('.filepond'),
+    // {
+    //   imagePreviewHeight: 170,
+    //   imageCropAspectRatio: '1:1',
+    //   imageResizeTargetWidth: 200,
+    //   imageResizeTargetHeight: 200,
+    //   stylePanelLayout: 'compact circle',
+    //   styleLoadIndicatorPosition: 'center bottom',
+    //   styleProgressIndicatorPosition: 'right bottom',
+    //   styleButtonRemoveItemPosition: 'left bottom',
+    //   styleButtonProcessItemPosition: 'right bottom',
+    //   files: [
+    //       {
+    //           // the server file reference
+    //           source : this.avt,
+    //           options: {
+    //             type: 'input',
+    //           }
+    //           // set type to limbo to tell FilePond this is a temp file
+    //       },
+    //   ],
+    // })
+    if(this.user!=null){
+      if(this.user.avatar.substring(0,5)=="https"){
+        this.avt = this.user.avatar
+      }else{
+        this.avt = 'images/'+this.user.avatar
+      }
+      if(this.user.birthOfDate!=null){
+        this.birthOfDay = this.user.birthOfDate
+      }else{
+        this.birthOfDay = 'Updating ......'
+      }
+      if(this.user.phoneNumber!=null){
+        this.phoneNumber = this.user.phoneNumber
+      }else{
+        this.phoneNumber = 'Updating ......'
+      }
+      if(this.user.gender!=null){
+        this.gender = this.user.gender
+      }else{
+        this.gender = '3'
+      }
+      this.editProfileForm = this.formBuilder.group({
+          username:[this.user.username,
+            [Validators.required]
+          ],
+          firstName:[this.user.firstName,
+            [Validators.required,
+              Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+            ]
+          ],
+          lastName:[this.user.lastName,
+            [Validators.required,
+              Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+            ]
+          ],
+          birthOfDate:[this.birthOfDay,
+            [Validators.required,
+              // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+            ]
+          ],
+          email:[this.user.email,
+            [Validators.required,
+            Validators.email]
+          ],
+          password:['',
+            [Validators.required,
+            Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+          ],
+          rePassword:['',[
+            Validators.required
+          ]],
+          phoneNumber:[this.phoneNumber,
+            [Validators.required,
+            Validators.pattern(/^0\d{9}$/)]
+          ],
+          role:[this.user.role,
+            [Validators.required]
+          ],
+          gender:[this.gender,
+            [Validators.required]
+          ],
+          avatar:[this.user.avatar],
+        },
+        {
+            validator: this.CheckP
+        }
+      )
     }
+    console.log(this.avt)
+    flatpickr('#rangeCalendarFlatpickr', {
+      mode: 'single',
+      dateFormat:'d-m-Y',
+    });
+  }
+  ngAfterViewInit(): void {
+    // Khởi tạo flatpickr
+    flatpickr('#rangeCalendarFlatpickr', {
+      mode: 'single',
+      dateFormat:'d-m-Y',
+    });
+  }
+  CheckP(control:AbstractControl){
+    return control.value.password === control.value.rePassword ? null:{mismatch:true}
+  }
+  selectFile(evt:any){
+    this.selectedFile = evt.target.files[0];
+  }
+  // pondOptions = {
+  //     // imagePreviewHeight: 170,
+  //     // imageCropAspectRatio: '1:1',
+  //     // imageResizeTargetWidth: 200,
+  //     // imageResizeTargetHeight: 200,
+  //     // stylePanelLayout: 'compact circle',
+  //     // styleLoadIndicatorPosition: 'center bottom',
+  //     // styleProgressIndicatorPosition: 'right bottom',
+  //     // styleButtonRemoveItemPosition: 'left bottom',
+  //     // styleButtonProcessItemPosition: 'right bottom',
+  //     allowImagePreview:true,
+  //     class: 'my-filepond',
+  //     multiple: true,
+  //     labelIdle: 'Drop files here',
+  //     acceptedFileTypes: 'image/jpeg, image/png, image/jpg',
+  // };
+
+  // pondFiles = ['images/noimg.jpg'];
+
+  // pondHandleInit() {
+  //     console.log('FilePond has initialised', this.myPond);
+  // }
+
+  // pondHandleAddFile(event: any) {
+  //     console.log('A file was added', event.target.files[0]);
+  // }
 }

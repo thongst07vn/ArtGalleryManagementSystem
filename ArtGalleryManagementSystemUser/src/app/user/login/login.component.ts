@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { formatDate, NgClass } from '@angular/common';
 import * as JSBase64 from 'js-base64'
 import { HttpClient } from '@angular/common/http';  
 import Swal from 'sweetalert2'
 import { UserService } from '../services/user.service';
+import { create } from 'filepond';
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
@@ -20,15 +21,29 @@ export class LoginComponent implements OnInit {
   username: string
   password: string
   wrong:string
+  imageURL:string
+  account:any
   constructor(
     private conect: Conect,
     private http : HttpClient,
     private userService: UserService,
-  ){}
+  ){
+    google.accounts.id.initialize({
+      client_id:'105028155984-afc2mgb3fgmkvvo4ipcmhn1eo0070rln.apps.googleusercontent.com',
+      callback:(resp : any)=> {
+        this.handleLogin(resp)
+      } 
+    })
+  }
   ngOnInit(): void {
 
     this.username = ''
     this.password = ''
+    google.accounts.id.renderButton(document.getElementById("google-btn"),{
+      type: 'icon',
+      shape:'circle',
+      size:'large',
+    })
     // this.conect.removeScript("src/bootstrap/js/bootstrap.bundle.min.js")
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
@@ -59,18 +74,9 @@ export class LoginComponent implements OnInit {
     // this.conect.addScriptAsync("layouts/horizontal-light-menu/alert.js")
     this.conect.reloadPage()
     
-    google.accounts.id.initialize({
-      client_id:'105028155984-afc2mgb3fgmkvvo4ipcmhn1eo0070rln.apps.googleusercontent.com',
-      callback:(resp : any)=> {
-        this.handleLogin(resp)
-      } 
-    })
-    google.accounts.id.renderButton(document.getElementById("google-btn"),{
-      type: 'icon',
-      shape:'circle',
-      size:'large',
-    })
+    
     this.wrong='icon-error'
+
     
   }
   login(){
@@ -86,8 +92,38 @@ export class LoginComponent implements OnInit {
             }
           )
         }
+        else{
+          document.querySelector('.icon-error').addEventListener('click', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Email or Password invalid',
+            })
+          })
+        }
+      },
+      err => {
+        document.querySelector('.icon-error').addEventListener('click', function() {
+          Swal.fire({
+              icon: 'error',
+              title: 'Email or Password invalid',
+          })
+        })
       }
     )
+  }
+  async downloadImage(url:string) {
+  this.http.get(url, { responseType: 'blob' })
+    .subscribe(blob => {
+      const reader = new FileReader();
+      console.log(reader)
+      // this.selectFile = reader
+      reader.onloadend = () => {
+        this.imageURL = reader.result as string;
+        console.log(this.imageURL)
+
+      };
+      reader.readAsDataURL(blob);
+    });
   }
   decodeToken(token:string){
     const base64URL = token.split(".")[1]
@@ -98,19 +134,21 @@ export class LoginComponent implements OnInit {
   handleLogin(resp:any){
     const payLoad = this.decodeToken(resp.credential)
 
-    const account = {
+    this.account = {
       email: payLoad.email,
       username: payLoad.name,
       avatar: payLoad.picture,
+      createdAt: formatDate(new Date(),'dd-MM-yyyy','en-US'),
       role: 1 
     }
-    this.userService.findbyemail(account.email).then(
+    // this.downloadImage(this.account.avatar)
+    this.userService.findbyemail(this.account.email).then(
       res=>{
         if(res['result']){
-          sessionStorage.setItem("loggedInUser",JSON.stringify(account.email))
+          sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
           window.location.href = 'user/home'
         }else{
-              let s = JSON.stringify(account);
+              let s = JSON.stringify(this.account);
               let formData = new FormData();
               formData.append('avt', payLoad.picture);
               formData.append('usergg',s);
@@ -118,7 +156,7 @@ export class LoginComponent implements OnInit {
                 res =>{
                     if(res['result']){
                       // console.log(account)
-                      sessionStorage.setItem("loggedInUser",JSON.stringify(account.email))
+                      sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
                       window.location.href = 'user/home' 
                     } else {
                         console.log('failed');

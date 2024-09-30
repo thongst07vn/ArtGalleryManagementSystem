@@ -155,7 +155,24 @@
                                         }
                                     </div>
                                 </div>
-
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="gender">Gender: </label>
+                                        <select class="form-control" id="gender" name="gender" formControlName="gender">
+                                            <option value="">Choose your gender ....</option>
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                            <option value="3">Others</option>
+                                        </select>
+                                        @if(registerForm.get('gender').touched){
+                                            <ul>
+                                                @if(registerForm.hasError('required',['gender'])){
+                                                    <li style="padding-top: 5px; color: red;">Gender is blank</li>
+                                                }
+                                            </ul>
+                                        }
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Phone Number: </label>
@@ -175,11 +192,19 @@
 
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="role">Choose your role: </label>
+                                        <label for="role">Role: </label>
                                         <select class="form-control" id="role" name="role" formControlName="role">
+                                            <option value="">Choose your role ....</option>
                                             <option value="1">Buyer</option>
                                             <option value="2">Seller</option>
                                         </select>
+                                        @if(registerForm.get('role').touched){
+                                            <ul>
+                                                @if(registerForm.hasError('required',['role'])){
+                                                    <li style="padding-top: 5px; color: red;">Role is blank</li>
+                                                }
+                                            </ul>
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-12">

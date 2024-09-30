@@ -40,7 +40,7 @@
                 aria-labelledby="animated-underline-home-tab">
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                        <form class="section general-info">
+                        <form [formGroup]="editProfileForm" class="section general-info">
                             <div class="info">
                                 <h6 class="">General Information</h6>
                                 <div class="row">
@@ -55,7 +55,9 @@
 
                                                     <div class="img-uploader-content">
                                                         <input type="file" class="filepond" name="filepond"
-                                                            accept="image/png, image/jpeg, image/gif"/>
+                                                            accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/>
+                                                            <!-- <file-pond #myPond [options]="pondOptions" [files]="pondFiles" (oninit)="pondHandleInit()" (change)="pondHandleAddFile($event)"></file-pond> -->
+
                                                     </div>
                                                     
                                                 </div>
@@ -65,39 +67,42 @@
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label style="font-weight: 600;" for="fullName">Full
-                                                                    Name</label>
+                                                                <label style="font-weight: 600;"
+                                                                    for="firstName">First Name: </label>
+                                                                <input type="text" class="form-control mb-3" id="firstName"
+                                                                formControlName="firstName">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label style="font-weight: 600;"
+                                                                    for="lastName">Last Name: </label>
+                                                                <input type="text" class="form-control mb-3" id="lastName"
+                                                                formControlName="lastName">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label style="font-weight: 600;" for="username">Username: </label>
                                                                 <input type="text" class="form-control mb-3"
-                                                                    id="fullName" placeholder="Full Name"
-                                                                    value="Ngo Hoang Thong">
+                                                                    id="username" formControlName="username">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label style="font-weight: 600;"
+                                                                    for="email">Email</label>
+                                                                <input type="text" class="form-control mb-3" id="email" formControlName="email">
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label style="font-weight: 600;"
-                                                                    for="country">Profession</label>
-                                                                <select class="form-select mb-3" id="country">
-                                                                    <option selected>Buyer</option>
-                                                                    <option>Seller</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label style="font-weight: 600;"
-                                                                    for="country">Country</label>
-                                                                <select class="form-select mb-3" id="country">
-                                                                    <option>All Countries</option>
-                                                                    <option selected>VietNam</option>
-                                                                    <option>Korea</option>
-                                                                    <option>Japan</option>
-                                                                    <option>China</option>
-                                                                    <option>France</option>
-                                                                    <option>USA</option>
-                                                                    <option>Canada</option>
+                                                                    for="role">Role: </label>
+                                                                <select class="form-select mb-3" id="role" formControlName="role">
+                                                                    <option value="1">Buyer</option>
+                                                                    <option value="2">Seller</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -105,30 +110,32 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label style="font-weight: 600;"
-                                                                    for="phone">Phone</label>
-                                                                <input type="text" class="form-control mb-3" id="phone"
-                                                                    placeholder="Write your phone number here"
-                                                                    value="+84 346006090">
+                                                                    for="gender">Gender: </label>
+                                                                <select class="form-select mb-3" id="gender" formControlName="gender">
+                                                                    <option value="1">Male</option>
+                                                                    <option value="2">Female</option>
+                                                                    <option value="3">Others</option>
+                                                                </select>
                                                             </div>
                                                         </div>
 
+
+                                                        
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label style="font-weight: 600;"
-                                                                    for="phone">Email</label>
-                                                                <input type="text" class="form-control mb-3" id="email"
-                                                                    placeholder="Write your email here"
-                                                                    value="tnbao1009gmail.com">
+                                                                    for="phoneNumber">PhoneNumber</label>
+                                                                <input type="text" class="form-control mb-3" id="phoneNumber"
+                                                                formControlName="phoneNumber">
                                                             </div>
                                                         </div>
 
+                                                        
+
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label style="font-weight: 600;"
-                                                                    style="font-weight: 600;" for="phone">Date Of
-                                                                    Birth</label>
-                                                                <input type="text" class="form-control mb-3" id="dob"
-                                                                    name="dob" placeholder="Write your dob hear">
+                                                                <label for="rangeCalendarFlatpickr">Day of Birth: </label>
+                                                                <input id="rangeCalendarFlatpickr" class="form-control" type="text" readonly="readonly" formControlName="birthOfDate">
                                                             </div>
                                                         </div>
 

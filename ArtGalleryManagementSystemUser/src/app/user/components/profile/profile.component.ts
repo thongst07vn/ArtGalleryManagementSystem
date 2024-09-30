@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
+import { UserService } from '../../services/user.service';
 
 @Component({
   standalone: true,
@@ -13,14 +14,16 @@ import { ConectActive } from '../../services/conectActive';
   }
 })
 export class ProfileComponent implements OnInit {
+  user: any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
-    private conectActive : ConectActive
+    private conectActive : ConectActive,
+    private userService:UserService
   ){
     // this.conect.reloadPage()
   }
-  ngOnInit(): void {
+  async ngOnInit(){
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -30,8 +33,9 @@ export class ProfileComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/users/user-profile.css")
     this.conect.addStyle("src/assets/css/dark/components/list-group.css")
     this.conect.addStyle("src/assets/css/dark/users/user-profile.css")
-
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.user = userResult['result'];
     // this.conect.reloadPage()
-
+    
   }
 }

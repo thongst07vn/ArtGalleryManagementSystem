@@ -30,6 +30,7 @@
     "glightbox": "^3.3.0",
     "jquery": "^3.7.1",
     "js-base64": "^3.7.7",
+    "ngx-filepond": "^7.0.3",
     "nouislider": "^15.8.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.6.13",

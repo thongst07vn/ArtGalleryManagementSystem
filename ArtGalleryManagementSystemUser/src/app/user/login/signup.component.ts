@@ -60,7 +60,12 @@ export class SignUpComponent implements OnInit {
           [Validators.required,
           Validators.pattern(/^0\d{9}$/)]
         ],
-        role:['1'],
+        role:['',
+          [Validators.required]
+        ],
+        gender:['',
+          [Validators.required]
+        ],
         avatar:['noimg.jpg'],
         createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')],
       },

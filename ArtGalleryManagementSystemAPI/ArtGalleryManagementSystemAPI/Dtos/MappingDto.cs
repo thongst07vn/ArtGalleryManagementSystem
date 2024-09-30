@@ -12,7 +12,7 @@ public class MappingDto : Profile
         CreateMap<User, UserDto>()
             .ForMember(
                 des => des.BirthOfDate,
-                src => src.MapFrom(des => des.BirthOfDate.ToString("dd-MM-yyyy"))
+                src => src.MapFrom(des => des.BirthOfDate != null ? ((DateTime)des.BirthOfDate).ToString("dd-MM-yyyy") : null)
             )
             .ForMember(
                 des => des.CreatedAt,
@@ -25,7 +25,7 @@ public class MappingDto : Profile
         CreateMap<UserDto, User>()
             .ForMember(
                 des => des.BirthOfDate,
-                src => src.MapFrom(src => DateTime.ParseExact(src.BirthOfDate, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+                src => src.MapFrom(src => src.BirthOfDate != null ? DateTime.ParseExact(src.BirthOfDate, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             )
             .ForMember(
                 des => des.CreatedAt,

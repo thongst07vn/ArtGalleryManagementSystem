@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\services\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\services\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,44 +35,36 @@
       "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\mappingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\services\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\services\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\dtos\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\artgallerymanagementsystemapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\dtos\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\dtos\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\CartDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ArtGalleryManagementSystemAPI\\Dtos\\CartDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|d:\\doanky3\\artgallerymanagementsystem\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi\\artgallerymanagementsystemapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D950A3F4-0908-4883-A575-D5C83D881E8E}|ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj|solutionrelative:artgallerymanagementsystemapi\\artgallerymanagementsystemapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,37 +74,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Address.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\Address.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Models\\Address.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\Address.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Models\\Address.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAA9wBkAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:09:42.669Z",
+              "WhenOpened": "2024-09-30T14:47:14.579Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Cart.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\Cart.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Models\\Cart.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\Cart.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Models\\Cart.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAsAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:09:32.892Z",
+              "WhenOpened": "2024-09-30T14:47:11.492Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Seller.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\Seller.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Models\\Seller.cs",
@@ -108,38 +112,51 @@
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Models\\Seller.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:09:28.376Z",
+              "WhenOpened": "2024-09-30T14:47:06.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\User.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Models\\User.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\User.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Models\\User.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAswCYAAABYAAAA",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAcwBQAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:09:17.887Z",
+              "WhenOpened": "2024-09-30T14:46:46.977Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "DatabaseContext.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Models\\DatabaseContext.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAADEAAAAAAAAA",
+              "ViewState": "AQIAACUAAAAAAAAAAAASwDEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T16:08:15.412Z",
+              "WhenOpened": "2024-09-30T14:44:31.052Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 12,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Controllers\\AdminController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T14:31:25.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "CartDto.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\CartDto.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Dtos\\CartDto.cs",
@@ -152,46 +169,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Controllers\\UserController.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Controllers\\UserController.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Controllers\\UserController.cs",
-              "ViewState": "AQIAAFsAAAAAAAAAAAAswHoAAAAJAAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAWwEcAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T11:02:36.872Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "MappingDto.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\MappingDto.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Dtos\\MappingDto.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\MappingDto.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Dtos\\MappingDto.cs",
-              "ViewState": "AQIAADEAAAAAAAAAAAAUwDoAAAA7AAAA",
+              "ViewState": "AQIAABoAAAAAAAAAAAAmwCgAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:31:21.13Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "UserServiceImpl.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Services\\UserServiceImpl.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Services\\UserServiceImpl.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Services\\UserServiceImpl.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Services\\UserServiceImpl.cs",
-              "ViewState": "AQIAAEUAAAAAAAAAAAAUwGMAAAAAAAAA",
+              "ViewState": "AQIAACkAAAAAAAAAAADwvzwAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:28:11.563Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "AddressDto.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\AddressDto.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Dtos\\AddressDto.cs",
@@ -199,25 +216,24 @@
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Dtos\\AddressDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T10:27:01.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T10:27:01.744Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "UserDto.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\UserDto.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Dtos\\UserDto.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Dtos\\UserDto.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Dtos\\UserDto.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAcwBYAAAAdAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAA5wBQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:25:08.884Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Services\\UserService.cs",
@@ -230,7 +246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\appsettings.json",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\appsettings.json",
@@ -248,14 +264,14 @@
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\Program.cs",
               "ToolTip": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\Program.cs",
               "RelativeToolTip": "ArtGalleryManagementSystemAPI\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAzAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:19:20.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "ArtGalleryManagementSystemAPI.csproj",
               "DocumentMoniker": "D:\\DoAnKy3\\ArtGalleryManagementSystem\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj",
               "RelativeDocumentMoniker": "ArtGalleryManagementSystemAPI\\ArtGalleryManagementSystemAPI.csproj",

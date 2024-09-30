@@ -42,6 +42,7 @@ export class SidbarComponent implements OnInit {
   async ngOnInit() {
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
+    console.log(this.user)
 
   }
 }

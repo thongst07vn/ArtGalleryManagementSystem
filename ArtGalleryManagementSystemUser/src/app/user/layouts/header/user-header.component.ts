@@ -23,6 +23,7 @@ export class UserHeaderComponent implements OnInit {
   async ngOnInit() {
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
+    
     console.log(this.user)
     setTimeout(() => {
       const hasDarkClass = document.body.classList.contains('dark');
