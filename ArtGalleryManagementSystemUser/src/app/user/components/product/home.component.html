@@ -73,11 +73,11 @@
             <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card style-2 mb-md-0 mb-4">
                     <a [routerLink]="['../product-details']" appReloadPage>
-                        @if(product.image == 'noimg.jpg'){
-                            <img src="images/{{product.image}}" class="card-img-top" alt="..." height="300px">
+                        @if(product.image.substring(0,5)=="https"){
+                            <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                         @else {
-                            <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
+                            <img src="images/{{product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                     </a>
                     <div class="card-body px-0 pb-0">
@@ -92,16 +92,17 @@
                         
                         <!-- <h5 class="card-bottom-section">$95.00</h5> -->
                         <div class="media mt-4 mb-0 pt-1">
-                            <a [routerLink]="['../profile']" appReloadPage>
-                                @if(product.avatar == 'noimg.jpg'){
+                            <a [routerLink]="['../profile',{sellerId:product.sellerId}]" appReloadPage>
+                                @if(product.avatar.substring(0,5)=="https"){
+                                    <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
+                                }
+                                @else {
                                     <img src="images/{{product.avatar}}" class="card-media-image me-3" alt="">
 
-                                } @else {
-                                    <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
                                 }
                             </a>
                             <div class="media-body">
-                                <a [routerLink]="['../profile']">
+                                <a [routerLink]="['../profile',{sellerId:product.sellerId}]">
                                     <h4 class="media-heading mb-1">{{product.username}}</h4>
                                     <p class="media-text">{{product.createdAt}}</p>
                                 </a>
