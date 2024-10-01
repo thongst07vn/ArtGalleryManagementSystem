@@ -1,3 +1,4 @@
+
 ﻿using ArtGalleryManagementSystemAPI.Dtos;
 
 namespace ArtGalleryManagementSystemAPI.Services;
@@ -10,3 +11,4 @@ public interface ProductService
 
     public List<ProductWithSellerDto> AllProductWithSeller();
 }
+
