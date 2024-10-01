@@ -5,14 +5,23 @@ import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as FilePond from 'filepond';
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-crop';
 import 'filepond-plugin-image-resize';
 import 'filepond-plugin-image-transform';
 import flatpickr from 'flatpickr';
 import { UserService } from '../../services/user.service';
-import { FilePondModule, registerPlugin } from 'ngx-filepond';
+import { FilePondModule } from 'ngx-filepond';
+import { FilePondOptions } from 'filepond';
 // import { BrowserModule } from '@angular/platform-browser';
+import { create, registerPlugin } from 'filepond';
+import 'filepond/dist/filepond.css';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import { AddressService } from '../../services/address.service';
+import { Province } from '../../entities/province.entity';
+import { District } from '../../entities/district.entity';
+import { Ward } from '../../entities/ward.entity';
 
 @Component({
   standalone: true,
@@ -27,15 +36,23 @@ export class ProfileEditComponent implements OnInit {
   user:any
   birthOfDay:any
   phoneNumber:any
+  lastName:any
+  firstName:any
   gender:any
   editProfileForm:FormGroup
+  addAddressForm:FormGroup
   selectedFile:File
+  addAddress:any
+  provinces:any
+  districts:any
+  wards:any
   @ViewChild('myPond') myPond: any;
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
     private conectActive : ConectActive,
     private userService : UserService,
+    private addressSevice: AddressService,
     private formBuilder : FormBuilder
   ){
     this.editProfileForm = this.formBuilder.group({
@@ -61,13 +78,13 @@ export class ProfileEditComponent implements OnInit {
         [Validators.required,
         Validators.email]
       ],
-      password:['',
-        [Validators.required,
-        Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
-      ],
-      rePassword:['',[
-        Validators.required
-      ]],
+      // password:['',
+      //   [Validators.required,
+      //   Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+      // ],
+      // rePassword:['',[
+      //   Validators.required
+      // ]],
       phoneNumber:['',
         [Validators.required,
         Validators.pattern(/^0\d{9}$/)]
@@ -78,13 +95,14 @@ export class ProfileEditComponent implements OnInit {
       gender:['',
         [Validators.required]
       ],
-      avatar:[''],
     },
     {
         validator: this.CheckP
     }
-  )
-    
+    )
+    this.addAddressForm = this.formBuilder.group({
+        province:['']
+    })
   }
   async ngOnInit() {
     this.activatedRoute.data.subscribe(
@@ -142,13 +160,13 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addScriptAsync("src/plugins/src/filepond/filepondPluginFileValidateSize.min.js")
     this.conect.addScriptAsync("src/plugins/src/notification/snackbar/snackbar.min.js")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-    this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
+    // this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
     this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
     this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
     // this.conect.reloadPage()
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
-    
+
     // FilePond.create(document.querySelector('.filepond'),
     // {
     //   imagePreviewHeight: 170,
@@ -160,17 +178,18 @@ export class ProfileEditComponent implements OnInit {
     //   styleProgressIndicatorPosition: 'right bottom',
     //   styleButtonRemoveItemPosition: 'left bottom',
     //   styleButtonProcessItemPosition: 'right bottom',
-    //   files: [
-    //       {
-    //           // the server file reference
-    //           source : this.avt,
-    //           options: {
-    //             type: 'input',
-    //           }
-    //           // set type to limbo to tell FilePond this is a temp file
-    //       },
-    //   ],
+    //   // files: [
+    //   //     {
+    //   //         // the server file reference
+    //   //         source : this.avt,
+    //   //         options: {
+    //   //           type: 'input',
+    //   //         }
+    //   //         // set type to limbo to tell FilePond this is a temp file
+    //   //     },
+    //   // ],
     // })
+   
     if(this.user!=null){
       if(this.user.avatar.substring(0,5)=="https"){
         this.avt = this.user.avatar
@@ -187,6 +206,17 @@ export class ProfileEditComponent implements OnInit {
       }else{
         this.phoneNumber = 'Updating ......'
       }
+      if(this.user.firstName){
+        this.firstName = this.user.firstName
+      }else{
+        this.firstName = 'Updating ......'
+
+      }
+      if(this.user.lastName!=null){
+        this.lastName = this.user.lastName
+      }else{
+        this.lastName = 'Updating ......'
+      }
       if(this.user.gender!=null){
         this.gender = this.user.gender
       }else{
@@ -196,12 +226,12 @@ export class ProfileEditComponent implements OnInit {
           username:[this.user.username,
             [Validators.required]
           ],
-          firstName:[this.user.firstName,
+          firstName:[this.firstName,
             [Validators.required,
               Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
             ]
           ],
-          lastName:[this.user.lastName,
+          lastName:[this.lastName,
             [Validators.required,
               Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
             ]
@@ -215,13 +245,13 @@ export class ProfileEditComponent implements OnInit {
             [Validators.required,
             Validators.email]
           ],
-          password:['',
-            [Validators.required,
-            Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
-          ],
-          rePassword:['',[
-            Validators.required
-          ]],
+          // password:['',
+          //   [Validators.required,
+          //   Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+          // ],
+          // rePassword:['',[
+          //   Validators.required
+          // ]],
           phoneNumber:[this.phoneNumber,
             [Validators.required,
             Validators.pattern(/^0\d{9}$/)]
@@ -231,15 +261,31 @@ export class ProfileEditComponent implements OnInit {
           ],
           gender:[this.gender,
             [Validators.required]
-          ],
-          avatar:[this.user.avatar],
+          ]
         },
         {
             validator: this.CheckP
         }
       )
+      
     }
+    const addAddressResult = await this.addressSevice.findallprovince()
+    this.provinces = addAddressResult['result'] as Province[]
+    console.log(this.provinces)
     console.log(this.avt)
+    // registerPlugin(FilePondPluginImagePreview);
+    // FilePond.create(document.querySelector('.filepond'),
+    // {
+    //   imagePreviewHeight: 170,
+    //   imageCropAspectRatio: '1:1',
+    //   imageResizeTargetWidth: 200,
+    //   imageResizeTargetHeight: 200,
+    //   stylePanelLayout: 'compact circle',
+    //   styleLoadIndicatorPosition: 'center bottom',
+    //   styleProgressIndicatorPosition: 'right bottom',
+    //   styleButtonRemoveItemPosition: 'left bottom',
+    //   styleButtonProcessItemPosition: 'right bottom',
+    // }).addFile(this.avt)
     flatpickr('#rangeCalendarFlatpickr', {
       mode: 'single',
       dateFormat:'d-m-Y',
@@ -255,33 +301,75 @@ export class ProfileEditComponent implements OnInit {
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
-  selectFile(evt:any){
-    this.selectedFile = evt.target.files[0];
+  // selectFile(event:any){
+  //   // registerPlugin(FilePondPluginImagePreview);
+  //   // // Get a file input reference
+  //   // const input = document.querySelector('.filepond');
+  //   // FilePond.create(input,
+  //   // {
+  //   //   imagePreviewHeight: 170,
+  //   //   imageCropAspectRatio: '1:1',
+  //   //   imageResizeTargetWidth: 200,
+  //   //   imageResizeTargetHeight: 200,
+  //   //   stylePanelLayout: 'compact circle',
+  //   //   styleLoadIndicatorPosition: 'center bottom',
+  //   //   styleProgressIndicatorPosition: 'right bottom',
+  //   //   styleButtonRemoveItemPosition: 'left bottom',
+  //   //   styleButtonProcessItemPosition: 'right bottom',
+  //   // });
+  //   // this.selectedFile = event.target.files[0]
+  //   console.log(event.target.files[0])
+  // }
+  pondOptions = {
+      // imagePreviewHeight: 170,
+      // imageCropAspectRatio: '1:1',
+      // imageResizeTargetWidth: 200,
+      // imageResizeTargetHeight: 200,
+      // stylePanelLayout: 'compact circle',
+      // styleLoadIndicatorPosition: 'center bottom',
+      // styleProgressIndicatorPosition: 'right bottom',
+      // styleButtonRemoveItemPosition: 'left bottom',
+      // styleButtonProcessItemPosition: 'right bottom',
+      // allowReorder: true,
+      class: 'my-filepond',
+      // multiple: true,
+      // labelIdle: 'Drop files here',
+      acceptedFileTypes: 'image/jpeg, image/png, image/jpg',
+  };
+
+  pondHandleInit() {
+    console.log('FilePond has initialised', this.myPond);
   }
-  // pondOptions = {
-  //     // imagePreviewHeight: 170,
-  //     // imageCropAspectRatio: '1:1',
-  //     // imageResizeTargetWidth: 200,
-  //     // imageResizeTargetHeight: 200,
-  //     // stylePanelLayout: 'compact circle',
-  //     // styleLoadIndicatorPosition: 'center bottom',
-  //     // styleProgressIndicatorPosition: 'right bottom',
-  //     // styleButtonRemoveItemPosition: 'left bottom',
-  //     // styleButtonProcessItemPosition: 'right bottom',
-  //     allowImagePreview:true,
-  //     class: 'my-filepond',
-  //     multiple: true,
-  //     labelIdle: 'Drop files here',
-  //     acceptedFileTypes: 'image/jpeg, image/png, image/jpg',
-  // };
+  pondHandleAddFile(event: any) {
+    this.selectedFile = event.target.files[0]
+    
+    console.log('A file was added', event.target.files[0]);
+  }
 
-  // pondFiles = ['images/noimg.jpg'];
-
-  // pondHandleInit() {
-  //     console.log('FilePond has initialised', this.myPond);
-  // }
-
-  // pondHandleAddFile(event: any) {
-  //     console.log('A file was added', event.target.files[0]);
-  // }
+  editProfile(){
+    let s = JSON.stringify(this.editProfileForm.value)
+    let fromData = new FormData()
+    fromData.append('photo', this.selectedFile)
+    fromData.append('productJSOn',s)
+    console.log(s)
+  }
+  async choosedProvince(event:any){
+    if(event.target.value!=''){
+      const addAddressResult = await this.addressSevice.finddistrictbyprovincecode(event.target.value)
+      this.districts = addAddressResult['result'] as District[]
+    }
+    else{
+      this.districts = null
+      this.wards = null
+    }
+  }
+  async choosedDistrict(event:any){
+    if(event.target.value!=''){
+      const addAddressResult = await this.addressSevice.findwardbydistrictcode(event.target.value)
+      this.wards = addAddressResult['result'] as Ward[]
+    }
+    else{
+      this.wards = null
+    }
+  }
 }

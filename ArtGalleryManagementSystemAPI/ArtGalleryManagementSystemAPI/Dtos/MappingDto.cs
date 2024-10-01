@@ -9,6 +9,10 @@ public class MappingDto : Profile
 {
     public MappingDto()
     {
+        CreateMap<Province, ProvinceDto>().ReverseMap();
+        CreateMap<District, DistrictDto>().ReverseMap();
+        CreateMap<Ward, WardDto>().ReverseMap();
+
         CreateMap<User, UserDto>()
             .ForMember(
                 des => des.BirthOfDate,

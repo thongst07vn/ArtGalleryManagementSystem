@@ -19,6 +19,8 @@ public partial class Product
 
     public int? Quantity { get; set; }
 
+    public string? Image { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
