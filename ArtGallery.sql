@@ -80,10 +80,11 @@ CREATE TABLE [products] (
   [id] integer PRIMARY KEY IDENTITY,
   [seller_id] integer,
   [name] nvarchar(255),
-  [description] nvarchar(255),
+  [description] nvarchar(500),
   [category_id] integer, 
   [price] Float,
   [quantity] integer,
+  [image] nvarchar(255),
   [created_at] datetime,
   [deleted_at] datetime
 )
@@ -100,6 +101,7 @@ GO
 
 CREATE TABLE [wishlist] (
   [id] integer PRIMARY KEY IDENTITY,
+  [name] nvarchar(255),
   [user_id] integer,
   [product_id] integer,
   [created_at] datetime,
