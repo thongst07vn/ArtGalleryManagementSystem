@@ -8,6 +8,9 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../entities/product.entity';
 import { NgClass } from '@angular/common';
 
+import { ProductWithSeller } from '../../entities/productwithseller.entity';
+
+
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
@@ -21,9 +24,11 @@ export class HomeComponent implements OnInit {
    totalItems: number = 0;
    itemsPerPage: number = 12;
    currentPage: number = 1;
-  productsToDisplay: Product[] = []; // Array for displaying current page items
 
-  products: Product[]
+  productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
+
+  productswithseller: ProductWithSeller[]
+
   // min:any
   max:any
   @ViewChild('input-number-min') min: ElementRef;
@@ -36,10 +41,12 @@ export class HomeComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.productService.findall().then(
+
+    this.productService.findallwithseller().then(
       res => {
-        this.products = res as Product[]
-        this.totalItems = this.products?.length || 0; // Assuming products length
+        this.productswithseller = res as ProductWithSeller[]
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+
         this.updateDisplayedProducts(); // Update displayed products on initial load
       },
       error => {
@@ -99,7 +106,9 @@ export class HomeComponent implements OnInit {
   updateDisplayedProducts() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage; 
-    this.productsToDisplay = this.products.slice(startIndex, endIndex);
+
+    this.productsToDisplay = this.productswithseller.slice(startIndex, endIndex);
+
   }
 
   // Event handlers for pagination interactions (implement in your component)

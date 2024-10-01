@@ -92,6 +92,7 @@ public class MappingDto : Profile
                 des => des.UpdatedAt,
                 src => src.MapFrom(src => src.UpdatedAt != null ? DateTime.ParseExact(src.UpdatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
+
         CreateMap<Product, ProductDto>()
             .ForMember(
                 des => des.CreatedAt,
@@ -109,6 +110,24 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+
+        CreateMap<Product, ProductWithSellerDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
+            )
+            .ForMember(
+                des => des.Username,
+                src => src.MapFrom(des => des.Seller.IdNavigation.Username)
+            )
+            .ForMember(
+                des => des.Avatar,
+                src => src.MapFrom(desc => desc.Seller.IdNavigation.Avatar)
             );
     }
 }

@@ -1,3 +1,4 @@
+
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { lastValueFrom } from "rxjs";
@@ -13,6 +14,9 @@ export class ProductService{
     ){}
     async findall(){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallproduct'))
+    }
+    async findallwithseller(){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallproductwithseller'))
     }
 
 }

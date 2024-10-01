@@ -1,3 +1,4 @@
+
 ﻿using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,21 @@ public class HomeController : Controller
         try
         {
             return Ok(productService.FindAll());
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
+    [HttpGet("findallproductwithseller")]
+    public IActionResult FindAllProductWithSeller()
+    {
+
+        try
+        {
+            return Ok(productService.AllProductWithSeller());
         }
         catch
         {

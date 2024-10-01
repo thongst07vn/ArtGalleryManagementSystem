@@ -1,5 +1,4 @@
-
-export class Product{
+export class ProductWithSeller{
     id:number
     sellerId: number
     name:string
@@ -10,4 +9,6 @@ export class Product{
     image:string
     createdAt:string
     deletedAt:string
+    username: string
+    avatar:string
 }

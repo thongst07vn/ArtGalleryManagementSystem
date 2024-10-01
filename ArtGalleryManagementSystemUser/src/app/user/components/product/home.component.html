@@ -93,12 +93,17 @@
                         <!-- <h5 class="card-bottom-section">$95.00</h5> -->
                         <div class="media mt-4 mb-0 pt-1">
                             <a [routerLink]="['../profile']" appReloadPage>
-                                <img src="../src/assets/img/profile-5.jpeg" class="card-media-image me-3" alt="">
+                                @if(product.avatar == 'noimg.jpg'){
+                                    <img src="images/{{product.avatar}}" class="card-media-image me-3" alt="">
+
+                                } @else {
+                                    <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
+                                }
                             </a>
                             <div class="media-body">
                                 <a [routerLink]="['../profile']">
-                                    <h4 class="media-heading mb-1">Shaun Park</h4>
-                                    <p class="media-text">01 May</p>
+                                    <h4 class="media-heading mb-1">{{product.username}}</h4>
+                                    <p class="media-text">{{product.createdAt}}</p>
                                 </a>
                             </div>
                             <div class="media-right-aligned">

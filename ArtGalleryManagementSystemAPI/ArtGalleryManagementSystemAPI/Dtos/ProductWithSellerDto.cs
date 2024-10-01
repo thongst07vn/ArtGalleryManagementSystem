@@ -1,7 +1,6 @@
-
 ﻿namespace ArtGalleryManagementSystemAPI.Dtos;
 
-public class ProductDto
+public class ProductWithSellerDto
 {
     public int Id { get; set; }
 
@@ -21,5 +20,9 @@ public class ProductDto
     public string CreatedAt { get; set; }
 
     public string DeletedAt { get; set; }
-}
 
+
+    public string Username { get; set; } = null!;
+    public string? Avatar { get; set; }
+
+}
