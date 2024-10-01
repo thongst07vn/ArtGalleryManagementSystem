@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ArtGalleryManagementSystemAPI.Models;
+﻿namespace ArtGalleryManagementSystemAPI.Models;
 
 public partial class Product
 {
@@ -21,7 +18,7 @@ public partial class Product
 
     public string? Image { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
