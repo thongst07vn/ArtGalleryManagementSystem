@@ -4,28 +4,49 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../entities/product.entity';
+import { NgClass } from '@angular/common';
+import { ProductWithSeller } from '../../entities/productwithseller.entity';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet,RouterLink,FormsModule],
+  imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
   templateUrl: './home.component.html',
   host:{
     'collision': 'HomeComponent'
   }
 })
 export class HomeComponent implements OnInit {
+   // Pagination variables
+   totalItems: number = 0;
+   itemsPerPage: number = 12;
+   currentPage: number = 1;
+  productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
+
+  productswithseller: ProductWithSeller[]
   // min:any
   max:any
   @ViewChild('input-number-min') min: ElementRef;
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
-    private conectActive : ConectActive
+    private conectActive : ConectActive,
+    private productService: ProductService
   ){
     
   }
   ngOnInit(): void {
-
+    this.productService.findallwithseller().then(
+      res => {
+        this.productswithseller = res as ProductWithSeller[]
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+        this.updateDisplayedProducts(); // Update displayed products on initial load
+      },
+      error => {
+        console.log(error)
+      }
+    )
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -52,5 +73,54 @@ export class HomeComponent implements OnInit {
     console.log(inputmin.value);
     const inputmax = document.getElementById('input-number') as HTMLInputElement
     console.log(inputmax.value);
+  }
+
+  truncate(text: string, length: number, suffix: any) {
+    if (text.length > length) {
+      // text = text.replace(/\s+/g, '')
+      return text.substring(0, length) + suffix;
+    }
+    return text; 
+  }
+  getPageNumbers(): number[] {
+    const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    const visiblePages = 5; // Adjust as needed
+    const startPage = Math.max(this.currentPage - Math.floor(visiblePages / 2), 1);
+    const endPage = Math.min(startPage + visiblePages - 1, totalPages);
+    const pageNumbers: number[] = [];
+  
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+    return pageNumbers;
+  }
+
+  updateDisplayedProducts() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage; 
+    this.productsToDisplay = this.productswithseller.slice(startIndex, endIndex);
+  }
+
+  // Event handlers for pagination interactions (implement in your component)
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.updateDisplayedProducts();
+  }
+
+  onPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedProducts();
+    }
+  }
+
+  onNextPage() {
+    if (this.currentPage < Math.ceil(this.totalItems / this.itemsPerPage)) {
+      this.currentPage++;
+      this.updateDisplayedProducts();
+    }
+  }
+  next(){
+    return Math.ceil(this.totalItems / this.itemsPerPage)
   }
 }
