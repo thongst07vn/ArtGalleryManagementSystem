@@ -1,3 +1,4 @@
+
 ﻿using ArtGalleryManagementSystemAPI.Dtos;
 
 namespace ArtGalleryManagementSystemAPI.Services;
@@ -15,3 +16,4 @@ public interface ProductService
 
 
 }
+

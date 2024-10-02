@@ -7,11 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../entities/product.entity';
 import { formatDate, NgClass } from '@angular/common';
+
 import { ProductWithSeller } from '../../entities/productwithseller.entity';
 import { UserService } from '../../services/user.service';
 import { CartItem } from '../../entities/cartitem.entity';
 import { User } from '../../entities/user.entity';
 import { CartService } from '../../services/cart.service';
+
 
 @Component({
   standalone: true,
@@ -26,9 +28,11 @@ export class HomeComponent implements OnInit {
    totalItems: number = 0;
    itemsPerPage: number = 12;
    currentPage: number = 1;
+
   productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
 
   productswithseller: ProductWithSeller[]
+
   // min:any
   max:any
   @ViewChild('input-number-min') min: ElementRef;
@@ -43,10 +47,12 @@ export class HomeComponent implements OnInit {
     
   }
   ngOnInit(): void {
+
     this.productService.findallwithseller().then(
       res => {
         this.productswithseller = res as ProductWithSeller[];
         this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+
         this.updateDisplayedProducts(); // Update displayed products on initial load
       },
       error => {
@@ -68,6 +74,7 @@ export class HomeComponent implements OnInit {
     this.conect.addStyle("src/plugins/css/dark/bootstrap-range-Slider/bootstrap-slider.css")
     this.conect.addStyle("src/assets/css/light/elements/custom-pagination.css")
     this.conect.addStyle("src/assets/css/dark/elements/custom-pagination.css")
+
     this.conect.addScriptAsync("src/plugins/src/noUiSlider/nouislider.min.js")
 
 
@@ -158,7 +165,9 @@ export class HomeComponent implements OnInit {
   updateDisplayedProducts() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage; 
+
     this.productsToDisplay = this.productswithseller.slice(startIndex, endIndex);
+
   }
 
   // Event handlers for pagination interactions (implement in your component)
