@@ -12,6 +12,7 @@ import { AboutusComponent } from './user/components/Us/aboutus.component';
 import { AuctionComponent } from './user/components/auction/auction.component';
 import { AuctionDetailsComponent } from './user/components/auction/auction-details.component';
 import { InvoiceComponent } from './user/components/product/invoice.component';
+import { PostcartComponent } from './user/components/post/postcart.component';
 
 
 export const routes: Routes = [
@@ -91,6 +92,13 @@ export const routes: Routes = [
                 component:AuctionDetailsComponent,
                 data:{
                     addActive: 'auction',
+                }
+            },
+            {
+                path:'post-art',
+                component:PostcartComponent,
+                data:{
+                    addActive: 'postArt',
                 }
             }
         ]

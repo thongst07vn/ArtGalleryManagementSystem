@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
+import { AdminService } from '../../services/admin.service';
+import { User } from '../../entities/user.entity';
 
 @Component({
   standalone: true,
@@ -12,10 +14,12 @@ import { ConectActive } from '../../services/conectActive';
   }
 })
 export class SellerListComponent {
+  sellers:any
   constructor(
     private conect : Conect,
     private activatedRoute :ActivatedRoute,
-    private conectActive : ConectActive
+    private conectActive : ConectActive,
+    private adminService: AdminService
   ){}
 
   ngOnInit(): void {
@@ -79,6 +83,11 @@ export class SellerListComponent {
     this.conect.addScript("src/plugins/src/table/datatable/button-ext/buttons.print.min.js")
     this.conect.addScript("src/plugins/src/table/datatable/custom_miscellaneous.js")
     // this.conect.reloadPage()
-
+    this.adminService.findallseller().then(
+      res=>{
+        this.sellers = res['result'] as User[]
+        console.log(this.sellers)
+      }
+    )
 }
 }

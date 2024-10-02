@@ -15,6 +15,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ProfileComponent implements OnInit {
   user: any
+  seller:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
@@ -24,6 +25,7 @@ export class ProfileComponent implements OnInit {
     // this.conect.reloadPage()
   }
   async ngOnInit(){
+    
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -36,6 +38,15 @@ export class ProfileComponent implements OnInit {
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
     // this.conect.reloadPage()
-    
+    this.activatedRoute.paramMap.subscribe(
+      async param=>{
+        console.log(param.get('sellerId'))
+        const sellerResult = await this.userService.findbyid(param.get('sellerId'));
+        if(sellerResult['result'].role == 2){
+          this.user = null
+          this.seller = sellerResult['result']
+        }
+      }
+    )
   }
 }

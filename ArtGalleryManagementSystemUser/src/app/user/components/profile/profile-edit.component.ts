@@ -274,18 +274,22 @@ export class ProfileEditComponent implements OnInit {
     console.log(this.provinces)
     console.log(this.avt)
     // registerPlugin(FilePondPluginImagePreview);
-    // FilePond.create(document.querySelector('.filepond'),
-    // {
-    //   imagePreviewHeight: 170,
-    //   imageCropAspectRatio: '1:1',
-    //   imageResizeTargetWidth: 200,
-    //   imageResizeTargetHeight: 200,
-    //   stylePanelLayout: 'compact circle',
-    //   styleLoadIndicatorPosition: 'center bottom',
-    //   styleProgressIndicatorPosition: 'right bottom',
-    //   styleButtonRemoveItemPosition: 'left bottom',
-    //   styleButtonProcessItemPosition: 'right bottom',
-    // }).addFile(this.avt)
+    // // Get a file input reference
+    // const input = document.querySelector('.filepond');
+    // FilePond.create(input,
+    //   {
+    //     imagePreviewHeight: 170,
+    //     imageCropAspectRatio: '1:1',
+    //     imageResizeTargetWidth: 200,
+    //     imageResizeTargetHeight: 200,
+    //     stylePanelLayout: 'compact circle',
+    //     styleLoadIndicatorPosition: 'center bottom',
+    //     styleProgressIndicatorPosition: 'right bottom',
+    //     styleButtonRemoveItemPosition: 'left bottom',
+    //     styleButtonProcessItemPosition: 'right bottom',
+        
+    //   }).addFile(this.avt);
+    //   console.log(FilePond.getOptions())
     flatpickr('#rangeCalendarFlatpickr', {
       mode: 'single',
       dateFormat:'d-m-Y',
@@ -301,43 +305,35 @@ export class ProfileEditComponent implements OnInit {
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
-  // selectFile(event:any){
-  //   // registerPlugin(FilePondPluginImagePreview);
-  //   // // Get a file input reference
-  //   // const input = document.querySelector('.filepond');
-  //   // FilePond.create(input,
-  //   // {
-  //   //   imagePreviewHeight: 170,
-  //   //   imageCropAspectRatio: '1:1',
-  //   //   imageResizeTargetWidth: 200,
-  //   //   imageResizeTargetHeight: 200,
-  //   //   stylePanelLayout: 'compact circle',
-  //   //   styleLoadIndicatorPosition: 'center bottom',
-  //   //   styleProgressIndicatorPosition: 'right bottom',
-  //   //   styleButtonRemoveItemPosition: 'left bottom',
-  //   //   styleButtonProcessItemPosition: 'right bottom',
-  //   // });
-  //   // this.selectedFile = event.target.files[0]
-  //   console.log(event.target.files[0])
-  // }
+  selectFile(event:any){
+    // registerPlugin(FilePondPluginImagePreview);
+    // // Get a file input reference
+    // const input = document.querySelector('.filepond');
+    // FilePond.create(input,
+    // {
+    //   imagePreviewHeight: 170,
+    //   imageCropAspectRatio: '1:1',
+    //   imageResizeTargetWidth: 200,
+    //   imageResizeTargetHeight: 200,
+    //   stylePanelLayout: 'compact circle',
+    //   styleLoadIndicatorPosition: 'center bottom',
+    //   styleProgressIndicatorPosition: 'right bottom',
+    //   styleButtonRemoveItemPosition: 'left bottom',
+    //   styleButtonProcessItemPosition: 'right bottom',
+    // });
+    
+    // this.selectedFile = event.target.files[0]
+    console.log(FilePond.getOptions())
+  }
   pondOptions = {
-      // imagePreviewHeight: 170,
-      // imageCropAspectRatio: '1:1',
-      // imageResizeTargetWidth: 200,
-      // imageResizeTargetHeight: 200,
-      // stylePanelLayout: 'compact circle',
-      // styleLoadIndicatorPosition: 'center bottom',
-      // styleProgressIndicatorPosition: 'right bottom',
-      // styleButtonRemoveItemPosition: 'left bottom',
-      // styleButtonProcessItemPosition: 'right bottom',
-      // allowReorder: true,
       class: 'my-filepond',
       // multiple: true,
-      // labelIdle: 'Drop files here',
       acceptedFileTypes: 'image/jpeg, image/png, image/jpg',
   };
 
   pondHandleInit() {
+    registerPlugin(FilePondPluginImagePreview);
+    FilePond.create(document.querySelector('.filepond'))
     console.log('FilePond has initialised', this.myPond);
   }
   pondHandleAddFile(event: any) {
@@ -347,11 +343,13 @@ export class ProfileEditComponent implements OnInit {
   }
 
   editProfile(){
-    let s = JSON.stringify(this.editProfileForm.value)
-    let fromData = new FormData()
-    fromData.append('photo', this.selectedFile)
-    fromData.append('productJSOn',s)
-    console.log(s)
+    // console.log(this.selectedFile)
+    // let s = JSON.stringify(this.editProfileForm.value)
+    // let fromData = new FormData()
+    // fromData.append('photo', this.selectedFile)
+    // fromData.append('productJSOn',s)
+    // console.log(s)
+
   }
   async choosedProvince(event:any){
     if(event.target.value!=''){

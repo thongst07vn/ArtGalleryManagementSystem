@@ -24,6 +24,10 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
+            )
+            .ForMember(
+                des => des.Income,
+                src => src.MapFrom(src => src.Role == 2 ? src.Seller.Income : null)
             );
         CreateMap<UserDto, User>()
             .ForMember(
