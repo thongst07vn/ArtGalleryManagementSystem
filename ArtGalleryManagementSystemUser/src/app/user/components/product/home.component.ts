@@ -6,8 +6,12 @@ import { ConectActive } from '../../services/conectActive';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../entities/product.entity';
-import { NgClass } from '@angular/common';
+import { formatDate, NgClass } from '@angular/common';
 import { ProductWithSeller } from '../../entities/productwithseller.entity';
+import { UserService } from '../../services/user.service';
+import { CartItem } from '../../entities/cartitem.entity';
+import { User } from '../../entities/user.entity';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   standalone: true,
@@ -32,14 +36,16 @@ export class HomeComponent implements OnInit {
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
     private conectActive : ConectActive,
-    private productService: ProductService
+    private productService: ProductService,
+    private userService:UserService,
+    private cartService:CartService
   ){
     
   }
   ngOnInit(): void {
     this.productService.findallwithseller().then(
       res => {
-        this.productswithseller = res as ProductWithSeller[]
+        this.productswithseller = res as ProductWithSeller[];
         this.totalItems = this.productswithseller?.length || 0; // Assuming products length
         this.updateDisplayedProducts(); // Update displayed products on initial load
       },
@@ -60,7 +66,8 @@ export class HomeComponent implements OnInit {
     this.conect.addStyle("src/assets/css/dark/scrollspyNav.cs")
     this.conect.addStyle("src/plugins/css/dark/noUiSlider/custom-nouiSlider.css")
     this.conect.addStyle("src/plugins/css/dark/bootstrap-range-Slider/bootstrap-slider.css")
-
+    this.conect.addStyle("src/assets/css/light/elements/custom-pagination.css")
+    this.conect.addStyle("src/assets/css/dark/elements/custom-pagination.css")
     this.conect.addScriptAsync("src/plugins/src/noUiSlider/nouislider.min.js")
 
 
@@ -68,13 +75,66 @@ export class HomeComponent implements OnInit {
 
     // this.conect.reloadPage()
   }
-  selectValue(){
-    const inputmin = document.getElementById('input-number-min') as HTMLInputElement
-    console.log(inputmin.value);
+  selectValueLowHigh(evt:any){
+    const inputmin = document.getElementById('input-number-min') as HTMLInputElement  
     const inputmax = document.getElementById('input-number') as HTMLInputElement
-    console.log(inputmax.value);
+    this.productService.sortbypricelowhigh(evt.target.value,parseFloat(inputmin.value),parseFloat(inputmax.value)).then(
+      res => {
+        this.productswithseller = res as ProductWithSeller[];
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+        this.currentPage = 1;
+        this.updateDisplayedProducts();
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
+  selectValue(){
+    const inputmin = document.getElementById('input-number-min') as HTMLInputElement  
+    const inputmax = document.getElementById('input-number') as HTMLInputElement
 
+    this.productService.sortbyprice(parseFloat(inputmin.value),parseFloat(inputmax.value)).then(
+      res => {
+        this.productswithseller = res as ProductWithSeller[];
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+        this.currentPage = 1;
+        this.updateDisplayedProducts();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  searchProduct(evt:any){
+    if(evt.target.value == '' || evt.target.value == null){
+      this.productService.findallwithseller().then(
+        res => {
+          this.productswithseller = res as ProductWithSeller[];
+          this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+          this.currentPage = 1;
+          this.updateDisplayedProducts(); // Update displayed products on initial load
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+    else {
+      this.productService.searchByKeyword(evt.target.value).then(
+        res => {
+          this.productswithseller = res as ProductWithSeller[];
+          this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+          this.currentPage = 1;
+          this.updateDisplayedProducts();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+    
+  }
   truncate(text: string, length: number, suffix: any) {
     if (text.length > length) {
       // text = text.replace(/\s+/g, '')
@@ -122,5 +182,37 @@ export class HomeComponent implements OnInit {
   }
   next(){
     return Math.ceil(this.totalItems / this.itemsPerPage)
+  }
+
+  async addToCart(productID:any){
+    await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        if(res['result']){
+          let user = res['result'] as User;
+          const cartItem = new CartItem();
+          cartItem.cartId = user.id;
+          cartItem.productId = productID;
+          cartItem.quantity = 1;
+          cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
+          this.cartService.addToCart(cartItem).then(
+            res => {
+              if(res['result']){
+                console.log('add success');
+                window.location.href = 'user/home'
+              }
+              else{
+                console.log('add failed')
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          )
+        }
+      },
+      error=>{
+        console.log(error)
+      }
+    )
   }
 }

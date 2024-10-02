@@ -1,7 +1,7 @@
 <div class="row layout-top-spacing">
-
+    
     <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-
+        
         <div class="widget-content widget-content-area br-8">
 
             <div class="row justify-content-center">
@@ -11,9 +11,17 @@
                         <div class="splide__track">
                                 <ul class="splide__list">
                                     <li class="splide__slide">
-                                        <a href="../src/assets/img/ecommerce-1.jpg" class="glightbox">
-                                            <img alt="ecommerce" src="../src/assets/img/ecommerce-1.jpg">
-                                        </a>
+
+                                        @if(product.image.substring(0,5)=="https"){
+                                            <a class="glightbox">
+                                                <img alt="ecommerce" src="{{product.image}}">
+                                            </a>
+                                        }
+                                        @else {
+                                            <a class="glightbox">
+                                                <img alt="ecommerce" src="images/{{product.image}}">
+                                            </a>
+                                        }                                        
                                     </li>
                                     <li class="splide__slide">
                                         <a href="../src/assets/img/ecommerce-2.jpg" class="glightbox">
@@ -64,7 +72,7 @@
                         
                         <div class="post-meta-info d-flex justify-content-between">
                             <div>
-                                <h3 class="product-title mb-0">Name Pictures</h3>
+                                <h3 class="product-title mb-0">{{product.name}}</h3>
                                 <!-- lượt đánh giá -->
                                 <a href="user/product-details/#comment" class="review mb-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -90,7 +98,7 @@
 
                                 <div class="pricing">
 
-                                    <span class="discounted-price">$20</span>
+                                    <span class="discounted-price">${{product.price}}</span>
                                     <!-- <span class="regular-price">$30</span>   -->
                                     
                                 </div>
@@ -142,7 +150,7 @@
                                
 
                                 <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
-                                    <button class="btn btn-warning w-100 btn-lg" (click)="addToCart()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
+                                    <button class="btn btn-warning w-100 btn-lg icon-error" (click)="addToCart(product.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
                                 </div>
 
                                 <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">

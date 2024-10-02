@@ -3,7 +3,7 @@
     <div class="widget-content col-lg-10     col-md-3 col-sm-3 mb-4">
         <div class="search-input-group-style input-group mb-3">
             <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-            <input type="text" class="form-control" placeholder="Let's find your question in fast way" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Let's find your item in fast way"  (change)="searchProduct($event)">
         </div>
     </div>
     
@@ -46,22 +46,31 @@
     <div id="iconAccordionTwo" class="collapse" aria-labelledby="headingTwo3" data-bs-parent="#iconsAccordion">
         <div class="card-body">
             <!-- <hr> -->
-            <div class="widget-content widget-content-area-home align-center mb-4">
+            <div class="widget-content widget-content-area-home align-center mb-4" >
                 <div class="container">
                     <br/>
                     <br/>
-                    <div id="html5"></div>
+                    <div id="html5" (click)="selectValue()"></div>
                     <br/>
-                    <div class="row mt-4 mb-4">
+                    <div class="row mt-4 mb-4" >
                         <div class="col-lg-6 mb-3">
-                            <input type="number" class="form-control" min="0" max="40" step="1" id="input-number-min">
+                            <input type="number" class="form-control" min="0" max="40" step="1" id="input-number-min"(change)="selectValue()" >
                         </div>
                         <div class="col-lg-6">
-                            <input type="number" class="form-control" min="0" max="40" step="1" id="input-number">
+                            <input type="number" class="form-control" min="0" max="40" step="1" id="input-number"(change)="selectValue()" >
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <select class="form-select form-select" (change)="selectValueLowHigh($event)">
+                                <option value="-1">Select sort</option>
+                                <option value="1">Low to high</option>
+                                <option value="2">High to low</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                 </div>
-                <button type="button" (click)="selectValue()" class="btn btn-info btn-rounded mb-2">Sort</button>
             </div>
         </div>
     </div>
@@ -70,22 +79,22 @@
 <div class="row">
     @if(productsToDisplay){
         @for(product of productsToDisplay; track product){
-            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-4">
                 <div class="card style-2 mb-md-0 mb-4">
-                    <a [routerLink]="['../product-details']" appReloadPage>
-                        @if(product.image == 'noimg.jpg'){
-                            <img src="images/{{product.image}}" class="card-img-top" alt="..." height="300px">
+                    <a [routerLink]="['../product-details',{productId:product.id}]" appReloadPage>
+                        @if(product.image.substring(0,5)=="https"){
+                            <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                         @else {
-                            <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
+                            <img src="images/{{product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                     </a>
                     <div class="card-body px-0 pb-0">
                         <div class="row">
-                            <a [routerLink]="['../product-details']" class="col-8">
+                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-6">
                                 <h4 class="card-title mb-0">{{truncate(product.name,10, '...')}}</h4>
                             </a>
-                            <a [routerLink]="['../product-details']" class="col-4 text-end">
+                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-6 text-end">
                                 <h4 class="mb-1 mt-2 m-lg-6"><b>${{product.price}}</b></h4>
                             </a>
                         </div>
@@ -93,11 +102,10 @@
                         <!-- <h5 class="card-bottom-section">$95.00</h5> -->
                         <div class="media mt-4 mb-0 pt-1">
                             <a [routerLink]="['../profile']" appReloadPage>
-                                @if(product.avatar == 'noimg.jpg'){
-                                    <img src="images/{{product.avatar}}" class="card-media-image me-3" alt="">
-
-                                } @else {
+                                @if(product.avatar.substring(0,5)=="https"){
                                     <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
+                                } @else {
+                                    <img src="images/{{product.avatar}}" class="card-media-image me-3" alt="">
                                 }
                             </a>
                             <div class="media-body">
@@ -110,7 +118,7 @@
                                 <button type="button" class="btn btn-danger btn-icon btn-rounded bs-popover me-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                 </button>
-                                <button type="button" class="btn btn-info btn-icon btn-rounded bs-popover" data-bs-container="body" data-bs-trigger="hover" data-bs-content="Add To Card">
+                                <button type="button" class="btn btn-info btn-icon btn-rounded bs-popover" data-bs-container="body" data-bs-trigger="hover" data-bs-content="Add To Card" (click)="addToCart(product.id)">
                                     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 122.88 104.43"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><title>add-to-cart</title><path class="cls-1" d="M97,0A25.9,25.9,0,1,1,78.67,7.59,25.79,25.79,0,0,1,97,0ZM3.66,10.89a3.71,3.71,0,0,1,0-7.42H9.11A17.3,17.3,0,0,1,18,5.81c4.92,3.12,5.79,7.57,7,12.59H66.7a31,31,0,0,0-.9,7.33H27.14L35.5,57.19H94.77l0-.18c.72.05,1.44.08,2.17.08a31.59,31.59,0,0,0,5.46-.48l-1.29,5.18a3.62,3.62,0,0,1-3.57,2.82H37.47c1.32,4.88,2.63,7.51,4.42,8.74,2.16,1.4,5.92,1.5,12.21,1.4H96.64a3.67,3.67,0,1,1,0,7.33H54.19c-7.79.09-12.58-.09-16.44-2.63s-6-7.14-8.07-15.31h0L17.09,16.52c0-.09,0-.09-.09-.19a6.51,6.51,0,0,0-2.82-4.22A9.51,9.51,0,0,0,9,10.89H3.66ZM60.87,33.47a2.6,2.6,0,0,1,5.11,0V47.63a2.6,2.6,0,0,1-5.11,0V33.47Zm-15.3,0a2.6,2.6,0,0,1,5.11,0V47.63a2.6,2.6,0,0,1-5.11,0V33.47ZM85.66,86.4a9,9,0,1,1-9,9,9,9,0,0,1,9-9Zm-39.55,0a9,9,0,1,1-9,9,9,9,0,0,1,9-9Zm64.08-62.91V28.3a2.09,2.09,0,0,1-2.07,2.07h-6.66V37a2.08,2.08,0,0,1-2.07,2.07H94.58A2.07,2.07,0,0,1,92.51,37V30.37H85.85a2.08,2.08,0,0,1-2.07-2.07V23.49a2.07,2.07,0,0,1,2.07-2.07h6.66V14.76a2.07,2.07,0,0,1,2.07-2.07h4.81a2.08,2.08,0,0,1,2.07,2.07v6.66h6.66a2.08,2.08,0,0,1,2.07,2.07Z"/></svg>
                                 </button>
                             </div>

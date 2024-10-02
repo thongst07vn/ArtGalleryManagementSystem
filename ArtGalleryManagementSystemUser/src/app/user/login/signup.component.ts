@@ -93,7 +93,7 @@ export class SignUpComponent implements OnInit {
     this.conect.addStyle("layouts/horizontal-light-menu/css/light/plugins.css")
     this.conect.addStyle("src/assets/css/light/authentication/auth-cover.css")
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
-
+    // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     // this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
     // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
@@ -125,12 +125,12 @@ export class SignUpComponent implements OnInit {
     await this.userService.findbyemail(this.registerForm.value.email).then(
       res => {
         if(res['result']){
-          document.querySelector('.icon-error').addEventListener('click', function() {
+          
             Swal.fire({
                 icon: 'error',
                 title: 'This account is already exists',
             })
-          })
+          
         }
         else{
           let user =  JSON.stringify(this.registerForm.value)
@@ -144,12 +144,12 @@ export class SignUpComponent implements OnInit {
 
               }
               else {
-                document.querySelector('.icon-error').addEventListener('click', function() {
+                
                   Swal.fire({
                       icon: 'error',
                       title: 'Register Fail',
                   })
-                })
+                
               } 
             },
             error => {

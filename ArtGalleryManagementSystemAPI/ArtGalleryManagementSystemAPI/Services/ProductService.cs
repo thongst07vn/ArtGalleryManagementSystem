@@ -9,4 +9,9 @@ public interface ProductService
     public ProductDto FindById(int id);
 
     public List<ProductWithSellerDto> AllProductWithSeller();
+    public List<ProductWithSellerDto> SortByPrice(double min, double max);
+    public List<ProductWithSellerDto> SortByPriceLowHigh(string value, double min, double max);
+    public List<ProductWithSellerDto> SearchByKeyword(string value);
+
+
 }
