@@ -1,9 +1,9 @@
 
 <div class="row layout-top-spacing">
-    <div class="widget-content col-lg-10     col-md-3 col-sm-3 mb-4">
-        <div class="search-input-group-style input-group mb-3">
+    <div class="widget-content col-xl-10 col-lg-9 col-md-3 col-sm-3 mb-4">
+        <div class="search-input-group-style input-group mb-3" >
             <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-            <input type="text" class="form-control" placeholder="Let's find your item in fast way"  (change)="searchProduct($event)">
+            <input type="text" class="form-control" placeholder="Let's find your item in fast way" (keydown)="searchProduct($event)">
         </div>
     </div>
     
@@ -91,10 +91,10 @@
                     </a>
                     <div class="card-body px-0 pb-0">
                         <div class="row">
-                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-6">
+                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-7">
                                 <h4 class="card-title mb-0">{{truncate(product.name,10, '...')}}</h4>
                             </a>
-                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-6 text-end">
+                            <a [routerLink]="['../product-details',{productId:product.id}]" class="col-5 text-end">
                                 <h4 class="mb-1 mt-2 m-lg-6"><b>${{product.price}}</b></h4>
                             </a>
                         </div>

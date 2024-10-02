@@ -24,6 +24,7 @@ import Swal from 'sweetalert2';
 export class ProductDetailsComponent implements OnInit {
   product:Product
   addsuccess:boolean
+  userId:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
@@ -51,6 +52,11 @@ export class ProductDetailsComponent implements OnInit {
         console.log(error)
       }
     )
+    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        let user = res['result'] as User
+        this.userId = user.id
+      })
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -130,6 +136,7 @@ export class ProductDetailsComponent implements OnInit {
     )
   }
   buy(){
+    window.location.href='user/invoice'
   }
   contactUs(){
     window.location.href = '/user/contact-us'
