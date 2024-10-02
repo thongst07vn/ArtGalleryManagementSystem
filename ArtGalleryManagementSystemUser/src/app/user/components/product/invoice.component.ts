@@ -23,8 +23,7 @@ export class InvoiceComponent implements OnInit {
     this.conect.removeScript("layouts/horizontal-light-menu/app.js");
     this.conect.removeScript("src/plugins/src/splide/splide.min.js");
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js");
-    this.conect.removeScript("src/plugins/src/filepond/filepond.min.js");
-    this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js");
+
 
     // Các Script sử dụng + trong index
     this.conect.addScript("src/assets/js/apps/invoice-preview.js");

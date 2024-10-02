@@ -10,6 +10,8 @@ public interface UserService
     public bool Login(UserDto userdto);
     public List<UserDto> FindAll();
     public UserDto FindById(int id);
+    public bool EditProfile(UserDto userDto);
     public bool AddAddress(AddressDto addressdto);
+    public bool UpdateAddress(AddressDto addressdto);
 
 }

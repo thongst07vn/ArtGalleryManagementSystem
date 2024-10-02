@@ -6,7 +6,6 @@ import flatpickr from 'flatpickr';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { first } from 'rxjs';
-import { create } from 'filepond';
 import Swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
 
@@ -80,10 +79,10 @@ export class SignUpComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/mousetrap/mousetrap.min.js")
     this.conect.removeScript("layouts/horizontal-light-menu/app.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/filepond.min.js")
+
     this.conect.removeScript("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
     this.conect.removeScript("src/plugins/src/waves/waves.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
+
 
 
     this.conect.addStyle("layouts/horizontal-light-menu/css/light/loader.css")
