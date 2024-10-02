@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink,FormsModule],
@@ -40,8 +41,9 @@ export class LoginComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/authentication/auth-boxed.css")
     
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
-    this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-    this.conect.addScriptAsync("layouts/semi-dark-menu/alert.js")
+    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
+
+    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     
   }
   login(){
@@ -50,6 +52,12 @@ export class LoginComponent implements OnInit {
     if(this.username == 'admin' && this.password == '123'){
       window.location.href = '/admin/dashboard'
       // this.router.navigate(['/admin/dashboard'])
+    }
+    else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Email or Password invalid',
+      })
     }
   }
 }

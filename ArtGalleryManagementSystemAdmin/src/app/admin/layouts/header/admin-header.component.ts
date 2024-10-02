@@ -11,5 +11,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   }
 })
 export class AdminHeaderComponent {
-  
+  logOut(){
+    window.location.href = '/login'
+  }
 }
