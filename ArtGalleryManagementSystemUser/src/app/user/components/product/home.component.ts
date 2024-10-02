@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
    totalItems: number = 0;
    itemsPerPage: number = 12;
    currentPage: number = 1;
-
+  userId:any
   productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
 
   productswithseller: ProductWithSeller[]
@@ -59,6 +59,11 @@ export class HomeComponent implements OnInit {
         console.log(error)
       }
     )
+    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        let user = res['result'] as User
+        this.userId = user.id
+      })
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
