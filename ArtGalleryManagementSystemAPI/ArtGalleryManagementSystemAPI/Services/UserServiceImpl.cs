@@ -106,4 +106,16 @@ public class UserServiceImpl : UserService
         db.Addresses.Add(address);
         return db.SaveChanges() > 0;
     }
+
+    public bool EditProfile(UserDto userDto)
+    {
+        var user = mapper.Map<User>(userDto);
+        db.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
+    public bool UpdateAddress(AddressDto addressdto)
+    {
+        throw new NotImplementedException();
+    }
 }

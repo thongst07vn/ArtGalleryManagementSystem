@@ -46,23 +46,24 @@
                                 <div class="row">
                                     <div class="col-lg-11 mx-auto">
                                         <div class="row">
-                                            <div class="col-xl-2 col-lg-12 col-md-4">
-                                                <div class="profile-image  mt-4 pe-md-4">
+                                            <div class="col-xl-4 col-lg-12 col-md-4">
+                                                <div class="row">
 
                                                     <!-- // The classic file input element we'll enhance
                                                     // to a file pond, we moved the configuration
                                                     // properties to JavaScript -->
-                                                    <div class="img-uploader-content">
-                                                        <!-- <input type="file" class="filepond" name="filepond"
-                                                            accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/> -->
-                                                        <file-pond #myPond [options]="pondOptions" [files]="avt" (oninit)="pondHandleInit()" (change)="pondHandleAddFile($event)" ></file-pond>
+                                                    <div class="col-12">
+                                                        <label style="font-weight: 600;"
+                                                                    for="avatar">Avatar: </label>
+                                                        <input type="file" class="form-control-file" name="filepond" id="avatar"
+                                                            accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="text-center">
-                                                    <img src="{{avt}}" alt="" height="50px" width="50px">
-                                                </div> -->
+                                                <div class="text-center mt-4 mb-4">
+                                                    <img src="{{avt}}" style="border: 2px solid darkgrey;" class="rounded-4" height="150px" width="150px">
+                                                </div>
                                             </div>
-                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                            <div class="col-xl-8 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                 <div class="form">
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -158,7 +159,7 @@
 
                                                         <div class="col-md-12 mt-1">
                                                             <div class="form-group text-end">
-                                                                <button type="submit" class="btn btn-secondary">Save</button>
+                                                                <button type="submit" [disabled]="editProfileForm.invalid" class="btn btn-secondary">Save</button>
                                                             </div>
                                                         </div>
 

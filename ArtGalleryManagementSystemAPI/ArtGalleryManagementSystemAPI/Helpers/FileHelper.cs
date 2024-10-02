@@ -1,4 +1,4 @@
-﻿namespace DecorVistaApi.Helpers;
+﻿namespace ArtGalleryManagementSystemAPI.Helpers;
 
 public class FileHelper
 {

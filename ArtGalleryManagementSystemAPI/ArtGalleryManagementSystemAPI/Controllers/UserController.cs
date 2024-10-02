@@ -1,4 +1,5 @@
 ﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Helpers;
 using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -140,5 +141,48 @@ public class UserController : Controller
         {
             return BadRequest();
         }
+    }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("editprofile")]
+    public IActionResult updateDto(IFormFile avatar, string profile)
+    {
+        try
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "dd-MM-yyyy"
+            });
+            var userDto = JsonConvert.DeserializeObject<UserDto>(profile);
+            if (!userDto.Avatar.StartsWith("https"))
+            {
+                Uri uri = new Uri(userDto.Avatar);
+                userDto.Avatar = Path.GetFullPath(uri.AbsolutePath);
+            }
+
+            if (avatar != null && avatar.Length > 0)
+            {
+                var newFileName = FileHelper.generateFileName(avatar.FileName);
+                var path = Path.Combine(webHostEnvironment.WebRootPath, "images", newFileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    avatar.CopyTo(fileStream);
+                }
+                userDto.Avatar = newFileName;
+            }
+            //convert JSon to productDTO
+
+
+            return Ok(new
+            {
+                Result = userService.EditProfile(userDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
     }
 }

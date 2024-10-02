@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace DecorVistaApi.Helpers;
+namespace ArtGalleryManagementSystemAPI.Helpers;
 
 public class MailHelper
 {

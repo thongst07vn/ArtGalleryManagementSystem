@@ -4,28 +4,20 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import * as FilePond from 'filepond';
-// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import 'filepond-plugin-image-preview';
-import 'filepond-plugin-image-crop';
-import 'filepond-plugin-image-resize';
-import 'filepond-plugin-image-transform';
+
 import flatpickr from 'flatpickr';
 import { UserService } from '../../services/user.service';
-import { FilePondModule } from 'ngx-filepond';
-import { FilePondOptions } from 'filepond';
-// import { BrowserModule } from '@angular/platform-browser';
-import { create, registerPlugin } from 'filepond';
-import 'filepond/dist/filepond.css';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+
 import { AddressService } from '../../services/address.service';
 import { Province } from '../../entities/province.entity';
 import { District } from '../../entities/district.entity';
 import { Ward } from '../../entities/ward.entity';
+import Swal from 'sweetalert2';
+
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet,FormsModule,ReactiveFormsModule,FilePondModule],
+  imports: [RouterOutlet,FormsModule,ReactiveFormsModule],
   templateUrl: './profile-edit.component.html',
   host:{
     'collision': 'ProfileEditComponent'
@@ -56,6 +48,7 @@ export class ProfileEditComponent implements OnInit {
     private formBuilder : FormBuilder
   ){
     this.editProfileForm = this.formBuilder.group({
+      id:[''],
       username:['',
         [Validators.required]
       ],
@@ -71,7 +64,7 @@ export class ProfileEditComponent implements OnInit {
       ],
       birthOfDate:['',
         [Validators.required,
-          // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+          Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
         ]
       ],
       email:['',
@@ -95,6 +88,8 @@ export class ProfileEditComponent implements OnInit {
       gender:['',
         [Validators.required]
       ],
+      avatar:[''],
+      createdAt:['']
     },
     {
         validator: this.CheckP
@@ -113,8 +108,7 @@ export class ProfileEditComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/filepond.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
+
     this.conect.removeScript("src/plugins/src/leaflet/leaflet.js")
     this.conect.removeScript("src/assets/js/apps/invoice-list.js")
     this.conect.removeScript("src/plugins/src/table/datatable/datatables.js")
@@ -129,11 +123,10 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addStyle("src/assets/css/dark/components/carousel.css");
     this.conect.addStyle("src/assets/css/dark/components/modal.css");
 
-    this.conect.addStyle("src/plugins/src/filepond/filepond.min.css")
-    this.conect.addStyle("src/plugins/src/filepond/FilePondPluginImagePreview.min.css")
+
     this.conect.addStyle("src/plugins/src/notification/snackbar/snackbar.min.css")
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
-    this.conect.addStyle("src/plugins/css/light/filepond/custom-filepond.css")
+
     this.conect.addStyle("src/assets/css/light/components/tabs.css")
     this.conect.addStyle("src/assets/css/light/elements/alert.css")
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
@@ -141,7 +134,7 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/forms/switches.css")
     this.conect.addStyle("src/assets/css/light/components/list-group.css")
     this.conect.addStyle("src/assets/css/light/users/account-setting.css")
-    this.conect.addStyle("src/plugins/css/dark/filepond/custom-filepond.css")
+
     this.conect.addStyle("src/assets/css/dark/components/tabs.css")
     this.conect.addStyle("src/assets/css/dark/elements/alert.css")
     this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
@@ -150,14 +143,7 @@ export class ProfileEditComponent implements OnInit {
     this.conect.addStyle("src/assets/css/dark/components/list-group.css")
     this.conect.addStyle("src/assets/css/dark/users/account-setting.css")
 
-    this.conect.addScriptAsync("src/plugins/src/filepond/filepond.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginFileValidateType.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginImagePreview.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginImageCrop.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginImageResize.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
-    this.conect.addScriptAsync("src/plugins/src/filepond/filepondPluginFileValidateSize.min.js")
+
     this.conect.addScriptAsync("src/plugins/src/notification/snackbar/snackbar.min.js")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
     // this.conect.addScriptAsync("src/assets/js/users/account-settings.js")
@@ -167,29 +153,6 @@ export class ProfileEditComponent implements OnInit {
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
 
-    // FilePond.create(document.querySelector('.filepond'),
-    // {
-    //   imagePreviewHeight: 170,
-    //   imageCropAspectRatio: '1:1',
-    //   imageResizeTargetWidth: 200,
-    //   imageResizeTargetHeight: 200,
-    //   stylePanelLayout: 'compact circle',
-    //   styleLoadIndicatorPosition: 'center bottom',
-    //   styleProgressIndicatorPosition: 'right bottom',
-    //   styleButtonRemoveItemPosition: 'left bottom',
-    //   styleButtonProcessItemPosition: 'right bottom',
-    //   // files: [
-    //   //     {
-    //   //         // the server file reference
-    //   //         source : this.avt,
-    //   //         options: {
-    //   //           type: 'input',
-    //   //         }
-    //   //         // set type to limbo to tell FilePond this is a temp file
-    //   //     },
-    //   // ],
-    // })
-   
     if(this.user!=null){
       if(this.user.avatar.substring(0,5)=="https"){
         this.avt = this.user.avatar
@@ -223,6 +186,7 @@ export class ProfileEditComponent implements OnInit {
         this.gender = '3'
       }
       this.editProfileForm = this.formBuilder.group({
+          id:[this.user.id],
           username:[this.user.username,
             [Validators.required]
           ],
@@ -238,7 +202,7 @@ export class ProfileEditComponent implements OnInit {
           ],
           birthOfDate:[this.birthOfDay,
             [Validators.required,
-              // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+              Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
             ]
           ],
           email:[this.user.email,
@@ -261,7 +225,9 @@ export class ProfileEditComponent implements OnInit {
           ],
           gender:[this.gender,
             [Validators.required]
-          ]
+          ],
+          avatar:[this.user.avatar],
+          createdAt:[this.user.createdAt]
         },
         {
             validator: this.CheckP
@@ -271,25 +237,6 @@ export class ProfileEditComponent implements OnInit {
     }
     const addAddressResult = await this.addressSevice.findallprovince()
     this.provinces = addAddressResult['result'] as Province[]
-    console.log(this.provinces)
-    console.log(this.avt)
-    // registerPlugin(FilePondPluginImagePreview);
-    // // Get a file input reference
-    // const input = document.querySelector('.filepond');
-    // FilePond.create(input,
-    //   {
-    //     imagePreviewHeight: 170,
-    //     imageCropAspectRatio: '1:1',
-    //     imageResizeTargetWidth: 200,
-    //     imageResizeTargetHeight: 200,
-    //     stylePanelLayout: 'compact circle',
-    //     styleLoadIndicatorPosition: 'center bottom',
-    //     styleProgressIndicatorPosition: 'right bottom',
-    //     styleButtonRemoveItemPosition: 'left bottom',
-    //     styleButtonProcessItemPosition: 'right bottom',
-        
-    //   }).addFile(this.avt);
-    //   console.log(FilePond.getOptions())
     flatpickr('#rangeCalendarFlatpickr', {
       mode: 'single',
       dateFormat:'d-m-Y',
@@ -306,50 +253,43 @@ export class ProfileEditComponent implements OnInit {
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
   selectFile(event:any){
-    // registerPlugin(FilePondPluginImagePreview);
-    // // Get a file input reference
-    // const input = document.querySelector('.filepond');
-    // FilePond.create(input,
-    // {
-    //   imagePreviewHeight: 170,
-    //   imageCropAspectRatio: '1:1',
-    //   imageResizeTargetWidth: 200,
-    //   imageResizeTargetHeight: 200,
-    //   stylePanelLayout: 'compact circle',
-    //   styleLoadIndicatorPosition: 'center bottom',
-    //   styleProgressIndicatorPosition: 'right bottom',
-    //   styleButtonRemoveItemPosition: 'left bottom',
-    //   styleButtonProcessItemPosition: 'right bottom',
-    // });
-    
-    // this.selectedFile = event.target.files[0]
-    console.log(FilePond.getOptions())
+    this.selectedFile = event.target.files[0];
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      const reader = new FileReader();
+      reader.onload  = (e: any) => {
+        this.avt = e.target.result;
+      };
+      reader.readAsDataURL(target.files[0]);
+    } else {
+      this.avt = null;
+    }
   }
-  pondOptions = {
-      class: 'my-filepond',
-      // multiple: true,
-      acceptedFileTypes: 'image/jpeg, image/png, image/jpg',
-  };
-
-  pondHandleInit() {
-    registerPlugin(FilePondPluginImagePreview);
-    FilePond.create(document.querySelector('.filepond'))
-    console.log('FilePond has initialised', this.myPond);
-  }
-  pondHandleAddFile(event: any) {
-    this.selectedFile = event.target.files[0]
-    
-    console.log('A file was added', event.target.files[0]);
-  }
-
   editProfile(){
-    // console.log(this.selectedFile)
-    // let s = JSON.stringify(this.editProfileForm.value)
-    // let fromData = new FormData()
-    // fromData.append('photo', this.selectedFile)
-    // fromData.append('productJSOn',s)
-    // console.log(s)
-
+    let u =JSON.stringify(this.editProfileForm.value)
+    console.log(u)
+    let fromData = new FormData()
+    fromData.append('avatar', this.selectedFile)
+    fromData.append('profile',u)
+    this.userService.editprofile(fromData).then(
+      res=>{
+          if(res['result']){
+            window.location.href = '/user/profile'
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Edit Profile Fail',
+            })
+          }
+      },
+      ()=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Edit Profile Fail',
+        })
+      }
+    )
+    console.log(this.selectedFile)
   }
   async choosedProvince(event:any){
     if(event.target.value!=''){

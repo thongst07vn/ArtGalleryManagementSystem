@@ -23,6 +23,9 @@ export class UserService{
     async findbyid(userid: any){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'user/findbyid/'+userid));
     }
+    async editprofile(formData: any){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'user/editprofile',formData));
+    }
     async login(email: string, password:string){
         return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'user/login/',{email,password}));
     }

@@ -65,8 +65,7 @@ export class ProductDetailsComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/filepond.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
+
     this.conect.removeScript("src/plugins/src/leaflet/leaflet.js")
     this.conect.removeScript("src/assets/js/apps/invoice-list.js")
     this.conect.removeScript("src/plugins/src/table/datatable/datatables.js")

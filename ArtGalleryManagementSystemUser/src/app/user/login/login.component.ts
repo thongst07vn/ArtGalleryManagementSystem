@@ -8,7 +8,6 @@ import * as JSBase64 from 'js-base64'
 import { HttpClient } from '@angular/common/http';  
 import Swal from 'sweetalert2'
 import { UserService } from '../services/user.service';
-import { create } from 'filepond';
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
@@ -50,10 +49,8 @@ export class LoginComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/mousetrap/mousetrap.min.js")
     this.conect.removeScript("layouts/horizontal-light-menu/app.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/filepond.min.js")
     this.conect.removeScript("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
     this.conect.removeScript("src/plugins/src/waves/waves.min.js")
-    this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
 
 
     this.conect.addStyle("layouts/horizontal-light-menu/css/light/loader.css")
