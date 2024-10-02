@@ -42,14 +42,16 @@
                                     <div class="usr-img-frame me-2 rounded-circle">
                                         @if(product.avatar.substring(0,5)=="https"){
                                             <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}">
+                         
                                         }
                                         @else {
                                             <img alt="avatar" class="img-fluid rounded-circle" src="images/{{product.avatar}}">
-                                        }
-                                        
+                                            
+                                        }                                        
                                     </div>
+                                    <p class="inv-amount mx-2">{{product.username}}</p>
                                 </div>
-                                <span class="inv-amount">{{product.username}}</span>
+                                
                                 
                             </td>
 

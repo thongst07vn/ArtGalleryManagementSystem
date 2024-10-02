@@ -89,6 +89,12 @@ export class LoginComponent implements OnInit {
                 sessionStorage.setItem("loggedInUser",JSON.stringify([this.username]))
                 window.location.href = 'user/home'
               }
+              else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Email or Password invalid',
+              })
+              }
             }
           )
         }

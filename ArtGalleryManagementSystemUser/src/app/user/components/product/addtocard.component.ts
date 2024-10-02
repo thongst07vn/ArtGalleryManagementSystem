@@ -33,25 +33,26 @@ export class AddtoCardComponent implements OnInit, AfterViewInit {
       if (cartResult['result']) {
         this.cartItems = []; // Initialize cartItems array
         for(let i=0; i<cartResult['result'].length; i++){
-          const product = await this.productService.findProductId(cartResult['result'][i].productId);
+          const product = await this.productService.findProductIdWithSeller(cartResult['result'][i].productId);
           this.cartItems.push({
             id : product['result'].id,
-            name:product['result'].name,
-            brand:product['result'].brand,
-            description:product['result'].description,
+            name:product['result'].name,           
             categoryId:product['result'].categoryId,
             image:product['result'].image,
             price:product['result'].price,
             quantity: cartResult['result'][i].quantity,
             cardid : cartResult['result'][i].id,
+            avatar: product['result'].avatar,
+            username: product['result'].username,
             selectedindex: i,
             selected:false
         });
         }
-        console.log(this.cartItems)
+        console.log(this.cartItems[0])
       }
+      console.log(this.cartItems[0])
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
 
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
@@ -83,14 +84,51 @@ export class AddtoCardComponent implements OnInit, AfterViewInit {
     console.log(deleteButton)
     if (deleteButton) {
       deleteButton.addEventListener('click', () => {
-        this.deleteAll();
+        // this.deleteAll();
       });
     }
   }
-  deleteAll(){
-    console.log('CCCCCCCCC')
+  formattedPrice(price: { toString: () => string; }){
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
-  buy(){
-    window.location.href='user/invoice'
+  truncate(text: string, length: number, suffix: any) {
+    if (text.length > length) {
+      // text = text.replace(/\s+/g, '')
+      return text.substring(0, length) + suffix;
+    }
+    return text; 
+  }
+  DeleteItem(id:any){
+    console.log(id)
+    // this.cartService.deleteItem(id);
+    // window.location.href = 'user/add-to-cart'
+
+  }
+  ChangeSelectedValueAll(evt:any){
+    const isChecked = evt.target.checked
+    const allCheckedBoxes = Array.from(document.querySelectorAll(".productchecked")) as HTMLInputElement[]
+    for(let i=0; i< this.cartItems.length; i++){
+      this.cartItems[i].selected = isChecked
+      allCheckedBoxes[i].checked = isChecked
+    }
+  }
+  ChangeSelectedValue(selectedindex: number,evt:any){
+    const isChecked = evt.target.checked;
+      this.cartItems[selectedindex].selected = isChecked
+  }
+  BuyItems(){
+    this.buyItems=[]
+    sessionStorage.setItem('buyItems',JSON.stringify(this.buyItems))
+
+    for(let i = 0; i < this.cartItems.length; i++){
+      if(this.cartItems[i].selected){
+        this.buyItems.push(this.cartItems[i]);
+      }
+    }
+    if(this.buyItems.length >0){
+      sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
+      // console.log(sessionStorage.getItem('buyItems'));
+      window.location.href = '../user/invoice'
+    }
   }
 }
