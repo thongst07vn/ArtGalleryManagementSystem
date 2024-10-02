@@ -93,21 +93,21 @@ export class LoginComponent implements OnInit {
           )
         }
         else{
-          document.querySelector('.icon-error').addEventListener('click', function() {
+          
             Swal.fire({
                 icon: 'error',
                 title: 'Email or Password invalid',
             })
-          })
+          
         }
       },
       err => {
-        document.querySelector('.icon-error').addEventListener('click', function() {
+        
           Swal.fire({
               icon: 'error',
               title: 'Email or Password invalid',
           })
-        })
+        
       }
     )
   }
@@ -159,7 +159,10 @@ export class LoginComponent implements OnInit {
                       sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
                       window.location.href = 'user/home' 
                     } else {
-                        console.log('failed');
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Email or Password invalid',
+                    })
                     }
                 },
                 error => {

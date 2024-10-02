@@ -112,6 +112,27 @@ public class MappingDto : Profile
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
 
+
+        CreateMap<CartItem, CartItemDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(desc => desc.UpdatedAt != null ? ((DateTime)desc.UpdatedAt).ToString("dd-MM-yyyy") : null)
+            );
+        CreateMap<CartItemDto, CartItem>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(src => src.UpdatedAt != null ? DateTime.ParseExact(src.UpdatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+
+
         CreateMap<Product, ProductWithSellerDto>()
             .ForMember(
                 des => des.CreatedAt,

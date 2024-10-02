@@ -3,12 +3,13 @@
 var html5Slider = document.getElementById('html5');
 
 noUiSlider.create(html5Slider, {
-    start: [ 0, 30 ],
+    start: [ 0, 999999999999 ],
     connect: true,
     tooltips: true,
     range: {
         'min': 0,
-        'max': 40
+        'max': 50000
+                
     }
 });
 

@@ -1,5 +1,7 @@
 
-﻿using ArtGalleryManagementSystemAPI.Services;
+﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Services;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
@@ -59,4 +61,64 @@ public class HomeController : Controller
             return BadRequest();
         }
     }
+
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [HttpPost("sortbyprice")]
+    public IActionResult SortByPrice([FromBody] PriceRangeDto values)
+    {
+
+        try
+        {
+            return Ok(productService.SortByPrice(values.min, values.max));
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [HttpPost("sortbypricelowhigh")]
+    public IActionResult SortByPriceLowHigh([FromBody] PriceRangeDto values)
+    {
+
+        try
+        {
+            return Ok(productService.SortByPriceLowHigh(values.value, values.min, values.max));
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
+    [HttpGet("searchbykeyword/{value}")]
+    public IActionResult SearchByKeyword(string value)
+    {
+
+        try
+        {
+            if (value != "" || value != null)
+            {
+                return Ok(productService.SearchByKeyword(value.ToLower()));
+
+            }
+            else
+            {
+                return Ok(productService.AllProductWithSeller());
+
+            }
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }
+
