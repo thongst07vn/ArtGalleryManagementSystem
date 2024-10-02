@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ArtGalleryManagementSystemAPI.Models;
+﻿namespace ArtGalleryManagementSystemAPI.Models;
 
 public partial class CartItem
 {
@@ -13,7 +10,7 @@ public partial class CartItem
 
     public int? Quantity { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
