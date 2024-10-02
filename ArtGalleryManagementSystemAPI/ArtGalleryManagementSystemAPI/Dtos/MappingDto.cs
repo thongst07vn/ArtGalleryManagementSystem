@@ -12,7 +12,6 @@ public class MappingDto : Profile
         CreateMap<Province, ProvinceDto>().ReverseMap();
         CreateMap<District, DistrictDto>().ReverseMap();
         CreateMap<Ward, WardDto>().ReverseMap();
-
         CreateMap<User, UserDto>()
             .ForMember(
                 des => des.BirthOfDate,
@@ -113,6 +112,7 @@ public class MappingDto : Profile
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
 
+
         CreateMap<CartItem, CartItemDto>()
             .ForMember(
                 des => des.CreatedAt,
@@ -133,7 +133,6 @@ public class MappingDto : Profile
             );
 
 
-        //Products with sellers
         CreateMap<Product, ProductWithSellerDto>()
             .ForMember(
                 des => des.CreatedAt,
@@ -151,7 +150,6 @@ public class MappingDto : Profile
                 des => des.Avatar,
                 src => src.MapFrom(desc => desc.Seller.IdNavigation.Avatar)
             );
-
     }
 }
 

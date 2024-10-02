@@ -1,3 +1,4 @@
+
 ﻿namespace ArtGalleryManagementSystemAPI.Dtos;
 
 public class ProductDto
@@ -21,3 +22,4 @@ public class ProductDto
 
     public string DeletedAt { get; set; }
 }
+
