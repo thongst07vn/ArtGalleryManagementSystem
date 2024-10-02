@@ -1,5 +1,5 @@
 
-﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Models;
 using AutoMapper;
 
@@ -30,6 +30,11 @@ public class ProductServiceImpl : ProductService
         return mapper.Map<ProductDto>(db.Products.Find(id));
     }
 
+    public ProductWithSellerDto FindByIdWithSeller(int id)
+    {
+        return mapper.Map<ProductWithSellerDto>(db.Products.Find(id));
+
+    }
     public List<ProductWithSellerDto> SearchByKeyword(string value)
     {
         return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.Name.ToLower().Contains(value) || p.Seller.IdNavigation.Username.ToLower().Contains(value)).ToList());

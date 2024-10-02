@@ -1,5 +1,5 @@
 
-﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Services;
 
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +55,24 @@ public class HomeController : Controller
         try
         {
             return Ok(productService.FindById(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
+    [HttpGet("findproductbyidwithseller/{id}")]
+    public IActionResult FindProductByIdWithSeller(int id)
+    {
+
+        try
+        {
+            return Ok(new
+            {
+                result = productService.FindByIdWithSeller(id)
+            });
         }
         catch
         {
