@@ -18,7 +18,7 @@ public class UserDto
 
     public string? Password { get; set; }
     public int? Gender { get; set; }
-
+    public int? Income { get; set; }
     public string BirthOfDate { get; set; }
 
     public string? PhoneNumber { get; set; }

@@ -19,7 +19,8 @@ export class SidbarComponent implements OnInit {
     aboutUs:'',
     product:'',
     profile:'',
-    auction:''
+    auction:'',
+    postArt:''
   };
   ariaUser:boolean
   ariaAuction:boolean

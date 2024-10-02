@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
+import { AdminService } from '../../services/admin.service';
+import { User } from '../../entities/user.entity';
 
 @Component({
   standalone: true,
@@ -12,13 +14,15 @@ import { ConectActive } from '../../services/conectActive';
   }
 })
 export class UserListComponent {
+  users:any
   constructor(
     private conect : Conect,
     private activatedRoute :ActivatedRoute,
-    private conectActive : ConectActive
+    private conectActive : ConectActive,
+    private adminService: AdminService
   ){}
 
-  ngOnInit(): void {
+ngOnInit(): void {
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -78,6 +82,11 @@ export class UserListComponent {
     this.conect.addScript("src/plugins/src/table/datatable/button-ext/buttons.print.min.js")
     this.conect.addScript("src/plugins/src/table/datatable/custom_miscellaneous.js")
     // this.conect.reloadPage()
-
-}
+    this.adminService.findalluser().then(
+      res=>{
+        this.users = res['result'] as User[]
+        console.log(this.users)
+      }
+    )
+  }
 }
