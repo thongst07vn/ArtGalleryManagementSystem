@@ -30,4 +30,7 @@ export class ProductService{
     async findProductId(productId:number){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findproductbyid/'+productId))
     }
+    async findProductIdWithSeller(productId:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findproductbyidwithseller/'+productId))
+    }
 }
