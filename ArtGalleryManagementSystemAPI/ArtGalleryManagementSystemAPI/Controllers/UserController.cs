@@ -155,11 +155,11 @@ public class UserController : Controller
                 DateTimeFormat = "dd-MM-yyyy"
             });
             var userDto = JsonConvert.DeserializeObject<UserDto>(profile);
-            if (!userDto.Avatar.StartsWith("https"))
-            {
-                Uri uri = new Uri(userDto.Avatar);
-                userDto.Avatar = Path.GetFullPath(uri.AbsolutePath);
-            }
+            //if (!userDto.Avatar.StartsWith("https"))
+            //{
+            //    Uri uri = new Uri(userDto.Avatar);
+            //    userDto.Avatar = Path.GetFullPath(uri.AbsolutePath);
+            //}
 
             if (avatar != null && avatar.Length > 0)
             {

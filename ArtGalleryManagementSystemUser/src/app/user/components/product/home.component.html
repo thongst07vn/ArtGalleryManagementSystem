@@ -86,7 +86,7 @@
                             <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                         @else {
-                            <img src="images/{{product.image}}" class="card-img-top" alt="..." height="300px">
+                            <img src="{{imageUrl+product.image}}" class="card-img-top" alt="..." height="300px">
                         }
                     </a>
                     <div class="card-body px-0 pb-0">
@@ -106,7 +106,7 @@
                                     <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
                                 }
                                 @else {
-                                    <img src="images/{{product.avatar}}" class="card-media-image me-3" alt="">
+                                    <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">
                                 }
                             </a>
                             <div class="media-body">

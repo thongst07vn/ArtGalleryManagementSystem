@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 import { CartItem } from '../../entities/cartitem.entity';
 import { User } from '../../entities/user.entity';
 import { CartService } from '../../services/cart.service';
+import { BaseURLService } from '../../services/baseURL.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
 
   // min:any
   max:any
+  imageUrl:any
   @ViewChild('input-number-min') min: ElementRef;
   constructor(
     private conect : Conect,
@@ -42,12 +44,13 @@ export class HomeComponent implements OnInit {
     private conectActive : ConectActive,
     private productService: ProductService,
     private userService:UserService,
-    private cartService:CartService
+    private cartService:CartService,
+    private baseURLService:BaseURLService
   ){
     
   }
   ngOnInit(): void {
-
+    this.imageUrl=this.baseURLService.IMAGE_URL
     this.productService.findallwithseller().then(
       res => {
         this.productswithseller = res as ProductWithSeller[];
