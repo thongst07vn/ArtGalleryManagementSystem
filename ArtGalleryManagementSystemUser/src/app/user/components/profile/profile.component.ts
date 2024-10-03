@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { UserService } from '../../services/user.service';
+import { BaseURLService } from '../../services/baseURL.service';
 
 @Component({
   standalone: true,
@@ -16,15 +17,18 @@ import { UserService } from '../../services/user.service';
 export class ProfileComponent implements OnInit {
   user: any
   seller:any
+  imageUrl:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
     private conectActive : ConectActive,
-    private userService:UserService
+    private userService:UserService,
+    private baseURLService : BaseURLService
   ){
     // this.conect.reloadPage()
   }
   async ngOnInit(){
+    this.imageUrl = this.baseURLService.IMAGE_URL
     
     this.activatedRoute.data.subscribe(
       params => {

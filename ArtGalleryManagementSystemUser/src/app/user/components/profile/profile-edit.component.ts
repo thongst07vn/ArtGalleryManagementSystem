@@ -13,6 +13,7 @@ import { Province } from '../../entities/province.entity';
 import { District } from '../../entities/district.entity';
 import { Ward } from '../../entities/ward.entity';
 import Swal from 'sweetalert2';
+import { BaseURLService } from '../../services/baseURL.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class ProfileEditComponent implements OnInit {
   provinces:any
   districts:any
   wards:any
+  imageUrl:any
   @ViewChild('myPond') myPond: any;
   constructor(
     private conect : Conect,
@@ -45,7 +47,9 @@ export class ProfileEditComponent implements OnInit {
     private conectActive : ConectActive,
     private userService : UserService,
     private addressSevice: AddressService,
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    private baseURLService : BaseURLService
+
   ){
     this.editProfileForm = this.formBuilder.group({
       id:[''],
@@ -100,6 +104,7 @@ export class ProfileEditComponent implements OnInit {
     })
   }
   async ngOnInit() {
+    this.imageUrl = this.baseURLService.IMAGE_URL
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -157,7 +162,7 @@ export class ProfileEditComponent implements OnInit {
       if(this.user.avatar.substring(0,5)=="https"){
         this.avt = this.user.avatar
       }else{
-        this.avt = 'images/'+this.user.avatar
+        this.avt = this.imageUrl+this.user.avatar
       }
       if(this.user.birthOfDate!=null){
         this.birthOfDay = this.user.birthOfDate

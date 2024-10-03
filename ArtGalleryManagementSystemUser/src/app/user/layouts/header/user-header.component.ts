@@ -4,6 +4,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { UserService } from '../../services/user.service';
 import { CartService } from '../../services/cart.service';
+import { BaseURLService } from '../../services/baseURL.service';
 
 @Component({
   selector: 'user-header',
@@ -18,13 +19,15 @@ export class UserHeaderComponent implements OnInit {
   user:any
   theme:boolean
   cartItems :any
-
+  imageUrl:any
   constructor(
     private conect : Conect,
     private userService : UserService,
-    private cartService : CartService
+    private cartService : CartService,
+    private baseURLService : BaseURLService
   ){}
   async ngOnInit() {
+    this.imageUrl = this.baseURLService.IMAGE_URL
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
     if(this.user != null){

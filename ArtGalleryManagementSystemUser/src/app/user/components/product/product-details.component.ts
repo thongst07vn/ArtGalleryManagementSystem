@@ -12,6 +12,7 @@ import { CartItem } from '../../entities/cartitem.entity';
 import { formatDate } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import Swal from 'sweetalert2';
+import { BaseURLService } from '../../services/baseURL.service';
 
 @Component({
   standalone: true,
@@ -25,17 +26,20 @@ export class ProductDetailsComponent implements OnInit {
   product:Product
   addsuccess:boolean
   userId:any
+  imageUrl:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
     private conectActive : ConectActive,
     private productService: ProductService,
     private userService: UserService,
-    private cartService: CartService
+    private cartService: CartService,
+    private baseURLService:BaseURLService
   ){
     
   }
   ngOnInit(): void {
+    this.imageUrl=this.baseURLService.IMAGE_URL
     this.addsuccess = false;
     this.activatedRoute.paramMap.subscribe(
       params => {
