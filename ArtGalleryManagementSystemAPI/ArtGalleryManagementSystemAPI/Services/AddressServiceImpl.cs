@@ -14,9 +14,21 @@ public class AddressServiceImpl : AddressService
         mapper = _mapper;
     }
 
+    public bool AddAddress(AddressDto addressDto)
+    {
+        var address = mapper.Map<Address>(addressDto);
+        db.Addresses.Add(address);
+        return db.SaveChanges() > 0;
+    }
+
+    public List<AddressDto> FindAllAddress(int userId)
+    {
+        return mapper.Map<List<AddressDto>>(db.Addresses.Where(a => a.UserId == userId).ToList());
+    }
+
     public List<ProvinceDto> FindAllProvince()
     {
-        return mapper.Map<List<ProvinceDto>>(db.Provinces).ToList();
+        return mapper.Map<List<ProvinceDto>>(db.Provinces.ToList());
 
     }
 

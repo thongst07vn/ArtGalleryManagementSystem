@@ -1,5 +1,7 @@
-﻿using ArtGalleryManagementSystemAPI.Services;
+﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/address")]
@@ -12,6 +14,42 @@ public class AddressController : Controller
         addressService = _addressService;
         webHostEnvironment = _webHostEnvironment;
 
+    }
+    [Produces("application/json")]
+    [HttpGet("findalladdress/{userId}")]
+    public IActionResult FindAlladdress(int userId)
+    {
+        try
+        {
+
+            return Ok(new
+            {
+                result = addressService.FindAllAddress(userId)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Consumes("multipart/form-data")]
+    [Produces("application/json")]
+    [HttpPost("addAddress")]
+    public IActionResult Addaddress(string addressInfor)
+    {
+        try
+        {
+            var addressDto = JsonConvert.DeserializeObject<AddressDto>(addressInfor);
+
+            return Ok(new
+            {
+                result = addressService.AddAddress(addressDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
     }
     [Produces("application/json")]
     [HttpGet("findallprovince")]
