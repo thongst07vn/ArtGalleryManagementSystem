@@ -8,9 +8,203 @@
             </ol> -->
         </nav>
     </div>
+    <div class="row">
+        <div class="col-10 seperator-header">
+            <h3 style="font-size: 25px; font-weight: bold; letter-spacing: 2px; font-family: 'Arial', sans-serif;">SELLER LIST</h3>
+        </div>
+        <div class="col-2 text-end">
+            <button class="btn btn-info add-address" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add Seller</button>
+        </div>
+    </div>
+    
 
-    <div class="seperator-header">
-        <h3 style="font-size: 25px; font-weight: bold; letter-spacing: 2px; font-family: 'Arial', sans-serif;">BUYER LIST</h3>
+
+    <!-- Modal Structure (ADD USER)-->
+    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAddressModalLabel">Add Seller</h5>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="padding: 30px;">
+                    <form class="row" [formGroup]="addSellerForm" (ngSubmit)="Add()">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Username: </label>
+                                <input type="text" class="form-control add-billing-address-input" formControlName="username">
+                                @if(addSellerForm.get('username').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['username'])){
+                                            <li style="padding-top: 5px; color: red;">Username is blank</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6">
+                            <div class="">
+                                <label class="form-label">First Name: </label>
+                                <input type="text" class="form-control add-billing-address-input" formControlName="firstName">
+                                @if(addSellerForm.get('firstName').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['firstName'])){
+                                            <li style="padding-top: 5px; color: red;">First Name is blank</li>
+                                        }
+                                        @else if(addSellerForm.hasError('pattern',['firstName'])){
+                                            <li style="padding-top: 5px; color: red;">First Name invalid</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Last Name: </label>
+                                <input type="text" class="form-control add-billing-address-input" formControlName="lastName">
+                                @if(addSellerForm.get('lastName').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['lastName'])){
+                                            <li style="padding-top: 5px; color: red;">Last Name is blank</li>
+                                        }
+                                        @else if(addSellerForm.hasError('pattern',['lastName'])){
+                                            <li style="padding-top: 5px; color: red;">Last Name invalid</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div> -->
+
+                       
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Email: </label>
+                                <input type="email" class="form-control" formControlName="email">
+                                @if(addSellerForm.get('email').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['email'])){
+                                            <li style="padding-top: 5px; color: red;">Email is blank</li>
+                                        }
+                                        @if(addSellerForm.hasError('email',['email'])){
+                                            <li style="padding-top: 5px; color: red;">Email invalid</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Password: </label>
+                                <input type="password" class="form-control" formControlName="password">
+                                @if(addSellerForm.get('password').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['password'])){
+                                            <li style="padding-top: 5px; color: red;">password is blank</li>
+                                        }
+                                        @else if(addSellerForm.hasError('pattern',['password'])){
+                                            <li style="padding-top: 5px; color: red;">password does not meet the require</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password: </label>
+                                <input type="password" class="form-control" formControlName="rePassword">
+                                @if(addSellerForm.get('rePassword').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['rePassword'])){
+                                            <li style="padding-top: 5px; color: red;">Confirm password is blank</li>
+                                        }
+                                        @else if(addSellerForm?.errors?.['mismatch']){
+                                            <li style="padding-top: 5px; color: red;">Wrong confirm password</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="rangeCalendarFlatpickr">Day of Birth: </label>
+                                <input id="rangeCalendarFlatpickr" class="form-control" type="text" readonly="readonly" formControlName="birthOfDate">
+                                @if(addSellerForm.get('birthOfDate').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['birthOfDate'])){
+                                            <li style="padding-top: 5px; color: red;">Day of Birth is blank</li>
+                                        }
+                                        @else if(addSellerForm.hasError('pattern',['birthOfDate'])){
+                                            <li style="padding-top: 5px; color: red;">Day of Birth invalid</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="gender">Gender: </label>
+                                <select class="form-control" id="gender" name="gender" formControlName="gender">
+                                    <option value="">Choose your gender ....</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Others</option>
+                                </select>
+                                @if(addSellerForm.get('gender').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['gender'])){
+                                            <li style="padding-top: 5px; color: red;">Gender is blank</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number: </label>
+                                <input type="text" class="form-control" formControlName="phoneNumber">
+                                @if(addSellerForm.get('phoneNumber').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['phoneNumber'])){
+                                            <li style="padding-top: 5px; color: red;">Phone Number is blank</li>
+                                        }
+                                        @else if(addSellerForm.hasError('pattern',['phoneNumber'])){
+                                            <li style="padding-top: 5px; color: red;">Phone Number invalid</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="role">Role: </label>
+                                <select class="form-control" id="role" name="role" formControlName="role">
+                                    <option value="">Choose your role ....</option>
+                                    <option value="1">Buyer</option>
+                                    <option value="2">Seller</option>
+                                </select>
+                                @if(addSellerForm.get('role').touched){
+                                    <ul>
+                                        @if(addSellerForm.hasError('required',['role'])){
+                                            <li style="padding-top: 5px; color: red;">Role is blank</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-secondary w-100 icon-error" [disabled]="addSellerForm.invalid">Add</button>
+                            </div>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -51,12 +245,12 @@
                                     <td>{{seller.username}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <div class="usr-img-frame mr-2 rounded-circle">
+                                            <div class="">
                                                 @if(seller.avatar.substring(0,5)=="https"){
-                                                    <img alt="avatar" src="{{seller.avatar}}" referrerpolicy="no-referrer" class="img-fluid rounded-circle">
+                                                    <img alt="avatar" src="{{seller.avatar}}" referrerpolicy="no-referrer" class="rounded-circle" width="40px" height="40px">
                                                 }
                                                 @else{
-                                                    <img src="images/{{seller.avatar}}"  class="img-fluid rounded-circle">
+                                                    <img src="{{imageUrl+seller.avatar}}"  class="rounded-circle" width="40px" height="40px">
                                                 }
                                             </div>
                                         </div>
@@ -84,7 +278,7 @@
                                     }
                                     <td>
                                         <div class="btn-group">
-                                            <a class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                            <a (click)="delete(seller.id)" class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -95,6 +289,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 }

@@ -14,15 +14,18 @@ export class AdminService{
     // async siginWithGG(formData:FormData){
     //     return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'user/siginwithgg',formData))
     // }
-    // async register(formData: FormData){
-    //     return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'user/register', formData));
-    // }
+    async createuserseller(formData: FormData){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'admin/createuserseller', formData));
+    }
+    async deleteuserseller(formData: FormData){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'admin/delete', formData));
+    }
     // async findbyemail(email: string){
     //     return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'user/findbyemail/'+email));
     // }
-    // async findbyid(userid: any){
-    //     return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'user/findbyid/'+userid));
-    // }
+    async findbyid(userid: any){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'user/findbyid/'+userid));
+    }
     // async login(email: string, password:string){
     //     return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'user/login/',{email,password}));
     // }

@@ -80,38 +80,42 @@ export class LoginComponent implements OnInit {
     this.userService.findbyemail(this.username).then(
       res => {
         if(res['result']){
-          this.userService.login(this.username,this.password).then(
-            res => {
-              if(res['result']){
-                sessionStorage.setItem("loggedInUser",JSON.stringify([this.username]))
-                window.location.href = 'user/home'
+          if(res['result'].deletedAt==null){
+            this.userService.login(this.username,this.password).then(
+              res => {
+                if(res['result']){
+                  sessionStorage.setItem("loggedInUser",JSON.stringify([this.username]))
+                  window.location.href = 'user/home'
+                }
+                else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Your Account Has Been Deleted',
+                })
+                }
               }
-              else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Email or Password invalid',
-              })
-              }
-            }
-          )
+            )
+          }
+          else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Email or Password invalid',
+            })
+          }
         }
         else{
-          
-            Swal.fire({
-                icon: 'error',
-                title: 'Email or Password invalid',
-            })
-          
-        }
-      },
-      err => {
-        
           Swal.fire({
               icon: 'error',
               title: 'Email or Password invalid',
           })
-        
-      }
+        }
+      },
+      () => {
+          Swal.fire({
+              icon: 'error',
+              title: 'Email or Password invalid',
+          })
+        }
     )
   }
   async downloadImage(url:string) {
@@ -148,8 +152,17 @@ export class LoginComponent implements OnInit {
     this.userService.findbyemail(this.account.email).then(
       res=>{
         if(res['result']){
-          sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
-          window.location.href = 'user/home'
+          if(res['result'].deletedAt==null){
+            sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
+            window.location.href = 'user/home'
+            
+          }
+          else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Your Account Has Been Deleted',
+            })
+          }
         }else{
               let s = JSON.stringify(this.account);
               let formData = new FormData();

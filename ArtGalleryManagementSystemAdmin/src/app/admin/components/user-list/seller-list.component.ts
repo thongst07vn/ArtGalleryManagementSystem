@@ -4,10 +4,14 @@ import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
 import { AdminService } from '../../services/admin.service';
 import { User } from '../../entities/user.entity';
+import { BaseURLService } from '../../services/baseURL.service';
+import Swal from 'sweetalert2';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet,RouterLink],
+  imports: [RouterOutlet,RouterLink,ReactiveFormsModule],
   templateUrl: './seller-list.component.html',
   host:{
     'collision': 'SellerListComponent'
@@ -15,14 +19,65 @@ import { User } from '../../entities/user.entity';
 })
 export class SellerListComponent {
   sellers:any
+  imageUrl:any
+  addSellerForm:FormGroup
   constructor(
     private conect : Conect,
     private activatedRoute :ActivatedRoute,
     private conectActive : ConectActive,
-    private adminService: AdminService
-  ){}
+    private adminService: AdminService,
+    private baseURL : BaseURLService,
+    private formBuilder: FormBuilder
+  ){
+    this.addSellerForm = this.formBuilder.group({
+      username:['',
+        [Validators.required]
+      ],
+      // firstName:['',
+      //   [Validators.required,
+      //     Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+      //   ]
+      // ],
+      // lastName:['',
+      //   [Validators.required,
+      //     Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
+      //   ]
+      // ],
+      // birthOfDate:['',
+      //   [Validators.required,
+      //     // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+      //   ]
+      // ],
+      email:['',
+        [Validators.required,
+        Validators.email]
+      ],
+      password:['',
+        [Validators.required,
+        Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+      ],
+      rePassword:['',[
+        Validators.required
+      ]],
+      phoneNumber:['',
+        [Validators.required,
+        Validators.pattern(/^0\d{9}$/)]
+      ],
+      role:[2],
+      gender:['',
+        [Validators.required]
+      ],
+      avatar:['noimg.jpg'],
+      createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')],
+    },
+    {
+        validator: this.CheckP
+    }
+    )
+  }
 
   ngOnInit(): void {
+    this.imageUrl=this.baseURL.IMAGE_URL
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -65,7 +120,11 @@ export class SellerListComponent {
     this.conect.addStyle("src/plugins/css/light/table/datatable/custom_dt_miscellaneous.css")
     this.conect.addStyle("src/plugins/css/dark/table/datatable/dt-global_style.css")
     this.conect.addStyle("src/plugins/css/dark/table/datatable/custom_dt_miscellaneous.css")
-    
+    this.conect.addStyle("src/assets/css/light/components/modal.css");
+    this.conect.addStyle("src/assets/css/dark/components/modal.css");
+    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     // this.conect.addScript("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")
     // this.conect.addScriptDefer("src/bootstrap/js/bootstrap.bundle.min.js")
     // this.conect.addScriptDefer("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
@@ -89,5 +148,94 @@ export class SellerListComponent {
         console.log(this.sellers)
       }
     )
-}
+    
+  }
+  CheckP(control:AbstractControl){
+    return control.value.password === control.value.rePassword ? null:{mismatch:true}
+  }
+  async Add(){
+    let user =  JSON.stringify(this.addSellerForm.value)
+    let formdata = new FormData();
+    formdata.append('usersellerinfo',user);
+    this.adminService.createuserseller(formdata).then(
+      res => {
+        if(res['result']){
+          Swal.fire({
+            icon: 'success',
+            title: 'Add User Success',
+          })
+          this.conect.reloadPage()
+        }
+        else {
+          Swal.fire({
+              icon: 'error',
+              title: 'Add User Fail',
+          }) 
+        } 
+      },
+      () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Add User Fail',
+        })
+      }
+    )
+  }
+  async delete(seller:number){
+    const u = await this.adminService.findbyid(seller)
+    const deleteU = u['result']
+    deleteU.deletedAt = formatDate(new Date(),'dd-MM-yyyy','en-US'),
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+      if (result.isConfirmed) {
+        
+        let us =JSON.stringify(deleteU)
+        let fromData = new FormData()
+        fromData.append('deleteAt',us)
+        this.adminService.deleteuserseller(fromData).then(
+          res=>{
+            if(res['result']){
+              swalWithBootstrapButtons.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Delete User Fail',
+              }) 
+            }
+          },
+          ()=>{
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete User Fail',
+            })
+          }
+        )
+        
+      } else if (result.dismiss === Swal.DismissReason.cancel){
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+  })
+  }
 }

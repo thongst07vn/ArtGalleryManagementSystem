@@ -1,5 +1,8 @@
-﻿using ArtGalleryManagementSystemAPI.Services;
+﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/admin")]
@@ -46,5 +49,54 @@ public class AdminController : Controller
         {
             return BadRequest();
         }
+    }
+    [Consumes("multipart/form-data")]
+    [Produces("application/json")]
+    [HttpPost("createuserseller")]
+    public IActionResult Create(string usersellerinfo)
+    {
+        var setting = new JsonSerializerSettings();
+        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd-MM-yyyy" });
+
+        var userDto = JsonConvert.DeserializeObject<UserDto>(usersellerinfo);
+        userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+        try
+        {
+
+            return Ok(new
+            {
+                result = adminService.CreateUserSeller(userDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("delete")]
+    public IActionResult delete(string deleteAt)
+    {
+        try
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "dd-MM-yyyy"
+            });
+            var userDto = JsonConvert.DeserializeObject<UserDto>(deleteAt);
+
+
+            return Ok(new
+            {
+                Result = adminService.Delete(userDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
     }
 }

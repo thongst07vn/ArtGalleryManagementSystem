@@ -6,5 +6,6 @@ public interface AdminService
 {
     public List<UserDto> FindAllUser();
     public List<UserDto> FindAllSeller();
-
+    public bool CreateUserSeller(UserDto userDto);
+    public bool Delete(UserDto userDto);
 }
