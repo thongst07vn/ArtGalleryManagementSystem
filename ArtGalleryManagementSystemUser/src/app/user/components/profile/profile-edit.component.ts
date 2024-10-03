@@ -14,6 +14,8 @@ import { District } from '../../entities/district.entity';
 import { Ward } from '../../entities/ward.entity';
 import Swal from 'sweetalert2';
 import { BaseURLService } from '../../services/baseURL.service';
+import { formatDate } from '@angular/common';
+import { Address } from '../../entities/address.entity';
 
 
 @Component({
@@ -35,7 +37,8 @@ export class ProfileEditComponent implements OnInit {
   editProfileForm:FormGroup
   addAddressForm:FormGroup
   selectedFile:File
-  addAddress:any
+  // addAddress:any
+  allAddress:any
   provinces:any
   districts:any
   wards:any
@@ -100,7 +103,15 @@ export class ProfileEditComponent implements OnInit {
     }
     )
     this.addAddressForm = this.formBuilder.group({
-        province:['']
+        userId:[''],
+        name:[''],
+        phoneNumber:[''],
+        addressLine:[''],
+        provinceCode:[''],
+        districtCode:[''],
+        wardCode:[''],
+        postalCode:[''],
+        createdAt:['']
     })
   }
   async ngOnInit() {
@@ -238,7 +249,38 @@ export class ProfileEditComponent implements OnInit {
             validator: this.CheckP
         }
       )
-      
+      this.addAddressForm = this.formBuilder.group({
+        userId:[this.user.id],
+        name:['',[
+          Validators.required
+        ]],
+        phoneNumber:['',
+          [Validators.required,
+          Validators.pattern(/^0\d{9}$/)]
+        ],
+        addressLine:['',[
+          Validators.required
+        ]],
+        provinceCode:['',[
+          Validators.required
+        ]],
+        districtCode:['',[
+          Validators.required
+        ]],
+        wardCode:['',[
+          Validators.required
+        ]],
+        postalCode:['',[
+          Validators.required
+        ]],
+        createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')]
+      })
+      this.addressSevice.findalladdress(this.user.id).then(
+        res=>{
+          this.allAddress = res['result'] as Address[]
+        }
+      )
+      console.log(this.allAddress)
     }
     const addAddressResult = await this.addressSevice.findallprovince()
     this.provinces = addAddressResult['result'] as Province[]
@@ -302,8 +344,8 @@ export class ProfileEditComponent implements OnInit {
       this.districts = addAddressResult['result'] as District[]
     }
     else{
-      this.districts = null
-      this.wards = null
+      this.districts = ''
+      this.wards = ''
     }
   }
   async choosedDistrict(event:any){
@@ -312,7 +354,34 @@ export class ProfileEditComponent implements OnInit {
       this.wards = addAddressResult['result'] as Ward[]
     }
     else{
-      this.wards = null
+      this.wards = ''
     }
+  }
+  createAddress(){
+    let a =JSON.stringify(this.addAddressForm.value)
+    console.log(a)
+    let fromData = new FormData()
+    fromData.append('addressInfor',a)
+    this.addressSevice.addaddress(fromData).then(
+      res=>{
+        if(res['result']){
+          Swal.fire({
+            icon: 'success',
+            title: 'Add Address Success',
+          })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Add Address Fail',
+          })
+        }
+      },
+      ()=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Add Address Fail',
+        })
+      }
+    )
   }
 }

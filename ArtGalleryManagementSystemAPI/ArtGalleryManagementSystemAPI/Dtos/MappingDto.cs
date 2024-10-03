@@ -68,7 +68,20 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
-            );
+            )
+            .ForMember(
+                des => des.ProvinceName,
+                src => src.MapFrom(src => src.ProvinceCodeNavigation.Name)
+            )
+            .ForMember(
+                des => des.DistrictName,
+                src => src.MapFrom(src => src.DistrictCodeNavigation.Name)
+            )
+            .ForMember(
+                des => des.WardName,
+                src => src.MapFrom(src => src.WardCodeNavigation.Name)
+            )
+            ;
         CreateMap<AddressDto, Address>()
             .ForMember(
                 des => des.CreatedAt,

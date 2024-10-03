@@ -11,6 +11,9 @@ export class AddressService{
         private httpClient: HttpClient,
         private baseUrlService : BaseURLService
     ){}
+    async findalladdress(userId:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'address/findalladdress/'+userId));
+    }
     async findallprovince(){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'address/findallprovince'));
     }
@@ -19,5 +22,8 @@ export class AddressService{
     }
     async findwardbydistrictcode(districtCode:string){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'address/findwardbydistrictcode/'+districtCode));
+    }
+    async addaddress(formData:any){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'address/addaddress',formData));
     }
 }
