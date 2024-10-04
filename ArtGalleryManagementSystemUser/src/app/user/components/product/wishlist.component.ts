@@ -12,12 +12,12 @@ import { ConectActive } from '../../services/conectActive';
 @Component({
   standalone: true,
   imports: [RouterOutlet,RouterLink],
-  templateUrl: './addtocard.component.html',
+  templateUrl: './wishlist.component.html',
   host:{
-    'collision': 'AddtoCardComponent'
+    'collision': 'WishlistComponent'
   }
 })
-export class AddtoCardComponent implements OnInit {
+export class WishlistComponent implements OnInit {
   cartItems: any
   buyItems: any = []
   imageUrl:any
@@ -26,13 +26,11 @@ export class AddtoCardComponent implements OnInit {
     private conect : Conect,
     private userService: UserService,
     private cartService: CartService,
-    private activatedRoute :ActivatedRoute,
-    private conectActive:ConectActive,
     private productService:ProductService,
-    private baseURLService:BaseURLService
-  ){
-
-  }
+    private baseURLService:BaseURLService,
+    private activatedRoute: ActivatedRoute,
+    private conectActive : ConectActive
+  ){}
   async ngOnInit(){
     this.activatedRoute.data.subscribe(
       params => {
@@ -82,10 +80,7 @@ export class AddtoCardComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/apps/invoice-list.css")
     this.conect.addStyle("src/plugins/css/dark/table/datatable/dt-global_style.css")
     this.conect.addScriptAsync("src/assets/js/custom.js")
-    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
 
-    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
-    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     this.conect.addStyle("src/assets/css/dark/apps/invoice-list.css")
     
     this.conect.addScriptAsync("src/plugins/src/table/datatable/datatables.js")
@@ -110,8 +105,6 @@ export class AddtoCardComponent implements OnInit {
       Swal.fire({
         icon: 'warning',
         title: 'There are no products to delete',
-      }).then(()=>{
-        window.location.href = 'user/home'
       })
     }
     

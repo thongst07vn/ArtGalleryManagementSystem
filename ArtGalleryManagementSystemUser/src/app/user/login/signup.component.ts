@@ -91,15 +91,15 @@ export class SignUpComponent implements OnInit {
     this.conect.addStyle("src/bootstrap/css/bootstrap.min.css")
     this.conect.addStyle("layouts/horizontal-light-menu/css/light/plugins.css")
     this.conect.addStyle("src/assets/css/light/authentication/auth-cover.css")
+    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
+
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
     // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     // this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
-    // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
 
     this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
     // this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
-    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
 
     this.conect.reloadPage()
