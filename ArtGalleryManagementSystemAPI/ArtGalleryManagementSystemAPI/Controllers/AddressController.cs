@@ -2,6 +2,7 @@
 using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/address")]
@@ -32,6 +33,23 @@ public class AddressController : Controller
             return BadRequest();
         }
     }
+    [Produces("application/json")]
+    [HttpGet("findaddressbyid/{id}")]
+    public IActionResult FindaddressbyId(int id)
+    {
+        try
+        {
+
+            return Ok(new
+            {
+                result = addressService.FindAddressById(id)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
     [Consumes("multipart/form-data")]
     [Produces("application/json")]
     [HttpPost("addAddress")]
@@ -50,6 +68,32 @@ public class AddressController : Controller
         {
             return BadRequest();
         }
+    }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("editaddress")]
+    public IActionResult updateDto(string addressProfile)
+    {
+        try
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "dd-MM-yyyy"
+            });
+            var addressDto = JsonConvert.DeserializeObject<AddressDto>(addressProfile);
+
+
+            return Ok(new
+            {
+                Result = addressService.EditAddress(addressDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
     }
     [Produces("application/json")]
     [HttpGet("findallprovince")]

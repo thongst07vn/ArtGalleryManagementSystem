@@ -21,7 +21,9 @@
                 <div class="col-md-12">
                     <label for="product-images">Upload Images</label>
                     <div class="multiple-file-upload">
-                        <input type="file" 
+                        <input type="file" class="form-control file-upload-input-lg" name="filepond" id="avatar"
+                        accept="image/png, image/jpeg, image/gif" (change)="updateImg($event)"/>
+                        <!-- <input type="file" 
                             class="filepond file-upload-multiple"
                             name="filepond"
                             id="product-images" 
@@ -29,7 +31,7 @@
                             data-allow-reorder="true"
                             data-max-file-size="3MB"
                             data-max-files="5"
-                            (click)="updateImg($event)">
+                            (click)="updateImg($event)"> -->
                     </div>
                 </div>
                 
