@@ -21,6 +21,13 @@ public class CartServiceImpl : CartService
         return db.SaveChanges() > 0;
     }
 
+    public bool DeleteAllItem(int cartId)
+    {
+        var item = db.CartItems.Where(c => c.CartId == cartId).ToList();
+        db.CartItems.RemoveRange(item);
+        return db.SaveChanges() > 0;
+    }
+
     public bool DeleteItem(int id)
     {
         var item = db.CartItems.Find(id);
@@ -30,7 +37,7 @@ public class CartServiceImpl : CartService
 
     public List<CartItemDto> FindAllCartItem(int id)
     {
-        return mapper.Map<List<CartItemDto>>(db.CartItems.Where(c => c.CartId == id)).ToList();
+        return mapper.Map<List<CartItemDto>>(db.CartItems.Where(c => c.CartId == id).ToList());
     }
 
     public CartDto FindById(int id)

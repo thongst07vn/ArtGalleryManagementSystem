@@ -50,4 +50,42 @@ public class CartController : Controller
             return BadRequest();
         }
     }
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [HttpDelete("deleteitem/{id}")]
+    public IActionResult DeleteItem(int id)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = cartService.DeleteItem(id)
+            });
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [Consumes("application/json")]
+
+    [HttpDelete("deleteallitem/{cartId}")]
+    public IActionResult DeleteAll(int cartId)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = cartService.DeleteAllItem(cartId)
+            });
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }

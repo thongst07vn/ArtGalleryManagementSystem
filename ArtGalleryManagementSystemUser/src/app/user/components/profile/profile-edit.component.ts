@@ -381,6 +381,8 @@ export class ProfileEditComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Add Address Success',
+          }).then(()=>{
+            window.location.href = 'user/edit-profile'
           })
         }else{
           Swal.fire({
@@ -429,8 +431,9 @@ export class ProfileEditComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Edit Address Success',
+          }).then(()=>{
+            window.location.href = 'user/edit-profile'
           })
-          this.conect.reloadPage()
         }else{
           Swal.fire({
             icon: 'error',

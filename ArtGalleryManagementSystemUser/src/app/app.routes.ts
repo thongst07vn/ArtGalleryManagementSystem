@@ -13,6 +13,7 @@ import { AuctionComponent } from './user/components/auction/auction.component';
 import { AuctionDetailsComponent } from './user/components/auction/auction-details.component';
 import { InvoiceComponent } from './user/components/product/invoice.component';
 import { PostcartComponent } from './user/components/post/postcart.component';
+import { WishlistComponent } from './user/components/product/wishlist.component';
 
 
 export const routes: Routes = [
@@ -78,7 +79,10 @@ export const routes: Routes = [
             },
             {
                 path:'add-to-cart',
-                component:AddtoCardComponent
+                component:AddtoCardComponent,
+                data:{
+                    addActive: 'product',
+                }
             },
             {
                 path:'auction',
@@ -99,6 +103,14 @@ export const routes: Routes = [
                 component:PostcartComponent,
                 data:{
                     addActive: 'postArt',
+                }
+            }
+            ,
+            {
+                path:'wishlist',
+                component:WishlistComponent,
+                data:{
+                    addActive: 'product',
                 }
             }
         ]
