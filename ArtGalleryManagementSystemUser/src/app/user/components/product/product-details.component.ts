@@ -26,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   product:Product
   addsuccess:boolean
   userId:any
+  user:any
   imageUrl:any
   constructor(
     private conect : Conect,
@@ -58,8 +59,10 @@ export class ProductDetailsComponent implements OnInit {
     )
     this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
-        let user = res['result'] as User
-        this.userId = user.id
+        this.user = res['result'] as User
+        if(this.user !=null){
+          this.userId = this.user.id
+        }
       })
     this.activatedRoute.data.subscribe(
       params => {
@@ -105,9 +108,9 @@ export class ProductDetailsComponent implements OnInit {
     await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       async res=>{
         if(res['result']){
-          let user = res['result'] as User;
+          this.user = res['result'] as User;
           const cartItem = new CartItem();
-          cartItem.cartId = user.id;
+          cartItem.cartId = this.user.id;
           cartItem.productId = productID;
           cartItem.quantity = 1;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
@@ -143,5 +146,32 @@ export class ProductDetailsComponent implements OnInit {
   }
   contactUs(){
     window.location.href = '/user/contact-us'
+  }
+  login(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    Swal.fire({
+      title: 'Do You Have An Account?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes !',
+      cancelButtonText: 'No !',
+      reverseButtons: true
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '/login'
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        window.location.href = '/register'
+      }
+    })
   }
 }

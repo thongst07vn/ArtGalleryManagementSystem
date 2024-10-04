@@ -53,4 +53,11 @@ export class UserHeaderComponent implements OnInit {
       this.conect.setData(this.theme);
     }, 50);
   }
+  login(){
+    window.location.href = '/login'
+  }
+  register(){
+    window.location.href = '/register'
+
+  }
 }

@@ -55,12 +55,11 @@
                                                     <div class="col-12">
                                                         <label style="font-weight: 600;"
                                                                     for="avatar">Avatar: </label>
-                                                        <input type="file" class="form-control file-upload-input-lg" name="filepond" id="avatar"
-                                                            accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/>
+                                                        <input type="file" class="form-control file-upload-input-lg" name="filepond" id="avatar" accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/>
                                                     </div>
                                                 </div>
                                                 <div class="text-center mt-4 mb-4">
-                                                    <img src="{{avt}}" style="border: 2px solid darkgrey;" class="rounded-4" height="150px" width="150px">
+                                                    <img src="{{avt}}" style="border: 2px solid darkgrey; object-fit: contain;" class="rounded-4" height="150px" width="150px">
                                                 </div>
                                             </div>
                                             <div class="col-xl-8 col-lg-12 col-md-8 mt-md-0 mt-4">
@@ -316,7 +315,7 @@
                     </div>
 
                     <!-- Modal Structure (EDIT ADDRESS)-->
-                    <div class="modal zoomInUp" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModal"
+                    <div class="modal animated zoomInUp custo-zoomInUp" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModal"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
