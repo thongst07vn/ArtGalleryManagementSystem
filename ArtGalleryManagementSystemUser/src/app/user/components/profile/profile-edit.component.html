@@ -55,7 +55,7 @@
                                                     <div class="col-12">
                                                         <label style="font-weight: 600;"
                                                                     for="avatar">Avatar: </label>
-                                                        <input type="file" class="form-control-file" name="filepond" id="avatar"
+                                                        <input type="file" class="form-control file-upload-input-lg" name="filepond" id="avatar"
                                                             accept="image/png, image/jpeg, image/gif" (change)="selectFile($event)"/>
                                                     </div>
                                                 </div>
@@ -96,18 +96,33 @@
                                                                 <input type="text" class="form-control mb-3" id="email" formControlName="email">
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label style="font-weight: 600;"
-                                                                    for="role">Role: </label>
-                                                                <select class="form-select mb-3" id="role" formControlName="role">
-                                                                    <option value="1">Buyer</option>
-                                                                    <option value="2">Seller</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
+                                                        @if(user!=null){
+                                                            @if(user.role == 1){
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label style="font-weight: 600;"
+                                                                            for="role">Role: </label>
+                                                                        <select id="disabledSelect" class="form-select mb-3" id="role" formControlName="role">
+                                                                            <option value="1">Buyer</option>
+                                                                            <option value="2">Seller</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            @else if(user.role == 2){
+                                                                <fieldset  class="col-md-6" disabled>
+                                                                    <div class="form-group">
+                                                                        <label style="font-weight: 600;"
+                                                                            for="role">Role: </label>
+                                                                        <select class="form-select mb-3" id="role" formControlName="role">
+                                                                            <!-- <option value="1">Buyer</option> -->
+                                                                            <option value="2">Seller</option>
+    
+                                                                        </select>
+                                                                    </div>
+                                                                </fieldset>
+                                                            }
+                                                        }
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label style="font-weight: 600;"
@@ -197,7 +212,7 @@
                                                         <p>{{address.addressLine}}, Phường {{address.wardName}}, {{address.districtName}}, {{address.provinceName}}</p>
                                                     </div>
                                                     <div class="billing-edit align-self-center ms-auto">
-                                                        <button data-bs-toggle="modal" data-bs-target="#editAddressModal" class="btn btn-dark">Edit</button>
+                                                        <button (click)="editAddress(address.id)" data-bs-toggle="modal" data-bs-target="#editAddressModal" class="btn btn-dark">Edit</button>
                                                     </div>
                                                 </div>
                                             </label>
@@ -311,68 +326,70 @@
                                 </div>
                                 <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="padding: 30px;">
                                     <p>Changes to your New <span class="text-success">Billing</span> Information.</p>
-                                    <form class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter name">
+                                    <form [formGroup]="editAddressForm" (ngSubmit)="editSave()">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Name</label>
+                                                    <input type="text" class="form-control" placeholder="Enter name" formControlName="name">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Phone</label>
-                                                <input type="text" class="form-control" placeholder="Enter phone">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone</label>
+                                                    <input type="text" class="form-control" placeholder="Enter phone"
+                                                    formControlName="phoneNumber">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Address</label>
-                                                <input type="text" class="form-control" placeholder="Enter address">
+                                            <div class="col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Address</label>
+                                                    <input type="text" class="form-control" placeholder="Enter address" formControlName="addressLine">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label class="form-label">City</label>
-                                                <select class="form-select" (change)="choosedProvince($event)">
-                                                    <option value="">Choose...</option>
-                                                    @for(province of provinces;track province){
-                                                        <option value="{{province.code}}">{{province.name}}</option>
-                                                    }
-                                                </select>                                               
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">City</label>
+                                                    <select formControlName="provinceCode" class="form-select" (change)="choosedProvince($event)" >
+                                                        <option value="">Choose...</option>
+                                                        @for(province of provinces;track province){
+                                                            <option value="{{province.code}}">{{province.name}}</option>
+                                                        }
+                                                    </select>                                               
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label class="form-label">District</label>
-                                                <!-- @if(districts!=null){ -->
-                                                    <select [disabled]=!districts class="form-select" (change)="choosedDistrict($event)">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">District</label>
+                                                        <select formControlName="districtCode" class="form-select" (change)="choosedDistrict($event)" >
+                                                            <option value="" selected>Choose...</option>
+                                                            @for(district of districts;track district){
+                                                                <option value="{{district.code}}">{{district.name}}</option>
+                                                            }
+                                                        </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Ward</label>
+                                                    <select formControlName="wardCode" class="form-select" >
                                                         <option value="" selected>Choose...</option>
-                                                        @for(district of districts;track district){
-                                                            <option value="{{district.code}}">{{district.name}}</option>
+                                                        @for(ward of wards;track ward){
+                                                            <option value="{{ward.code}}">{{ward.name}}</option>
                                                         }
                                                     </select>
-                                                <!-- } -->
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">ZIP</label>
+                                                    <input type="tel" class="form-control" placeholder="Enter ZIP"
+                                                    formControlName="postalCode">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label class="form-label">Ward</label>
-                                                <select [disabled]=!wards class="form-select">
-                                                    <option value="" selected>Choose...</option>
-                                                    @for(ward of wards;track ward){
-                                                        <option value="{{ward.code}}">{{ward.name}}</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">ZIP</label>
-                                                <input type="tel" class="form-control" placeholder="Enter ZIP">
-                                            </div>
-                                        </div>
+                                        <button class="btn btn-primary" [disabled]="editAddressForm.invalid" style="padding-right: 30px; padding-left: 30px;">Add</button>
                                     </form>
-                                        <button class="btn btn-primary" style="padding-right: 30px; padding-left: 30px;">Add</button>
                                 </div>
                             </div>
                         </div>

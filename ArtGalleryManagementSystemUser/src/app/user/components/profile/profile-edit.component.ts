@@ -36,6 +36,7 @@ export class ProfileEditComponent implements OnInit {
   gender:any
   editProfileForm:FormGroup
   addAddressForm:FormGroup
+  editAddressForm:FormGroup
   selectedFile:File
   // addAddress:any
   allAddress:any
@@ -112,6 +113,17 @@ export class ProfileEditComponent implements OnInit {
         wardCode:[''],
         postalCode:[''],
         createdAt:['']
+    })
+    this.editAddressForm = this.formBuilder.group({
+      userId:[''],
+      name:[''],
+      phoneNumber:[''],
+      addressLine:[''],
+      provinceCode:[''],
+      districtCode:[''],
+      wardCode:[''],
+      postalCode:[''],
+      createdAt:['']
     })
   }
   async ngOnInit() {
@@ -275,6 +287,7 @@ export class ProfileEditComponent implements OnInit {
         ]],
         createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')]
       })
+      
       this.addressSevice.findalladdress(this.user.id).then(
         res=>{
           this.allAddress = res['result'] as Address[]
@@ -383,5 +396,55 @@ export class ProfileEditComponent implements OnInit {
         })
       }
     )
+  }
+  editAddress(addressId:number){
+    console.log(addressId)
+    this.addressSevice.findaddressbyid(addressId).then(
+      res=>{
+        const address = res['result'] as Address
+        console.log(address)
+        this.editAddressForm = this.formBuilder.group({
+          id:[addressId],
+          userId:[this.user.id],
+          name:[address.name],
+          phoneNumber:[address.phoneNumber],
+          addressLine:[address.addressLine],
+          provinceCode:[address.provinceCode],
+          districtCode:[address.districtCode],
+          wardCode:[address.wardCode],
+          postalCode:[address.postalCode],
+          createdAt:[address.createdAt]
+        })
+      }
+    )
+  }
+  editSave(){
+    let a =JSON.stringify(this.editAddressForm.value)
+    console.log(a)
+    let fromData = new FormData()
+    fromData.append('addressProfile',a)
+    this.addressSevice.editaddress(fromData).then(
+      res=>{
+        if(res['result']){
+          Swal.fire({
+            icon: 'success',
+            title: 'Edit Address Success',
+          })
+          this.conect.reloadPage()
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Add Address Fail',
+          })
+        }
+      },
+      ()=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Add Address Fail',
+        })
+      }
+    )
+
   }
 }
