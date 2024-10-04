@@ -21,6 +21,18 @@ public class AddressServiceImpl : AddressService
         return db.SaveChanges() > 0;
     }
 
+    public bool EditAddress(AddressDto addressDto)
+    {
+        var address = mapper.Map<Address>(addressDto);
+        db.Entry(address).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
+    public AddressDto FindAddressById(int id)
+    {
+        return mapper.Map<AddressDto>(db.Addresses.Find(id));
+    }
+
     public List<AddressDto> FindAllAddress(int userId)
     {
         return mapper.Map<List<AddressDto>>(db.Addresses.Where(a => a.UserId == userId).ToList());
