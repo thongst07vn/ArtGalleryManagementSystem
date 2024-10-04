@@ -25,15 +25,16 @@ import { BaseURLService } from '../../services/baseURL.service';
   }
 })
 export class HomeComponent implements OnInit {
-   // Pagination variables
-   totalItems: number = 0;
-   itemsPerPage: number = 12;
-   currentPage: number = 1;
+  // Pagination variables
+  totalItems: number = 0;
+  itemsPerPage: number = 12;
+  currentPage: number = 1;
   userId:any
+  user:any
   productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
 
   productswithseller: ProductWithSeller[]
-
+  artName:any
   // min:any
   max:any
   imageUrl:any
@@ -64,8 +65,8 @@ export class HomeComponent implements OnInit {
     )
     this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
-        let user = res['result'] as User
-        this.userId = user.id
+        this.user = res['result'] as User
+        this.userId = this.user.id
       })
     this.activatedRoute.data.subscribe(
       params => {
@@ -82,6 +83,8 @@ export class HomeComponent implements OnInit {
     this.conect.addStyle("src/plugins/css/dark/bootstrap-range-Slider/bootstrap-slider.css")
     this.conect.addStyle("src/assets/css/light/elements/custom-pagination.css")
     this.conect.addStyle("src/assets/css/dark/elements/custom-pagination.css")
+    this.conect.addStyle("src/assets/css/light/components/modal.css");
+    this.conect.addStyle("src/assets/css/dark/components/modal.css");
 
     this.conect.addScriptAsync("src/plugins/src/noUiSlider/nouislider.min.js")
 
@@ -205,9 +208,9 @@ export class HomeComponent implements OnInit {
     await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
         if(res['result']){
-          let user = res['result'] as User;
+          this.user = res['result'] as User;
           const cartItem = new CartItem();
-          cartItem.cartId = user.id;
+          cartItem.cartId = this.user.id;
           cartItem.productId = productID;
           cartItem.quantity = 1;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
@@ -231,5 +234,9 @@ export class HomeComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+  async creatWishlist(productID:any){
+    const pro = await this.productService.findProductId(productID)
+    this.artName = pro['name']
   }
 }

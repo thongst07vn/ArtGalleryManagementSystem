@@ -114,7 +114,6 @@ export class AddtoCardComponent implements OnInit {
         window.location.href = 'user/home'
       })
     }
-    
   }
   DeleteItem(id:any){
     console.log(id)

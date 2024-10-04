@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS wards
 DROP TABLE IF EXISTS districts
 DROP TABLE IF EXISTS provinces
 DROP TABLE IF EXISTS [sellers] 
-DROP TABLE IF EXISTS [users]   
+DROP TABLE IF EXISTS [users]
 GO
 
 CREATE TABLE [users] (
@@ -32,7 +32,7 @@ CREATE TABLE [users] (
   [avatar] nvarchar(255),
   [first_name] nvarchar(255),
   [last_name] nvarchar(255),
-  [username] nvarchar(255) UNIQUE NOT NULL,
+  [username] nvarchar(255) NOT NULL,
   [email] nvarchar(255) UNIQUE NOT NULL,
   [password] nvarchar(255),
   [gender] integer,
@@ -80,6 +80,7 @@ CREATE TABLE [products] (
   [id] integer PRIMARY KEY IDENTITY,
   [seller_id] integer,
   [name] nvarchar(255),
+  [type] integer,
   [description] nvarchar(500),
   [category_id] integer, 
   [price] Float,

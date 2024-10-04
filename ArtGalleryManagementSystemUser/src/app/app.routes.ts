@@ -14,6 +14,7 @@ import { AuctionDetailsComponent } from './user/components/auction/auction-detai
 import { InvoiceComponent } from './user/components/product/invoice.component';
 import { PostcartComponent } from './user/components/post/postcart.component';
 import { WishlistComponent } from './user/components/product/wishlist.component';
+import { HomeNoLoginComponent } from './user/layouts/layouts/homeNoLogin.component';
 
 
 export const routes: Routes = [
@@ -117,7 +118,16 @@ export const routes: Routes = [
     },
     {
         path:'',
-        component:LoginComponent
+        component:HomeNoLoginComponent,
+        children:[
+            {
+                path:'',
+                component:HomeComponent,
+                data:{
+                    addActive: 'userHome',
+                }
+            }
+        ]
     },
     {
         path:'login',

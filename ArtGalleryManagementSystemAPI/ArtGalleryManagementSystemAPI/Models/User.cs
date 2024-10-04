@@ -22,7 +22,7 @@ public partial class User
 
     public bool? Status { get; set; }
 
-    public DateTime? BirthOfDate { get; set; }
+    public DateTime BirthOfDate { get; set; }
 
     public string? PhoneNumber { get; set; }
 
