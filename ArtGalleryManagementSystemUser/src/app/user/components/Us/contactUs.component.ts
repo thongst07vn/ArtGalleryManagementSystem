@@ -34,6 +34,7 @@ export class ContactUsComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/table/datatable/datatables.js")
     this.conect.removeScript("src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js")
     this.conect.removeScript("src/assets/js/custom.js")
+    this.conect.removeScript("src/assets/js/apps/ecommerce-details.js")
     
     this.conect.addStyle("src/plugins/src/leaflet/leaflet.css")
     this.conect.addStyle("src/assets/css/light/pages/contact_us.css")

@@ -44,6 +44,7 @@ export class PostcartComponent implements OnInit {
     this.conect.removeScript('src/plugins/src/autocomplete/custom-autoComplete.js')
     this.conect.removeScript('src/plugins/src/autocomplete/automaterial.min.js')
     this.conect.removeScript('src/plugins/src/autocomplete/autopaint.min.js')
+    this.conect.removeScript("src/assets/js/apps/ecommerce-details.js")
 
     this.conect.addStyle('src/assets/css/light/apps/ecommerce-create.css')
     this.conect.addStyle('src/assets/css/dark/apps/ecommerce-create.css')

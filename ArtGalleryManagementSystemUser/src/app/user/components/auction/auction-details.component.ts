@@ -41,6 +41,7 @@ export class AuctionDetailsComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
     this.conect.removeScript("src/plugins/src/filepond/filepond.min.js")
     this.conect.removeScript("src/plugins/src/filepond/FilePondPluginImageTransform.min.js")
+    this.conect.removeScript("src/assets/js/apps/ecommerce-details.js")
 
 
     this.conect.addStyle("src/assets/css/light/components/accordions.css")

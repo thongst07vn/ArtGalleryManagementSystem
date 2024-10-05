@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
 import flatpickr from 'flatpickr';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { first } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
         ],
         birthOfDate:['',
           [Validators.required,
-            // Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
+            Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
           ]
         ],
         email:['',
@@ -49,8 +49,14 @@ export class SignUpComponent implements OnInit {
           Validators.email]
         ],
         password:['',
-          [Validators.required,
-          Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+          [
+            Validators.required,
+            this.lengthValidator(),
+            this.digitValidator(),
+            this.lowercaseValidator(),
+            this.uppercaseValidator(),
+            this.specialCharacterValidator()
+          ]
         ],
         rePassword:['',[
           Validators.required
@@ -118,6 +124,51 @@ export class SignUpComponent implements OnInit {
   }
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
+  }
+  lengthValidator():ValidatorFn{
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/.{6,20}/.test(value)) {
+        return { length: true };
+      }
+      return null; 
+    };
+  }
+  uppercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[A-Z]/.test(value)) {
+        return { uppercase: true };
+      }
+      return null; 
+    };
+  }
+  lowercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[a-z]/.test(value)) {
+        return { lowercase: true };
+      }
+      return null;
+    };
+  }
+  digitValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[0-9]/.test(value)) {
+        return { digit: true };
+      }
+      return null;
+    };
+  }
+  specialCharacterValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[@*#$%]/.test(value)) {
+        return { specialCharacter: true };
+      }
+      return null;
+    };
   }
   async Register(){
     console.log(this.registerForm.value)
