@@ -29,7 +29,13 @@
                             <td>
                                 <div class="d-flex">
                                     <div class="usr-img-frame me-2">
-                                        <img alt="avatar" class="img-fluid" src="{{product.image}}">
+                                        @if(product.image.substring(0,5)=="https"){
+                                            <img alt="avatar" class="img-fluid" src="{{product.image}}">
+                                        }
+                                        @else {
+                                            <img alt="avatar" class="img-fluid" src="{{imageUrl+product.image}}">
+                                        } 
+                                        
                                     </div>
                                 </div>
                             </td>

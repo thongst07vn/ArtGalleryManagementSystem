@@ -15,9 +15,7 @@ builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingPr
 builder.Services.AddScoped<UserService, UserServiceImpl>();
 builder.Services.AddScoped<AddressService, AddressServiceImpl>();
 builder.Services.AddScoped<ProductService, ProductServiceImpl>();
-
 builder.Services.AddScoped<AdminService, AdminServiceImpl>();
-
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 
 

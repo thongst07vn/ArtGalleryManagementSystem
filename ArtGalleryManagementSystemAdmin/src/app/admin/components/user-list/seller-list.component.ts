@@ -163,13 +163,14 @@ export class SellerListComponent {
           Swal.fire({
             icon: 'success',
             title: 'Add User Success',
+          }).then(()=>{
+            window.location.href = 'admin/seller-list'
           })
-          this.conect.reloadPage()
         }
         else {
           Swal.fire({
               icon: 'error',
-              title: 'Add User Fail',
+              title: 'Email Already Exists',
           }) 
         } 
       },
@@ -201,8 +202,7 @@ export class SellerListComponent {
         },
         buttonsStyling: false
     })
-      if (result.isConfirmed) {
-        
+      if (result.isConfirmed) {  
         let us =JSON.stringify(deleteU)
         let fromData = new FormData()
         fromData.append('deleteAt',us)
@@ -213,12 +213,14 @@ export class SellerListComponent {
                 'Deleted!',
                 'Your file has been deleted.',
                 'success'
-              )
+              ).then(()=>{
+                window.location.href = 'admin/seller-list'
+              })
             }else{
               Swal.fire({
                 icon: 'error',
                 title: 'Delete User Fail',
-              }) 
+              })
             }
           },
           ()=>{

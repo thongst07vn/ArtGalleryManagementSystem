@@ -55,11 +55,13 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<WishlistProduct> WishlistProducts { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__addresse__3213E83FA0AECA95");
+
 
             entity.ToTable("addresses");
 
@@ -105,6 +107,7 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK__addresses__user___1431ED0D");
 
+
             entity.HasOne(d => d.WardCodeNavigation).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.WardCode)
                 .HasConstraintName("addresses_ward_code_fkey");
@@ -113,6 +116,7 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<BidOrder>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__bid_orde__3213E83F3E159080");
+
 
             entity.ToTable("bid_order");
 
@@ -151,6 +155,7 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<Cart>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__cart__3213E83F8D61D6AD");
+
 
             entity.ToTable("cart");
 

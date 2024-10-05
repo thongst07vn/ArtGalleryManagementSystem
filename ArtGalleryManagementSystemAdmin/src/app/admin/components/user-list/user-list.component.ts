@@ -173,13 +173,16 @@ export class UserListComponent {
           Swal.fire({
             icon: 'success',
             title: 'Add User Success',
-          })
-          this.conect.reloadPage()
+          }).then(()=>{
+            window.location.href = 'admin/seller-list'
+          }) 
         }
         else {
           Swal.fire({
               icon: 'error',
-              title: 'Add User Fail',
+              title: 'Email Already Exists',
+          }).then(()=>{
+            window.location.href = 'admin/seller-list'
           }) 
         } 
       },
@@ -223,7 +226,9 @@ export class UserListComponent {
                 'Deleted!',
                 'Your file has been deleted.',
                 'success'
-              )
+              ).then(()=>{
+                window.location.href = 'admin/seller-list'
+              })
             }else{
               Swal.fire({
                 icon: 'error',
