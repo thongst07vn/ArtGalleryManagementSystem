@@ -14,24 +14,24 @@
                                         <li class="splide__slide">
                                             @if(product.image.substring(0,5)=="https"){
                                                 <a href="{{product.image}}" class="glightbox">
-                                                    <img alt="ecommerce" src="{{product.image}}">
+                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{product.image}}">
                                                 </a>
                                             }
                                             @else {
                                                 <a href="{{imageUrl+product.image}}" class="glightbox">
-                                                    <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{imageUrl+product.image}} ">
                                                 </a>
                                             }                                        
                                         </li>
                                         <li class="splide__slide">
                                             @if(product.image.substring(0,5)=="https"){
                                                 <a href="{{product.image}}" class="glightbox">
-                                                    <img alt="ecommerce" src="{{product.image}}">
+                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{product.image}}">
                                                 </a>
                                             }
                                             @else {
                                                 <a href="{{imageUrl+product.image}}" class="glightbox">
-                                                    <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{imageUrl+product.image}}">
                                                 </a>
                                             }  
                                         </li>
@@ -145,11 +145,17 @@
                                 <a [routerLink]="['../profile']" class="post-meta-info d-flex justify-content-between">
                                     
                                     <div class="media-body align-middle">
-                                        <h4 class="media-heading mx-2">Shaun Park</h4>
+                                        <h4 class="media-heading mx-2">{{product.username}}</h4>
                                         <!-- <p class="media-text mx-3">01 May</p> -->
                                     </div>
                                     <div class="avatar avatar-xl">
-                                        <img alt="avatar" src="../src/assets/img/profile-12.jpeg" class="rounded-circle" />
+                                        @if(product.avatar.substring(0,5)=="https"){                                            
+                                            <img alt="avatar" referrerpolicy="no-referrer" src="{{product.avatar}}" class="rounded-circle" />
+                                        }
+                                        @else {
+                                            <img alt="avatar"  src="{{imageUrl + product.avatar}}" class="rounded-circle" />
+
+                                        }
                                     </div>
                                 </a>
                             </div>
@@ -171,24 +177,11 @@
                             </div>                                            
     
                             <hr class="mb-3">
-                            <div class="row size-selector mb-3">
-                                <div class="col-xl-9 col-lg-6 col-sm-6 align-self-center"> Id: 0810200</div>
-                            </div>
-                            <div class="row size-selector mb-3 ">
-                                <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Size: 30 x 40 cm each</div>
-                            </div>
-                            
-                            <div class="row quantity-selector mb-3">
-                                <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Medium: Acryl</div>
-                                
-                            </div>
-                            
-                            <div class="row quantity-selector mb-3">
-                                <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Material: Paper</div>
-                            </div>
-                            <div class="row quantity-selector mb-3">
-                                <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Year: 2024</div>
-                            </div>
+                            @for(a of product.productAttributes; track a){
+                                <div class="row size-selector mb-3">
+                                    <div class="col-xl-9 col-lg-6 col-sm-6 align-self-center"> {{a.type}}: {{a.value}}</div>
+                                </div>
+                            }
                             
                             <hr class="mb-3">
     
@@ -200,7 +193,7 @@
                                          <!-- CHỖ NÀY LINK TỚI PROFILE ARTIST -->
                                     </div>
                                     <div class="col-xxl-5 col-xl-5 col-sm-6">
-                                        <div >Name of artist</div>
+                                        <div >{{product.username}}</div>
                                     </div>
                                     <br>
                                     <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">

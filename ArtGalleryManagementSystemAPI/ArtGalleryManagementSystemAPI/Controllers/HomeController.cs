@@ -80,6 +80,21 @@ public class HomeController : Controller
         }
     }
 
+    [Produces("application/json")]
+    [HttpGet("findproductbyidwithattributes/{id}")]
+    public IActionResult findproductbyidwithattributes(int id)
+    {
+
+        try
+        {
+            return Ok(productService.FindByIdWithAttributes(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
     [Consumes("application/json")]
     [Produces("application/json")]
     [HttpPost("sortbyprice")]

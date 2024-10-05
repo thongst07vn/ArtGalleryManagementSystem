@@ -2,6 +2,7 @@
 using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtGalleryManagementSystemAPI.Services;
 
@@ -17,7 +18,7 @@ public class ProductServiceImpl : ProductService
 
     public List<ProductWithSellerDto> AllProductWithSeller()
     {
-        return mapper.Map<List<ProductWithSellerDto>>(db.Products.ToList());
+        return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.Seller.IdNavigation.DeletedAt == null && p.Type == 1).ToList());
     }
 
     public List<ProductDto> FindAll()
@@ -28,6 +29,16 @@ public class ProductServiceImpl : ProductService
     public ProductDto FindById(int id)
     {
         return mapper.Map<ProductDto>(db.Products.Find(id));
+    }
+
+    public ProductWithAttributesDto FindByIdWithAttributes(int id)
+    {
+        return mapper.Map<ProductWithAttributesDto>(
+            db.Products
+            .Include(p => p.ProductAttributesProducts)
+        .ThenInclude(pap => pap.ProductAttributes).FirstOrDefault(p => p.Id == id)
+        );
+
     }
 
     public ProductWithSellerDto FindByIdWithSeller(int id)
