@@ -1,43 +1,103 @@
-@if(product!=null){
-    <div class="row layout-top-spacing">
-    
-        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-            
-            <div class="widget-content widget-content-area br-8">
-    
-                <div class="row justify-content-center">
-                    <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-7 col-sm-9 col-12 pe-3">
-                        <!-- Swiper -->
-                        <div id="main-slider" class="splide">
-                            <div class="splide__track">
-                                    <ul class="splide__list">
-                                        <li class="splide__slide">
-                                            @if(product.image.substring(0,5)=="https"){
-                                                <a href="{{product.image}}" class="glightbox">
-                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{product.image}}">
-                                                </a>
-                                            }
-                                            @else {
-                                                <a href="{{imageUrl+product.image}}" class="glightbox">
-                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{imageUrl+product.image}} ">
-                                                </a>
-                                            }                                        
-                                        </li>
-                                        <li class="splide__slide">
-                                            @if(product.image.substring(0,5)=="https"){
-                                                <a href="{{product.image}}" class="glightbox">
-                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{product.image}}">
-                                                </a>
-                                            }
-                                            @else {
-                                                <a href="{{imageUrl+product.image}}" class="glightbox">
-                                                    <img referrerpolicy="no-referrer" alt="ecommerce" src="{{imageUrl+product.image}}">
-                                                </a>
-                                            }  
-                                        </li>
-                                        <li class="splide__slide">
-                                            @if(product.image.substring(0,5)=="https"){
-                                                <a href="{{product.image}}" class="glightbox">
+@if(user!=null){
+
+    @if(product!=null){
+        <div class="row layout-top-spacing">
+        
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+                
+                <div class="widget-content widget-content-area br-8">
+        
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-7 col-sm-9 col-12 pe-3">
+                            <!-- Swiper -->
+                            <div id="main-slider" class="splide">
+                                <div class="splide__track">
+                                        <ul class="splide__list">
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <a href="{{product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{product.image}}">
+                                                    </a>
+                                                }
+                                                @else {
+                                                    <a href="{{imageUrl+product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    </a>
+                                                }                                        
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <a href="{{product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{product.image}}">
+                                                    </a>
+                                                }
+                                                @else {
+                                                    <a href="{{imageUrl+product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    </a>
+                                                }  
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <a href="{{product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{product.image}}">
+                                                    </a>
+                                                }
+                                                @else {
+                                                    <a href="{{imageUrl+product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    </a>
+                                                }  
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <a href="{{product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{product.image}}">
+                                                    </a>
+                                                }
+                                                @else {
+                                                    <a href="{{imageUrl+product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    </a>
+                                                }  
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <a href="{{product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{product.image}}">
+                                                    </a>
+                                                }
+                                                @else {
+                                                    <a href="{{imageUrl+product.image}}" class="glightbox">
+                                                        <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                    </a>
+                                                }  
+                                            </li>
+                                        </ul>
+                                </div>
+                                </div>
+        
+                                <div id="thumbnail-slider" class="splide">
+                                <div class="splide__track">
+                                        <ul class="splide__list">
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <img alt="ecommerce" src="{{product.image}}">
+                                                }
+                                                @else {
+                                                    <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                }
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
+                                                    <img alt="ecommerce" src="{{product.image}}">
+                                                }
+                                                @else {
+                                                    <img alt="ecommerce" src="{{imageUrl+product.image}}">
+                                                }
+                                            </li>
+                                            <li class="splide__slide">
+                                                @if(product.image.substring(0,5)=="https"){
                                                     <img alt="ecommerce" src="{{product.image}}">
                                                 }
                                                 @else {
@@ -62,20 +122,27 @@
                                             </li>
                                         </ul>
                                 </div>
-                                <a [routerLink]="['../profile']" class="post-meta-info d-flex justify-content-between">
-                                    
-                                    <div class="media-body align-middle">
-                                        <h4 class="media-heading mx-2">{{product.username}}</h4>
-                                        <!-- <p class="media-text mx-3">01 May</p> -->
-                                    </div>
-                                    <div class="avatar avatar-xl">
-                                        @if(product.avatar.substring(0,5)=="https"){                                            
-                                            <img alt="avatar" referrerpolicy="no-referrer" src="{{product.avatar}}" class="rounded-circle" />
-                                        }
-                                        @else {
-                                            <img alt="avatar"  src="{{imageUrl + product.avatar}}" class="rounded-circle" />
-
-                                        }
+                                
+                                </div>
+                                
+        
+                        </div>
+        
+                        <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-12 mt-xl-0 mt-5 align-self-center">
+        
+                            <div class="product-details-content">
+                                
+                                <!-- <span class="badge badge-light-danger mb-3">40% Sale off</span> -->
+                                <!-- Show đường dẫn khi chọn skus -->
+                                
+                                <div class="post-meta-info d-flex justify-content-between">
+                                    <div>
+                                        <h3 class="product-title mb-0 me-2">{{product.name}}</h3>
+                                        <!-- lượt đánh giá -->
+                                        <a href="user/product-details/#comment" class="review mb-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <span class="rating-score">4.88 <span class="rating-count">(200 Reviews)</span></span>
+                                        </a>
                                     </div>
                                     <a [routerLink]="['../profile']" class="post-meta-info d-flex justify-content-between">
                                         
@@ -113,43 +180,50 @@
                                     <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Size: 30 x 40 cm each</div>
                                 </div>
                                 
-                            </div>                                            
-    
-                            <hr class="mb-3">
-                            @for(a of product.productAttributes; track a){
-                                <div class="row size-selector mb-3">
-                                    <div class="col-xl-9 col-lg-6 col-sm-6 align-self-center"> {{a.type}}: {{a.value}}</div>
+                                <div class="row quantity-selector mb-3">
+                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Medium: Acryl</div>
+                                    
                                 </div>
-                            }
-                            
-                            <hr class="mb-3">
-    
-                            <div class="action-button text-center">
-    
-                                <div class="row quantity-selector mb-4">
-                                    <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3" style="text-align: left;">
-                                         <div class="col-xl-6 col-lg-6 col-sm-6"> Know the artist:</div>
-                                         <!-- CHỖ NÀY LINK TỚI PROFILE ARTIST -->
-                                    </div>
-                                    <div class="col-xxl-5 col-xl-5 col-sm-6">
-                                        <div >{{product.username}}</div>
-                                    </div>
-                                    <br>
-                                    <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">
-                                        <div class="col-xl-6 col-lg-6 col-sm-6" > Availability:</div>
-                                   </div>
-                                   <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
-                                       <div >In stock </div> 
-                                       <!-- CHỖ NÀY CÓ ĐỔI MÀU: XANH - CÒN HÀNG, ĐỎ HẾT HÀNG -->
-                                   </div>
-                                   
-                                   @if(product.sellerId != userId){
-                                    <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
-                                        <button class="btn btn-warning w-100 btn-lg icon-error" (click)="addToCart(product.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
-                                    </div>
-    
-                                    <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
-                                        <button class="btn btn btn-danger w-100 btn-lg" (click)="buy()">Buy Now</button>
+                                
+                                <div class="row quantity-selector mb-3">
+                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Material: Paper</div>
+                                </div>
+                                <div class="row quantity-selector mb-3">
+                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Year: 2024</div>
+                                </div>
+                                
+                                <hr class="mb-3">
+        
+                                <div class="action-button text-center">
+        
+                                    <div class="row quantity-selector mb-4">
+                                        <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3" style="text-align: left;">
+                                             <div class="col-xl-6 col-lg-6 col-sm-6"> Know the artist:</div>
+                                             <!-- CHỖ NÀY LINK TỚI PROFILE ARTIST -->
+                                        </div>
+                                        <div class="col-xxl-5 col-xl-5 col-sm-6">
+                                            <div >Name of artist</div>
+                                        </div>
+                                        <br>
+                                        <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">
+                                            <div class="col-xl-6 col-lg-6 col-sm-6" > Availability:</div>
+                                       </div>
+                                       <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
+                                           <div >In stock </div> 
+                                           <!-- CHỖ NÀY CÓ ĐỔI MÀU: XANH - CÒN HÀNG, ĐỎ HẾT HÀNG -->
+                                       </div>
+                                       
+                                       @if(product.sellerId != userId){
+                                        <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
+                                            <button class="btn btn-warning w-100 btn-lg icon-error" (click)="addToCart(product.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
+                                        </div>
+        
+                                        <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
+                                            <button class="btn btn btn-danger w-100 btn-lg" (click)="buy()">Buy Now</button>
+                                        </div>
+                                       }
+                                        
+                                        
                                     </div>
                                     
                                 </div>
@@ -388,10 +462,15 @@
         
                                                     <div class="media mb-4">
                                                         <div class="avatar me-sm-4 mb-sm-0 me-0 mb-3">
-                                                            <img alt="avatar" src="../src/assets/img/profile-34.jpeg" class="rounded-circle">
+                                                            @if(product.avatar.substring(0,5)=="https"){                                                             
+                                                                <img alt="avatar" src="{{product.avatar}}" class="rounded-circle">
+                                                            }
+                                                            @else {                                                            
+                                                                <img alt="avatar" src="{{imageUrl + product.avatar}}" class="rounded-circle">
+                                                            }                                                        
                                                         </div>
                                                         <div class="media-body">
-                                                            <h4 class="media-heading mb-1">Shaun Park</h4>
+                                                            <h4 class="media-heading mb-1">{{product.username}}</h4>
                                                             <div class="stars">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -686,14 +765,21 @@
                                             <span class="rating-score">4.88 <span class="rating-count">(200 Reviews)</span></span>
                                         </a>
                                     </div>
-                                    <a [routerLink]="['../profile']" class="post-meta-info d-flex justify-content-between">
+                                    <a [routerLink]="['../profile',{sellerId:product.sellerId}]" class="post-meta-info d-flex justify-content-between">
                                         
                                         <div class="media-body align-middle">
-                                            <h4 class="media-heading mx-2">Shaun Park</h4>
+                                            <h4 class="media-heading mx-2 mt-3">{{product.username}}</h4>
                                             <!-- <p class="media-text mx-3">01 May</p> -->
                                         </div>
                                         <div class="avatar avatar-xl">
-                                            <img alt="avatar" src="../src/assets/img/profile-12.jpeg" class="rounded-circle" />
+                                            @if(product.avatar.substring(0,5)=="https"){
+                                                <img alt="avatar" src="{{product.avatar}}" class="rounded-circle" />
+
+                                            }
+                                            @else {
+                                                <img alt="avatar" src="{{imageUrl+ product.avatar}}" class="rounded-circle" />
+
+                                            }
                                         </div>
                                     </a>
                                 </div>
@@ -715,25 +801,11 @@
                                 </div>                                            
         
                                 <hr class="mb-3">
-                                <div class="row size-selector mb-3">
-                                    <div class="col-xl-9 col-lg-6 col-sm-6 align-self-center"> Id: 0810200</div>
-                                </div>
-                                <div class="row size-selector mb-3 ">
-                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Size: 30 x 40 cm each</div>
-                                </div>
-                                
-                                <div class="row quantity-selector mb-3">
-                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Medium: Acryl</div>
-                                    
-                                </div>
-                                
-                                <div class="row quantity-selector mb-3">
-                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Material: Paper</div>
-                                </div>
-                                <div class="row quantity-selector mb-3">
-                                    <div class="col-xl-6 col-lg-6 col-sm-6 mt-sm-3">Year: 2024</div>
-                                </div>
-                                
+                                @for (a of product.productAttributes; track a) {
+                                    <div class="row size-selector mb-3">
+                                        <div class="col-xl-9 col-lg-6 col-sm-6 align-self-center"> {{a.type}}: {{a.value}}</div>
+                                    </div>
+                                }                          
                                 <hr class="mb-3">
         
                                 <div class="action-button text-center">
@@ -744,7 +816,7 @@
                                              <!-- CHỖ NÀY LINK TỚI PROFILE ARTIST -->
                                         </div>
                                         <div class="col-xxl-5 col-xl-5 col-sm-6">
-                                            <div >Name of artist</div>
+                                            <div [routerLink]="['../profile',{sellerId:product.sellerId}]">{{product.username}}</div>
                                         </div>
                                         <br>
                                         <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">
