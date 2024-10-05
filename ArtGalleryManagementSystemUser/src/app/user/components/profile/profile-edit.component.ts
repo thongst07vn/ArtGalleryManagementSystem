@@ -136,6 +136,7 @@ export class ProfileEditComponent implements OnInit {
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
+    this.conect.removeScript("src/assets/js/apps/ecommerce-details.js")
 
     this.conect.removeScript("src/plugins/src/leaflet/leaflet.js")
     this.conect.removeScript("src/assets/js/apps/invoice-list.js")
@@ -352,22 +353,23 @@ export class ProfileEditComponent implements OnInit {
     console.log(this.selectedFile)
   }
   async choosedProvince(event:any){
-    if(event.target.value!=''){
+    console.log(this.provinces)
+    if(event.target.value!=''|| this.provinces!=null){
       const addAddressResult = await this.addressSevice.finddistrictbyprovincecode(event.target.value)
       this.districts = addAddressResult['result'] as District[]
     }
     else{
-      this.districts = ''
-      this.wards = ''
+      this.districts = []
+      this.wards = []
     }
   }
   async choosedDistrict(event:any){
-    if(event.target.value!=''){
+    if(event.target.value!=''|| this.districts!=null){
       const addAddressResult = await this.addressSevice.findwardbydistrictcode(event.target.value)
       this.wards = addAddressResult['result'] as Ward[]
     }
     else{
-      this.wards = ''
+      this.wards = []
     }
   }
   createAddress(){
@@ -401,10 +403,19 @@ export class ProfileEditComponent implements OnInit {
   }
   editAddress(addressId:number){
     console.log(addressId)
-    this.addressSevice.findaddressbyid(addressId).then(
-      res=>{
+    
+     this.addressSevice.findaddressbyid(addressId).then(
+      async res=>{
         const address = res['result'] as Address
         console.log(address)
+        if(this.provinces != null){
+          const addAddressResult = await this.addressSevice.finddistrictbyprovincecode(address.provinceCode)
+          this.districts = addAddressResult['result'] as District[]
+          if(this.districts!=null){
+            const addAddressResult = await this.addressSevice.findwardbydistrictcode(address.districtCode)
+            this.wards = addAddressResult['result'] as Ward[]
+          }
+        }
         this.editAddressForm = this.formBuilder.group({
           id:[addressId],
           userId:[this.user.id],

@@ -64,7 +64,7 @@
                                                     <li style="padding-top: 5px; color: red;">First Name is blank</li>
                                                 }
                                                 @else if(registerForm.hasError('pattern',['firstName'])){
-                                                    <li style="padding-top: 5px; color: red;">First Name invalid</li>
+                                                    <li style="padding-top: 5px; color: red;">First Name must contain at uppercase the first letter</li>
                                                 }
                                             </ul>
                                         }
@@ -81,7 +81,7 @@
                                                     <li style="padding-top: 5px; color: red;">Last Name is blank</li>
                                                 }
                                                 @else if(registerForm.hasError('pattern',['lastName'])){
-                                                    <li style="padding-top: 5px; color: red;">Last Name invalid</li>
+                                                    <li style="padding-top: 5px; color: red;">Last Name must contain at uppercase the first letter</li>
                                                 }
                                             </ul>
                                         }
@@ -114,10 +114,22 @@
                                         @if(registerForm.get('password').touched){
                                             <ul>
                                                 @if(registerForm.hasError('required',['password'])){
-                                                    <li style="padding-top: 5px; color: red;">password is blank</li>
+                                                    <li style="padding-top: 5px; color: red;">password is blank.</li>
                                                 }
-                                                @else if(registerForm.hasError('pattern',['password'])){
-                                                    <li style="padding-top: 5px; color: red;">password does not meet the require</li>
+                                                @if(registerForm.hasError('length', ['password'])){
+                                                    <li style="padding-top: 5px; color: red;">Password must be between 6 and 20 characters.</li>
+                                                }
+                                                @if(registerForm.hasError('digit', ['password'])){
+                                                    <li style="padding-top: 5px; color: red;">Password must contain at least one digit.</li>
+                                                }
+                                                @if(registerForm.hasError('lowercase', ['password'])){
+                                                    <li style="padding-top: 5px; color: red;">Password must contain at least one lowercase letter.</li>
+                                                }
+                                                @if(registerForm.hasError('uppercase', ['password'])){
+                                                    <li style="padding-top: 5px; color: red;">Password must contain at least one uppercase letter.</li>
+                                                }
+                                                @if(registerForm.hasError('specialCharacter', ['password'])){
+                                                    <li style="padding-top: 5px; color: red;">Password must contain at least one special character.</li>
                                                 }
                                             </ul>
                                         }
@@ -132,7 +144,7 @@
                                                 @if(registerForm.hasError('required',['rePassword'])){
                                                     <li style="padding-top: 5px; color: red;">Confirm password is blank</li>
                                                 }
-                                                @else if(registerForm?.errors?.['mismatch']){
+                                                @if(registerForm?.errors?.['mismatch']){
                                                     <li style="padding-top: 5px; color: red;">Wrong confirm password</li>
                                                 }
                                             </ul>
@@ -148,9 +160,9 @@
                                                 @if(registerForm.hasError('required',['birthOfDate'])){
                                                     <li style="padding-top: 5px; color: red;">Day of Birth is blank</li>
                                                 }
-                                                <!-- @else if(registerForm.hasError('pattern',['birthOfDate'])){
-                                                    <li style="padding-top: 5px; color: red;">Day of Birth invalid</li>
-                                                } -->
+                                                @else if(registerForm.hasError('pattern',['birthOfDate'])){
+                                                    <li style="padding-top: 5px; color: red;">You must be over 18 and under 60 years old</li>
+                                                }
                                             </ul>
                                         }
                                     </div>
