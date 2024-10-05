@@ -2,7 +2,6 @@ using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Models;
 using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
 

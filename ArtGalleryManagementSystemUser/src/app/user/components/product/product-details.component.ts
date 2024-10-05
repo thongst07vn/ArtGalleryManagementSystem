@@ -13,6 +13,7 @@ import { formatDate } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import Swal from 'sweetalert2';
 import { BaseURLService } from '../../services/baseURL.service';
+import { ProductWithAttributes } from '../../entities/productwithattributes.entity';
 
 @Component({
   standalone: true,
@@ -23,7 +24,7 @@ import { BaseURLService } from '../../services/baseURL.service';
   }
 })
 export class ProductDetailsComponent implements OnInit {
-  product:Product
+  product:ProductWithAttributes
   addsuccess:boolean
   userId:any
   user:any
@@ -39,36 +40,8 @@ export class ProductDetailsComponent implements OnInit {
   ){
     
   }
-  ngOnInit(): void {
-    this.imageUrl=this.baseURLService.IMAGE_URL
-    this.addsuccess = false;
-    this.activatedRoute.paramMap.subscribe(
-      params => {
-        this.productService.findProductId(parseInt(params.get('productId'))).then(
-          res => {
-            this.product = res as Product
-          },
-          error => {
-            console.log(error);
-          }
-        )
-      },
-      error => {
-        console.log(error)
-      }
-    )
-    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
-        this.user = res['result'] as User
-        if(this.user !=null){
-          this.userId = this.user.id
-        }
-      })
-    this.activatedRoute.data.subscribe(
-      params => {
-        this.conectActive.setData(params['addActive'])
-      }
-    )
+  async ngOnInit() {
+    
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
@@ -95,13 +68,40 @@ export class ProductDetailsComponent implements OnInit {
 
     this.conect.addScriptAsync("src/plugins/src/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js")
     this.conect.addScriptAsync("src/plugins/src/glightbox/glightbox.min.js")
-    this.conect.addScriptAsync("src/plugins/src/splide/splide.min.js")
+    this.conect.addScript("src/plugins/src/splide/splide.min.js")
     this.conect.addScriptAsync("src/assets/js/apps/ecommerce-details.js")
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
     this.conect.reloadPage()
 
-    
+    this.imageUrl=this.baseURLService.IMAGE_URL
+    this.addsuccess = false;
+    this.activatedRoute.paramMap.subscribe(
+      params => {
+        this.productService.findProductIdWithAttributes(parseInt(params.get('productId'))).then(
+          res => {
+            this.product = res as ProductWithAttributes
+            console.log(this.product);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      },
+      error => {
+        console.log(error)
+      }
+    )
+    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        let user = res['result'] as User
+        this.userId = user.id
+      })
+    this.activatedRoute.data.subscribe(
+      params => {
+        this.conectActive.setData(params['addActive'])
+      }
+    )
   }
   
   async addToCart(productID:any){

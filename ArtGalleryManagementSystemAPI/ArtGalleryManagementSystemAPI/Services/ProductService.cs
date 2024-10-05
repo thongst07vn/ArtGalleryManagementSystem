@@ -9,6 +9,7 @@ public interface ProductService
 
     public ProductDto FindById(int id);
     public ProductWithSellerDto FindByIdWithSeller(int id);
+    public ProductWithAttributesDto FindByIdWithAttributes(int id);
 
     public List<ProductWithSellerDto> AllProductWithSeller();
     public List<ProductWithSellerDto> SortByPrice(double min, double max);

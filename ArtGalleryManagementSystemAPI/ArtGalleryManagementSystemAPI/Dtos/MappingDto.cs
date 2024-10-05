@@ -7,6 +7,11 @@ namespace ArtGalleryManagementSystemAPI.Dtos;
 
 public class MappingDto : Profile
 {
+    private IMapper mapper;
+    public MappingDto(IMapper _mapper)
+    {
+        mapper = _mapper;
+    }
     public MappingDto()
     {
         CreateMap<Province, ProvinceDto>().ReverseMap();
@@ -167,6 +172,23 @@ public class MappingDto : Profile
                 des => des.Avatar,
                 src => src.MapFrom(desc => desc.Seller.IdNavigation.Avatar)
             );
+
+        CreateMap<ProductAttribute, ProductAttributeDto>();
+        CreateMap<ProductAttributeDto, ProductAttribute>();
+        CreateMap<ProductAttributesProduct, ProductAttributesProductDto>();
+
+        CreateMap<Product, ProductWithAttributesDto>()
+            .ForMember(
+                des => des.Username,
+                src => src.MapFrom(des => des.Seller.IdNavigation.Username)
+            )
+            .ForMember(
+                des => des.Avatar,
+                src => src.MapFrom(desc => desc.Seller.IdNavigation.Avatar)
+            )
+            .ForMember(
+                des => des.ProductAttributes,
+                 src => src.MapFrom(desc => desc.ProductAttributesProducts.Select(pap => pap.ProductAttributes)));
     }
 }
 
