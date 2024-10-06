@@ -38,17 +38,15 @@ export class ProductDetailsComponent implements OnInit {
     private cartService: CartService,
     private baseURLService:BaseURLService
   ){
-    
   }
-  ngOnInit() {
+  async ngOnInit() {
     this.imageUrl=this.baseURLService.IMAGE_URL
-    
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
       }
     )
-    
+    this.addsuccess = false;
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
@@ -80,10 +78,16 @@ export class ProductDetailsComponent implements OnInit {
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
     // this.conect.reloadPage()
-    this.addsuccess = false;
+    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        let user = res['result'] as User
+        if(user!=null){
+          this.userId = user.id
+        }
+      })
     this.activatedRoute.paramMap.subscribe(
-      params => {
-        this.productService.findProductIdWithAttributes(parseInt(params.get('productId'))).then(
+      async params => {
+        await this.productService.findProductIdWithAttributes(parseInt(params.get('productId'))).then(
           res => {
             this.product = res as ProductWithAttributes
             console.log(this.product);
@@ -97,12 +101,6 @@ export class ProductDetailsComponent implements OnInit {
         console.log(error)
       }
     )
-    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
-        let user = res['result'] as User
-        this.userId = user.id
-      })
-    
   }
   
   async addToCart(productID:any){
@@ -165,3 +163,7 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 }
+function Splide(arg0: string, arg1: { rewind: boolean; fixedWidth: number; fixedHeight: number; isNavigation: boolean; gap: number; focus: string; pagination: boolean; cover: boolean; dragMinThreshold: { mouse: number; touch: number; }; breakpoints: { 640: { fixedWidth: number; fixedHeight: number; }; }; }) {
+  throw new Error('Function not implemented.');
+}
+
