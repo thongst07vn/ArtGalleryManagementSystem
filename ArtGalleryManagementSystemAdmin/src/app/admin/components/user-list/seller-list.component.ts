@@ -240,4 +240,7 @@ export class SellerListComponent {
       }
   })
   }
+  edit(event:any){
+
+  }
 }
