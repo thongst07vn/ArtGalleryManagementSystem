@@ -124,8 +124,31 @@ export const routes: Routes = [
     // Chuyển hướng về `/user/home` nếu đã đăng nhập
     {
         path: '',
-        component: LoginComponent,
-        canActivate: [LoginRedirectGuard]
+        component: HomeNoLoginComponent,
+        canActivate: [LoginRedirectGuard],
+        children:[
+            {
+                path: '',
+                component: HomeComponent,
+                data: {
+                    addActive: 'userHome',
+                }
+            },
+            {
+                path: 'product-details',
+                component: ProductDetailsComponent,
+                data: {
+                    addActive: 'product'
+                }
+            },
+            {
+                path: 'about-us',
+                component: AboutusComponent,
+                data: {
+                    addActive: 'aboutUs',
+                }
+            }
+        ]
     },
     {
         path: 'login',
@@ -138,9 +161,9 @@ export const routes: Routes = [
         canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
     },
     
-    // Route cho người dùng chưa đăng nhập (HomeNoLogin)
-    {
-        path: 'home',
-        component: HomeNoLoginComponent
-    },
+    // // Route cho người dùng chưa đăng nhập (HomeNoLogin)
+    // {
+    //     path: 'home',
+    //     component: HomeNoLoginComponent
+    // },
 ];
