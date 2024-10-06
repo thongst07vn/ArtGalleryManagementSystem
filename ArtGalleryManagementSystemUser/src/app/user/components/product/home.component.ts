@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit {
     private baseURLService:BaseURLService,
     private formBuilder : FormBuilder
   ){
-    
   }
   ngOnInit(): void {
     this.imageUrl=this.baseURLService.IMAGE_URL
@@ -67,7 +66,9 @@ export class HomeComponent implements OnInit {
     this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
         this.user = res['result'] as User
-        this.userId = this.user.id
+        if(this.user!=null){
+          this.userId = this.user.id
+        }
       })
     this.activatedRoute.data.subscribe(
       params => {
