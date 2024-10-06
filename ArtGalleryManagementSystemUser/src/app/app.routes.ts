@@ -19,6 +19,7 @@ import { HomeNoLoginComponent } from './user/layouts/layouts/homeNoLogin.compone
 // Import guards
 import { AuthGuard } from './auth.guard';
 import { LoginRedirectGuard } from './loginRedirect.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
     // Route cho người dùng đã đăng nhập
@@ -160,10 +161,8 @@ export const routes: Routes = [
         component: SignUpComponent,
         canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
     },
-    
-    // // Route cho người dùng chưa đăng nhập (HomeNoLogin)
-    // {
-    //     path: 'home',
-    //     component: HomeNoLoginComponent
-    // },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];
