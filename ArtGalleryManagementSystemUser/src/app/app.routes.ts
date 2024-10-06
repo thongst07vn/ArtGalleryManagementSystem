@@ -16,126 +16,131 @@ import { PostcartComponent } from './user/components/post/postcart.component';
 import { WishlistComponent } from './user/components/product/wishlist.component';
 import { HomeNoLoginComponent } from './user/layouts/layouts/homeNoLogin.component';
 
+// Import guards
+import { AuthGuard } from './auth.guard';
+import { LoginRedirectGuard } from './loginRedirect.guard';
 
 export const routes: Routes = [
+    // Route cho người dùng đã đăng nhập
     {
-        path:'user',
-        component:LayoutsComponent,
-        children:[
+        path: 'user',
+        component: LayoutsComponent,
+        canActivate: [AuthGuard], // Bảo vệ toàn bộ đường dẫn con của `user` bằng `AuthGuard`
+        children: [
             {
-                path:'',
-                component:HomeComponent,
-                data:{
+                path: '',
+                component: HomeComponent,
+                data: {
                     addActive: 'userHome',
                 }
             },
             {
-                path:'home',
-                component:HomeComponent,
-                data:{
+                path: 'home',
+                component: HomeComponent,
+                data: {
                     addActive: 'userHome',
                 }
             },
             {
-                path:'profile',
-                component:ProfileComponent,
-                data:{
-                    addActive:'profile'
+                path: 'profile',
+                component: ProfileComponent,
+                data: {
+                    addActive: 'profile'
                 }
             },
             {
-                path:'edit-profile',
+                path: 'edit-profile',
                 component: ProfileEditComponent,
-                data:{
-                    addActive:'profile'
+                data: {
+                    addActive: 'profile'
                 }
             },
             {
-                path:'product-details',
-                component:ProductDetailsComponent,
-                data:{
-                    addActive:'product'
+                path: 'product-details',
+                component: ProductDetailsComponent,
+                data: {
+                    addActive: 'product'
                 }
             },
             {
-                path:'invoice',
-                component:InvoiceComponent,
-                data:{
-                    addActive:'product'
+                path: 'invoice',
+                component: InvoiceComponent,
+                data: {
+                    addActive: 'product'
                 }
             },
             {
-                path:'contact-us',
-                component:ContactUsComponent,
-                data:{
+                path: 'contact-us',
+                component: ContactUsComponent,
+                data: {
                     addActive: 'contactUs',
                 }
             },
             {
-                path:'about-us',
-                component:AboutusComponent,
-                data:{
+                path: 'about-us',
+                component: AboutusComponent,
+                data: {
                     addActive: 'aboutUs',
                 }
             },
             {
-                path:'add-to-cart',
-                component:AddtoCardComponent,
-                data:{
+                path: 'add-to-cart',
+                component: AddtoCardComponent,
+                data: {
                     addActive: 'product',
                 }
             },
             {
-                path:'auction',
-                component:AuctionComponent,
-                data:{
+                path: 'auction',
+                component: AuctionComponent,
+                data: {
                     addActive: 'auction',
                 }
             },
             {
-                path:'auction-detail',
-                component:AuctionDetailsComponent,
-                data:{
+                path: 'auction-detail',
+                component: AuctionDetailsComponent,
+                data: {
                     addActive: 'auction',
                 }
             },
             {
-                path:'post-art',
-                component:PostcartComponent,
-                data:{
+                path: 'post-art',
+                component: PostcartComponent,
+                data: {
                     addActive: 'postArt',
                 }
-            }
-            ,
+            },
             {
-                path:'wishlist',
-                component:WishlistComponent,
-                data:{
+                path: 'wishlist',
+                component: WishlistComponent,
+                data: {
                     addActive: 'product',
                 }
             }
         ]
     },
-    {
-        path:'',
-        component:HomeNoLoginComponent,
-        children:[
-            {
-                path:'',
-                component:HomeComponent,
-                data:{
-                    addActive: 'userHome',
-                }
-            }
-        ]
-    },
-    {
-        path:'login',
-        component:LoginComponent
-    },
-    {
-        path:'register',
-        component:SignUpComponent
-    }
 
+    // Chuyển hướng về `/user/home` nếu đã đăng nhập
+    {
+        path: '',
+        component: LoginComponent,
+        canActivate: [LoginRedirectGuard]
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
+    },
+    {
+        path: 'register',
+        component: SignUpComponent,
+        canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
+    },
+    
+    // Route cho người dùng chưa đăng nhập (HomeNoLogin)
+    {
+        path: 'home',
+        component: HomeNoLoginComponent
+    },
 ];
