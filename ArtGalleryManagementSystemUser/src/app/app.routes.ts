@@ -19,6 +19,7 @@ import { HomeNoLoginComponent } from './user/layouts/layouts/homeNoLogin.compone
 // Import guards
 import { AuthGuard } from './auth.guard';
 import { LoginRedirectGuard } from './loginRedirect.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
     // Route cho người dùng đã đăng nhập
@@ -143,4 +144,8 @@ export const routes: Routes = [
         path: 'home',
         component: HomeNoLoginComponent
     },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];
