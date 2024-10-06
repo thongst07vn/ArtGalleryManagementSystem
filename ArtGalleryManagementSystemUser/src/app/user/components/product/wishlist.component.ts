@@ -108,7 +108,9 @@ export class WishlistComponent implements OnInit {
         title: 'There are no products to delete',
       })
     }
-    
+  }
+  addToCardAll(){
+
   }
   DeleteItem(id:any){
     console.log(id)
@@ -119,11 +121,25 @@ export class WishlistComponent implements OnInit {
     const isChecked = evt.target.checked;
     console.log(isChecked); // Log the checkbox state for debugging
 
+    const addtocardAButtonContainer = document.querySelector('.addtocartA');
+
+    // Create the button once initially outside the conditional block:
+    const addtocardAButton = document.createElement('button');
+    addtocardAButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-info','btn-lg');
+    addtocardAButton.setAttribute('tabindex', '0');
+    addtocardAButton.setAttribute('aria-controls', 'invoice-list');
+    addtocardAButton.textContent = 'Add All To Card';
+
+    // Add an event listener to the button outside the conditional block:
+    addtocardAButton.addEventListener('click', () => {
+      this.addToCardAll(); // Assuming this refers to a defined function
+    });
+    addtocardAButtonContainer.appendChild(addtocardAButton);
     const deleteButtonContainer = document.querySelector('.deleteA');
 
     // Create the button once initially outside the conditional block:
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-danger');
+    deleteButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-danger','btn-lg');
     deleteButton.setAttribute('tabindex', '0');
     deleteButton.setAttribute('aria-controls', 'invoice-list');
     deleteButton.textContent = 'Delete All';
@@ -133,11 +149,11 @@ export class WishlistComponent implements OnInit {
       this.deleteAll(); // Assuming this refers to a defined function
     });
     deleteButtonContainer.appendChild(deleteButton);
-
     // Only conditionally append or remove the button based on checkbox state:
     if (!isChecked) {
       deleteButtonContainer.removeChild(deleteButton);
-      window.location.href='/user/add-to-cart'
+      addtocardAButtonContainer.removeChild(addtocardAButton);
+      window.location.href='/user/wishlist'
     }
 
     const allCheckedBoxes = Array.from(document.querySelectorAll(".productchecked")) as HTMLInputElement[]

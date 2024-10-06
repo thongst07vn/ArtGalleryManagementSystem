@@ -129,7 +129,7 @@ export class AddtoCardComponent implements OnInit {
 
     // Create the button once initially outside the conditional block:
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-danger');
+    deleteButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-danger','btn-lg');
     deleteButton.setAttribute('tabindex', '0');
     deleteButton.setAttribute('aria-controls', 'invoice-list');
     deleteButton.textContent = 'Delete All';

@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../entities/product.entity';
 import { formatDate, NgClass } from '@angular/common';
@@ -18,7 +18,7 @@ import { BaseURLService } from '../../services/baseURL.service';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
+  imports: [RouterOutlet,RouterLink,FormsModule,NgClass,ReactiveFormsModule],
   templateUrl: './home.component.html',
   host:{
     'collision': 'HomeComponent'
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   userId:any
   user:any
   productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
-
+  createWishList:FormGroup
   productswithseller: ProductWithSeller[]
   artName:any
   // min:any
@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit {
     private productService: ProductService,
     private userService:UserService,
     private cartService:CartService,
-    private baseURLService:BaseURLService
+    private baseURLService:BaseURLService,
+    private formBuilder : FormBuilder
   ){
     
   }
