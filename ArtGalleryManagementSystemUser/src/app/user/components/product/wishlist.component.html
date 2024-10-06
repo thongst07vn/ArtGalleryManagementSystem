@@ -10,9 +10,9 @@
                                 <input class="form-check-input" id="checkbox_parent_all" type="checkbox" (change)="ChangeSelectedValueAll($event)">
                             </div>
                         </th>
+                        <th>WishList Name</th>
                         <th>Image</th>
                         <th>Product Name</th>                                                                 
-                        <th>Quantity</th>
                         <th>Price</th>
                         <th>Seller</th> 
                         <th>Action</th>
@@ -26,6 +26,7 @@
                                     <input class="form-check-input productchecked" type="checkbox" (change)="ChangeSelectedValue(product.selectedindex,$event)">
                                 </div>
                             </td>
+                            <td><span class="inv-amount">{{product.quantity}}</span></td>
                             <td>
                                 <div class="d-flex">
                                     <div class="usr-img-frame me-2">
@@ -33,9 +34,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span>{{product.name}}</span></td>
-                            <td><span class="inv-amount">{{product.quantity}}</span></td>
-                            
+                            <td><span>{{product.name}}</span></td>                            
                             <td ><span class="">${{product.price}}</span></td>
                             <td>
                                 <div class="d-flex">
@@ -62,12 +61,18 @@
 
                 </tbody>
             </table>
-            <div style="float: left;" class="mb-2 deleteA btn-lg">
-                <!-- <button class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;" (click)="deleteAll()">Delete All</button> -->
+            <div class="row">
+                <div class="col-4 mb-2 deleteA btn-lg">
+                    <!-- <button class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;" (click)="deleteAll()">Delete All</button> -->
+                </div>
+                <div class="col-4 mb-2 addtocartA btn-lg">
+                    <!-- <button class ="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;" (click)="deleteAll()">Delete All</button> -->
+                </div>
+                <div class="col-4 mb-2 text-end btn-lg">
+                    <button class="btn btn-success mb-2 btn-lg" style="padding-left: 55px; padding-right: 55px;" (click)="BuyItems()">Buy</button>
+                </div>
             </div>
-            <div style="float: right;" class="mb-2  btn-lg">
-                <button class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;" (click)="BuyItems()">Buy</button>
-            </div>
+            
             
         </div>
     </div>
