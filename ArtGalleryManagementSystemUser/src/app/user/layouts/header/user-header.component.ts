@@ -5,6 +5,7 @@ import { Conect } from '../../../conect';
 import { UserService } from '../../services/user.service';
 import { CartService } from '../../services/cart.service';
 import { BaseURLService } from '../../services/baseURL.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'user-header',
@@ -27,6 +28,11 @@ export class UserHeaderComponent implements OnInit {
     private baseURLService : BaseURLService
   ){}
   async ngOnInit() {
+    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
+
+    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     this.imageUrl = this.baseURLService.IMAGE_URL
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     this.user = userResult['result'];
@@ -59,5 +65,20 @@ export class UserHeaderComponent implements OnInit {
   register(){
     window.location.href = '/register'
 
+  }
+  sendMail(){
+    Swal.fire({
+      icon: 'warning',
+      title: 'An email to reset your password has been sent to you.',
+      text: 'Please check your inbox (including spam) to complete the password reset process.',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Open Email',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.open("https://mail.google.com/", '_blank'); // Open in new tab/window
+      }
+    });
   }
 }

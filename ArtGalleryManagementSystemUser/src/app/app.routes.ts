@@ -20,6 +20,9 @@ import { HomeNoLoginComponent } from './user/layouts/layouts/homeNoLogin.compone
 import { AuthGuard } from './auth.guard';
 import { LoginRedirectGuard } from './loginRedirect.guard';
 import { NotFoundComponent } from './user/not-found/not-found.component';
+import { ProductRateComponent } from './user/components/product/product-rate.component';
+import { ForgotPasswordComponent } from './user/login/forgotPassword.component';
+import { ResetPasswordComponent } from './user/login/resetPassword.component';
 
 export const routes: Routes = [
     // Route cho người dùng đã đăng nhập
@@ -118,6 +121,13 @@ export const routes: Routes = [
                 data: {
                     addActive: 'product',
                 }
+            },
+            {
+                path:'product-rate',
+                component: ProductRateComponent,
+                data: {
+                    addActive: 'product',
+                }
             }
         ]
     },
@@ -159,6 +169,16 @@ export const routes: Routes = [
     {
         path: 'register',
         component: SignUpComponent,
+        canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
+    },
+    {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+        canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
+    },
+    {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
         canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
     },
     {
