@@ -1,5 +1,5 @@
 declare var google : any 
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   wrong:string
   imageURL:string
   account:any
+  typeInput:any
   constructor(
     private conect: Conect,
     private http : HttpClient,
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-
+    this.typeInput='password'
     this.username = ''
     this.password = ''
     google.accounts.id.renderButton(document.getElementById("google-btn"),{
@@ -188,6 +189,12 @@ export class LoginComponent implements OnInit {
             }
           }
         )
+  }
+  show(){
+    this.typeInput='text'
+  }
+  hide(){
+    this.typeInput='password'
   }
 }
 

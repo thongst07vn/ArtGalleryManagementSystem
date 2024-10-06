@@ -830,6 +830,28 @@ select.form-control.form-custom {
 .input-group .input-group-text svg {
   color: #515365;
 }
+.input-group-text-nohover  {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--bs-tertiary-bg);
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+}
+.input-group .input-group-text-nohover {
+  border: 1px solid #bfc9d4;
+  background-color: #f1f2f3;
+  color: #515365;
+}
+.input-group .input-group-text-nohover svg {
+  color: #515365;
+}
 .input-group:hover .input-group-text svg {
   color: #4361ee;
   fill: rgba(27, 85, 226, 0.2392156863);

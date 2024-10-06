@@ -20,6 +20,9 @@ import { formatDate } from '@angular/common';
 })
 export class SignUpComponent implements OnInit {
   registerForm: FormGroup
+  typeInput:any
+  typeInputRe:any
+
   constructor(
     private conect: Conect,
     private userService: UserService,
@@ -80,6 +83,9 @@ export class SignUpComponent implements OnInit {
     )
   }
   ngOnInit(): void {
+    this.typeInput='password'
+    this.typeInputRe='password'
+
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/mousetrap/mousetrap.min.js")
@@ -209,5 +215,17 @@ export class SignUpComponent implements OnInit {
         }
       }
     )
+  }
+  show(){
+    this.typeInput='text'
+  }
+  hide(){
+    this.typeInput='password'
+  }
+  showRe(){
+    this.typeInputRe='text'
+  }
+  hideRe(){
+    this.typeInputRe='password'
   }
 }
