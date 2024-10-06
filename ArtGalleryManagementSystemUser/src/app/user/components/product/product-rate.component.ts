@@ -6,7 +6,7 @@ import { Conect } from '../../../conect';
   standalone: true,
   imports: [RouterOutlet, RouterLink],
   templateUrl: './product-rate.component.html',
-  styleUrls: ['./product-rate.component.css']
+  // styleUrls: ['./product-rate.component.css']
 })
 export class ProductRateComponent implements OnInit, AfterViewInit {
   constructor(
@@ -35,7 +35,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
     this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     this.conect.addStyle("src/assets/css/dark/apps/invoice-list.css")
-
+    this.conect.addStyle("layouts/horizontal-light-menu/css/product-rate.css")
     this.conect.addScriptAsync("src/plugins/src/table/datatable/datatables.js")
     this.conect.addScriptAsync("src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js")
     this.conect.addScriptAsync("src/assets/js/apps/invoice-list.js")
@@ -50,7 +50,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
       // Product rating stars
       document.querySelectorAll('.star-rating.product-stars i[data-star]').forEach((starElement) => {
         starElement.addEventListener('click', () => {
-          console.log('Product Star clicked:', starElement); // Ghi log khi ngôi sao được nhấn
+           // Ghi log khi ngôi sao được nhấn
           const star = starElement.getAttribute('data-star');
           const stars = starElement.parentElement?.children;
   
@@ -65,6 +65,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
               }
             }
           }
+          console.log(star)
         });
       });
   
@@ -90,7 +91,4 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
       });
     });
   }
-
-  
-  
 }
