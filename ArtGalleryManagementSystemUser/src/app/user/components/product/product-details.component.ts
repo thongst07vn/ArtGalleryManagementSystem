@@ -79,7 +79,7 @@ export class ProductDetailsComponent implements OnInit {
     this.conect.addScriptAsync("src/assets/js/apps/ecommerce-details.js")
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-    this.conect.reloadPage()
+    // this.conect.reloadPage()
     this.addsuccess = false;
     this.activatedRoute.paramMap.subscribe(
       params => {
@@ -149,15 +149,9 @@ export class ProductDetailsComponent implements OnInit {
     window.location.href = '/user/contact-us'
   }
   login(){
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
     Swal.fire({
-      title: 'Do You Have An Account?',
+      title: 'You Love It ?',
+      text: 'Please Login !',
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes !',
@@ -167,11 +161,6 @@ export class ProductDetailsComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = '/login'
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        window.location.href = '/register'
       }
     })
   }

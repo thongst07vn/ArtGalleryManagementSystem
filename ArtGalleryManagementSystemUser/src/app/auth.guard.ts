@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
       return true; // Cho phép truy cập nếu đã đăng nhập
     } else {
       // Chuyển hướng về trang login nếu chưa đăng nhập
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
       return false;
     }
   }
