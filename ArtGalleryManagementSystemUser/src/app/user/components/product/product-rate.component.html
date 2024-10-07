@@ -142,8 +142,6 @@
                             <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">
                                 Review Product
                               </button>
-                              
-
                         </td>
                     </tr>
                 </tbody>
@@ -153,7 +151,7 @@
         
 
         <div style="float: right;" class="mb-2  btn-lg">
-            <button class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;">Back to
+            <button (click)="back()" class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;">Back to
                 Home</button>
         </div>
 
@@ -167,56 +165,46 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <div class="modal-body p-4">
-                        <!-- Product Image and Name -->
-                        <div class="d-flex align-items-center mb-4">
-                            <img src="../src/assets/img/profile-13.jpeg" alt="Product Image"
-                                class="img-fluid rounded me-3">
-                            <h4 class="mb-0">Product Name</h4>
+                    <form [formGroup]="reviewForm" (ngSubmit)="send()">
+                        <div class="modal-body p-4">
+                            <!-- Product Image and Name -->
+                            <div class="d-flex align-items-center mb-4">
+                                <img src="../src/assets/img/profile-13.jpeg" alt="Product Image"
+                                    class="img-fluid rounded me-3">
+                                <h4 class="mb-0">Product Name</h4>
+                            </div>
+    
+                            <!-- Product Rating -->
+                            <div class="mb-4">
+                                <label class="fw-bold">Review Product:</label>
+                                <div class="d-flex">
+                                    <div class="star-rating product-stars">
+                                      <i class="fa fa-star fa-2x text-secondary" data-star="1" style="cursor: pointer;"></i>
+                                      <i class="fa fa-star fa-2x text-secondary" data-star="2" style="cursor: pointer;"></i>
+                                      <i class="fa fa-star fa-2x text-secondary" data-star="3" style="cursor: pointer;"></i>
+                                      <i class="fa fa-star fa-2x text-secondary" data-star="4" style="cursor: pointer;"></i>
+                                      <i class="fa fa-star fa-2x text-secondary" data-star="5" style="cursor: pointer;"></i>
+                                    </div>
+                                  </div>
+                                  
+                                  
+                            </div>
+    
+                            <!-- Review Description -->
+                            <div class="form-group">
+                                <label for="reviewDescription" class="fw-bold">Your opinion about our product:</label>
+                                <textarea class="form-control" id="reviewDescription" rows="4"
+                                    placeholder="Enter your opinion..." formControlName="reviewText"></textarea>
+                            </div>
+    
+                            
                         </div>
-
-                        <!-- Product Rating -->
-                        <div class="mb-4">
-                            <label class="fw-bold">Review Product:</label>
-                            <div class="d-flex">
-                                <div class="star-rating product-stars">
-                                  <i class="fa fa-star fa-2x text-secondary" data-star="1" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-star="2" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-star="3" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-star="4" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-star="5" style="cursor: pointer;"></i>
-                                </div>
-                              </div>
-                              
-                              
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success" >Send Review</button>
                         </div>
-
-                        <!-- Review Description -->
-                        <div class="form-group">
-                            <label for="reviewDescription" class="fw-bold">Your opinion about our product:</label>
-                            <textarea class="form-control" id="reviewDescription" rows="4"
-                                placeholder="Enter your opinion..."></textarea>
-                        </div>
-
-                        <!-- Service Rating -->
-                        <div class="mb-4">
-                            <label class="fw-bold">Review Service:</label>
-                            <div class="d-flex">
-                                <div class="star-rating service-stars">
-                                  <i class="fa fa-star fa-2x text-secondary" data-service-star="1" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-service-star="2" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-service-star="3" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-service-star="4" style="cursor: pointer;"></i>
-                                  <i class="fa fa-star fa-2x text-secondary" data-service-star="5" style="cursor: pointer;"></i>
-                                </div>
-                              </div>
-                              
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Send Review</button>
-                    </div>
+                    </form>
+                    
                 </div>
             </div>
         </div>

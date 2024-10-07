@@ -126,7 +126,7 @@ export const routes: Routes = [
                 path:'product-rate',
                 component: ProductRateComponent,
                 data: {
-                    addActive: 'product',
+                    addActive: 'review',
                 }
             }
         ]
