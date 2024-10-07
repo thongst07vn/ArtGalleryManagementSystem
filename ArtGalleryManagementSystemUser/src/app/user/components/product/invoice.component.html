@@ -103,43 +103,48 @@
                                                                 <table class="table">
                                                                     <thead class="">
                                                                         <tr>
-                                                                            <th scope="col">S.No</th>
-                                                                            <th scope="col">Items</th>
-                                                                            <th class="text-end" scope="col">Quantity
-                                                                            </th>
-                                                                            <th class="text-end" scope="col">Price</th>
-                                                                            <th class="text-end" scope="col">Amount</th>
+                                                                            <th>Image</th>
+                                                                            <th>Product Name</th>                                                                 
+                                                                            <th>Quantity</th>
+                                                                            <th>Price</th>
+                                                                            <th>Seller</th>                                                                        
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>Calendar App Customization</td>
-                                                                            <td class="text-end">1</td>
-                                                                            <td class="text-end">$120</td>
-                                                                            <td class="text-end">$120</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>2</td>
-                                                                            <td>Chat App Customization</td>
-                                                                            <td class="text-end">1</td>
-                                                                            <td class="text-end">$230</td>
-                                                                            <td class="text-end">$230</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>3</td>
-                                                                            <td>Laravel Integration</td>
-                                                                            <td class="text-end">1</td>
-                                                                            <td class="text-end">$405</td>
-                                                                            <td class="text-end">$405</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>4</td>
-                                                                            <td>Backend UI Design</td>
-                                                                            <td class="text-end">1</td>
-                                                                            <td class="text-end">$2500</td>
-                                                                            <td class="text-end">$2500</td>
-                                                                        </tr>
+                                                                        @if(invoiceList){
+                                                                            @for(product of invoiceList; track product){
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if(product.image.substring(0,5)=="https"){
+                                                                                           
+                                                                                            <img src="{{product.image}}"width="60" height="60" alt="">
+
+                                                                                        }
+                                                                                        @else {
+                                                                                            <img src="{{imageUrl + product.image}}"width="60" height="60" alt="">
+                                                                                        } 
+                                                                                    </td>
+                                                                                    <td>{{product.name}}</td>                                                                                   
+                                                                                    <td class="text-end">{{product.quantity}}</td>
+                                                                                    <td class="text-end">${{product.price}}</td>
+                                                                                    <td>
+                                                                                        <div class="d-flex">
+                                                                                            <div class="usr-img-frame me-2 rounded-circle">
+                                                                                                @if(product.avatar.substring(0,5)=="https"){
+                                                                                                    <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}">
+                                                                                 
+                                                                                                }
+                                                                                                @else {
+                                                                                                    <img alt="avatar" class="img-fluid rounded-circle" src="{{imageUrl+product.avatar}}">
+                                                                                                    
+                                                                                                }                                        
+                                                                                            </div>
+                                                                                            <p class="inv-amount mx-2">{{product.username}}</p>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }                                                
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -203,7 +208,7 @@
                                                                             </div>
                                                                             <div
                                                                                 class="col-sm-4 col-5 grand-total-amount mt-3 mb-4">
-                                                                                <h4 class="">$3480</h4>
+                                                                                <h4 class="">${{total}}</h4>
                                                                             </div>
                                                                             <div class="col-xl-12 col-md-3 col-sm-6" style="padding: 0;">
                                                                                 <a href="javascript:void(0);"
