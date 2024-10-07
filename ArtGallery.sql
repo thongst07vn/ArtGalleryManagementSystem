@@ -37,9 +37,11 @@ CREATE TABLE [users] (
   [password] nvarchar(255),
   [gender] integer,
   [status] bit,
-  [birth_of_date] date,
+  [birth_of_date] datetime,
   [phone_number] nvarchar(255),
-  [created_at] datetime,
+  [reset_password_token] nvarchar(255),
+  [reset_password_expiry] datetime,
+  [created_at] datetime NOT NULL,
   [deleted_at] datetime
 )
 GO
@@ -62,7 +64,7 @@ CREATE TABLE [addresses] (
   [ward_code] nvarchar(20),
   [postal_code] nvarchar(255),
   [phone_number] nvarchar(255),
-  [created_at] datetime,
+  [created_at] datetime NOT NULL,
   [deleted_at] datetime
 )
 GO

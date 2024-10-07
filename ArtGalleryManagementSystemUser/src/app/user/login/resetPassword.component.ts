@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
 import flatpickr from 'flatpickr';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
@@ -22,70 +22,38 @@ export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup
   typeInput:string = 'password'
   typeInputRe:string = 'password'
-
+  
   constructor(
     private conect: Conect,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private activatedRoute : ActivatedRoute
   ){
-    this.resetForm = this.formBuilder.group({
-      username:['',
-        [Validators.required]
-      ],
-      firstName:['',
-        [Validators.required,
-          Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
-        ]
-      ],
-      lastName:['',
-        [Validators.required,
-          Validators.pattern(/^[A-ZÀ-Ỹ][a-zA-Zà-ỹ\s]*/)
-        ]
-      ],
-      birthOfDate:['',
-        [Validators.required,
-          Validators.pattern(/\d+\-\d+\-\b(19[6-9][0-9]|200[0-6])\b/)
-        ]
-      ],
-      email:['',
-        [Validators.required,
-        Validators.email]
-      ],
-      password:['',
-        [
-          Validators.required,
-          this.lengthValidator(),
-          this.digitValidator(),
-          this.lowercaseValidator(),
-          this.uppercaseValidator(),
-          this.specialCharacterValidator()
-        ]
-      ],
-      rePassword:['',[
-        Validators.required
-      ]],
-      phoneNumber:['',
-        [Validators.required,
-        Validators.pattern(/^0\d{9}$/)]
-      ],
-      role:['',
-        [Validators.required]
-      ],
-      gender:['',
-        [Validators.required]
-      ],
-      avatar:['noimg.jpg'],
-      createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')],
-    },
-    {
-        validator: this.CheckP
-    }
-  )
-    
+      this.resetForm = this.formBuilder.group({
+        password:['',
+          [
+            Validators.required,
+            this.lengthValidator(),
+            this.digitValidator(),
+            this.lowercaseValidator(),
+            this.uppercaseValidator(),
+            this.specialCharacterValidator()
+          ]
+        ],
+        rePassword:['',[
+          Validators.required
+        ]],
+        
+      },
+      {
+          validator: this.CheckP
+      }
+    )
   }
   ngOnInit() {
     this.typeInput='password'
     this.typeInputRe='password'
+    
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/mousetrap/mousetrap.min.js")
@@ -113,8 +81,32 @@ export class ResetPasswordComponent implements OnInit {
     this.conect.addStyle("src/plugins/css/light/flatpickr/custom-flatpickr.css")
     // this.conect.addStyle("src/plugins/css/dark/flatpickr/custom-flatpickr.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")
-
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      this.resetForm = this.formBuilder.group({
+          email:[params.get('email')],
+          password:['',
+            [
+              Validators.required,
+              this.lengthValidator(),
+              this.digitValidator(),
+              this.lowercaseValidator(),
+              this.uppercaseValidator(),
+              this.specialCharacterValidator()
+            ]
+          ],
+          rePassword:['',[
+            Validators.required
+          ]],
+          resetPasswordToken:[params.get('code')],
+          resetPasswordExpiry:[formatDate(new Date(),'dd-MM-yyyy HH:mm:ss','en-US')]
+        },
+        {
+            validator: this.CheckP
+        }
+      )
+    })
     this.conect.reloadPage()
+    
     console.log(this.typeInput)
   }
   CheckP(control:AbstractControl){
@@ -176,5 +168,35 @@ export class ResetPasswordComponent implements OnInit {
   }
   hideRe(){
     this.typeInputRe='password'
+  }
+  resetPass(){
+    
+    console.log(this.resetForm.value)
+    let user =  JSON.stringify(this.resetForm.value)
+    let formdata = new FormData();
+    formdata.append('resetinfo',user);
+    this.userService.resetpass(formdata).then(
+      res=>{
+        if(res['result']){
+          window.location.href='/login'
+        }
+        else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Reset Password Fail',
+          }).then(()=>{
+            window.location.href='/'
+          })
+        }
+      },
+      ()=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Reset Password Fail',
+        }).then(()=>{
+          window.location.href='/'
+        })
+      }
+    )
   }
 }

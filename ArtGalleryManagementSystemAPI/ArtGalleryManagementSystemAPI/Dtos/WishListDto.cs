@@ -10,7 +10,7 @@ public class WishListDto
 
     public int? ProductId { get; set; }
     public string ProductName { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public string CreatedAt { get; set; }
 
-    public DateTime? DeletedAt { get; set; }
+    public string DeletedAt { get; set; }
 }

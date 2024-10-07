@@ -22,8 +22,11 @@ public class UserDto
     public string BirthOfDate { get; set; }
 
     public string? PhoneNumber { get; set; }
+    public string ResetPasswordToken { get; set; }
 
+    public string ResetPasswordExpiry { get; set; }
     public string CreatedAt { get; set; }
 
     public string DeletedAt { get; set; }
+
 }

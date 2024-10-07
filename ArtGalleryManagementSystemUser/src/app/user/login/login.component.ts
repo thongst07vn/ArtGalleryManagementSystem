@@ -2,7 +2,7 @@ declare var google : any
 import { Component, input, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../conect';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { formatDate, NgClass } from '@angular/common';
 import * as JSBase64 from 'js-base64'
 import { HttpClient } from '@angular/common/http';  
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 import { UserService } from '../services/user.service';
 @Component({
   standalone: true,
-  imports: [RouterOutlet,RouterLink,FormsModule,NgClass],
+  imports: [RouterOutlet,RouterLink,FormsModule,NgClass,ReactiveFormsModule],
   templateUrl: './login.component.html',
   host:{
     'collision': 'LoginComponent'
@@ -23,10 +23,14 @@ export class LoginComponent implements OnInit {
   imageURL:string
   account:any
   typeInput:any
+  forgotForm:FormGroup
+  resetPassEmail:string
+  isValidEmail:any
   constructor(
     private conect: Conect,
     private http : HttpClient,
     private userService: UserService,
+    private formBuilder:FormBuilder
   ){
     google.accounts.id.initialize({
       client_id:'105028155984-afc2mgb3fgmkvvo4ipcmhn1eo0070rln.apps.googleusercontent.com',
@@ -62,7 +66,8 @@ export class LoginComponent implements OnInit {
     this.conect.addStyle("src/assets/css/light/authentication/auth-cover.css")
 
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
-
+    this.conect.addStyle("src/assets/css/light/components/modal.css");
+    this.conect.addStyle("src/assets/css/dark/components/modal.css");
     // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
     // this.conect.addStyle("src/assets/css/dark/authentication/auth-cover.css")
     // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
@@ -88,19 +93,13 @@ export class LoginComponent implements OnInit {
                   sessionStorage.setItem("loggedInUser",JSON.stringify([this.username]))
                   window.location.href = 'user/home'
                 }
-                else {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Your Account Has Been Deleted',
-                })
-                }
               }
             )
           }
-          else{
+          else {
             Swal.fire({
               icon: 'error',
-              title: 'Email or Password invalid',
+              title: 'Your Account Has Been Deleted',
             })
           }
         }
@@ -156,7 +155,6 @@ export class LoginComponent implements OnInit {
           if(res['result'].deletedAt==null){
             sessionStorage.setItem("loggedInUser",JSON.stringify(this.account.email))
             window.location.href = 'user/home'
-            
           }
           else{
             Swal.fire({
@@ -196,5 +194,74 @@ export class LoginComponent implements OnInit {
   hide(){
     this.typeInput='password'
   }
+  checkValidEmail(event:any){
+    const value =  event
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    this.isValidEmail = regex.test(value)
+  }
+  confirmSend(){
+    if(this.resetPassEmail!=null){
+      this.userService.findbyemail(this.resetPassEmail).then(
+        res =>{
+          if(res['result']){
+            if(res['result'].deletedAt==null){
+              if(this.isValidEmail){
+                  this.userService.sendmail(this.resetPassEmail).then(
+                    () =>{
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Send Email success',
+                      })
+                      this.resetPassEmail=''
+                    },
+                    ()=>{
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Send Email Fail'
+                      })
+                      this.resetPassEmail=''
+                    }
+                  )
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Email invalid',
+                })
+              }
+            }
+            else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Your Account Has Been Deleted',
+              })
+              this.resetPassEmail=''
+            }
+          }
+          else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Email invalid',
+            })
+            this.resetPassEmail=''
+          }
+        },
+        ()=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Email invalid',
+          })
+          this.resetPassEmail=''
+        }
+      )
+    }
+    else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Email invalid',
+        })
+        this.resetPassEmail=''
+      }
+  }
+
 }
 
