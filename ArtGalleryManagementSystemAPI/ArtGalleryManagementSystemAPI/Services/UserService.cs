@@ -13,5 +13,6 @@ public interface UserService
     public bool EditProfile(UserDto userDto);
     public bool AddAddress(AddressDto addressdto);
     public bool UpdateAddress(AddressDto addressdto);
-
+    public bool ResetPassword(UserDto userDto);
+    public bool SendMail(UserDto userDto);
 }

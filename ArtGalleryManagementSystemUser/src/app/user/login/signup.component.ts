@@ -200,12 +200,10 @@ export class SignUpComponent implements OnInit {
 
               }
               else {
-                
-                  Swal.fire({
-                      icon: 'error',
-                      title: 'Register Fail',
-                  })
-                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Register Fail',
+                })                
               } 
             },
             error => {

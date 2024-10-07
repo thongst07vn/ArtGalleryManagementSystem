@@ -33,6 +33,10 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.Income,
                 src => src.MapFrom(src => src.Role == 2 ? src.Seller.Income : null)
+            )
+            .ForMember(
+                des => des.ResetPasswordExpiry,
+                src => src.MapFrom(desc => desc.ResetPasswordExpiry != null ? ((DateTime)desc.ResetPasswordExpiry).ToString("dd-MM-yyyy HH:mm:ss") : null)
             );
         CreateMap<UserDto, User>()
             .ForMember(
@@ -46,6 +50,10 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            )
+            .ForMember(
+                des => des.ResetPasswordExpiry,
+                src => src.MapFrom(src => src.ResetPasswordExpiry != null ? DateTime.ParseExact(src.ResetPasswordExpiry, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture) : default(DateTime?))
             );
         CreateMap<Seller, SellerDto>()
             .ForMember(
@@ -197,6 +205,19 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
+            )
+            .ForMember(
+                des => des.ProductName,
+                src => src.MapFrom(src => src.WishlistProducts.Select(src => src.Products.Name))
+            );
+        CreateMap<WishListDto, Wishlist>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
     }
 }

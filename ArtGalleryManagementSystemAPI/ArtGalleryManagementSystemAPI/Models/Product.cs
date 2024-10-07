@@ -15,7 +15,7 @@ public partial class Product
 
     public int? Type { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public int? CategoryId { get; set; }
 
@@ -31,7 +31,7 @@ public partial class Product
 
     public virtual ICollection<BidOrder> BidOrders { get; set; } = new List<BidOrder>();
 
-    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; } = new List<CartItemProduct>();
+    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; }
 
     public virtual Category Category { get; set; }
 
@@ -43,5 +43,5 @@ public partial class Product
 
     public virtual Seller Seller { get; set; }
 
-    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; } = new List<WishlistProduct>();
+    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; }
 }

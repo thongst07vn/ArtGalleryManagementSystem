@@ -68,17 +68,39 @@ export class UserHeaderComponent implements OnInit {
   }
   sendMail(){
     Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
       icon: 'warning',
-      title: 'An email to reset your password has been sent to you.',
-      text: 'Please check your inbox (including spam) to complete the password reset process.',
       showCancelButton: true,
-      cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Open Email',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes !'
     }).then((result) => {
-      if (result.isConfirmed) {
-        window.open("https://mail.google.com/", '_blank'); // Open in new tab/window
-      }
-    });
+        if (result.isConfirmed) {
+          if(this.user != null){
+            this.userService.sendmail(this.user.email).then(
+              () =>{
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'An email to reset your password has been sent to you.',
+                  text: 'Please check your inbox (including spam) to complete the password reset process.',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'Open Email',
+                }).then( ()=> {
+                    window.location.href='https://mail.google.com' // Open in new tab/window
+                });
+              },
+              ()=>{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Send Email Fail'
+                })
+              }
+            )
+          }
+          
+        }
+    })
+    
   }
 }

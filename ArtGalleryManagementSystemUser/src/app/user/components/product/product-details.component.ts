@@ -80,9 +80,9 @@ export class ProductDetailsComponent implements OnInit {
     // this.conect.reloadPage()
     this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
-        let user = res['result'] as User
-        if(user!=null){
-          this.userId = user.id
+        this.user = res['result'] as User
+        if(this.user!=null){
+          this.userId = this.user.id
         }
       })
     this.activatedRoute.paramMap.subscribe(
@@ -162,8 +162,5 @@ export class ProductDetailsComponent implements OnInit {
       }
     })
   }
-}
-function Splide(arg0: string, arg1: { rewind: boolean; fixedWidth: number; fixedHeight: number; isNavigation: boolean; gap: number; focus: string; pagination: boolean; cover: boolean; dragMinThreshold: { mouse: number; touch: number; }; breakpoints: { 640: { fixedWidth: number; fixedHeight: number; }; }; }) {
-  throw new Error('Function not implemented.');
 }
 
