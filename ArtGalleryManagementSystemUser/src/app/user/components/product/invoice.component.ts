@@ -55,4 +55,7 @@ export class InvoiceComponent implements OnInit {
 
 
   }
+  buy(){
+    window.location.href="/user/product-rate"
+  }
 }

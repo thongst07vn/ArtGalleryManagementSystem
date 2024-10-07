@@ -1,20 +1,37 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ConectActive } from '../../services/conectActive';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink,ReactiveFormsModule],
   templateUrl: './product-rate.component.html',
   // styleUrls: ['./product-rate.component.css']
 })
 export class ProductRateComponent implements OnInit, AfterViewInit {
+  star:any
+  serviceStar:any
+  reviewForm:FormGroup
   constructor(
-    private conect : Conect
-  ) { }
+    private conect : Conect,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private conectActive: ConectActive
+  ) {
+    this.reviewForm = this.formBuilder.group({
+      rating: ['',Validators.required],
+      reviewText:['',Validators.required]
+    })
+  }
 
   async ngOnInit(){
-
+    this.activatedRoute.data.subscribe(
+      params => {
+        this.conectActive.setData(params['addActive'])
+      }
+    )
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
@@ -43,6 +60,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
 
     this.conect.addStyle("src/assets/css/light/components/modal.css");
     this.conect.addStyle("src/assets/css/dark/components/modal.css");
+    
   }
 
   ngAfterViewInit() {
@@ -51,7 +69,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
       document.querySelectorAll('.star-rating.product-stars i[data-star]').forEach((starElement) => {
         starElement.addEventListener('click', () => {
            // Ghi log khi ngôi sao được nhấn
-          const star = starElement.getAttribute('data-star');
+          this.star = starElement.getAttribute('data-star');
           const stars = starElement.parentElement?.children;
   
           if (stars) {
@@ -59,36 +77,28 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
               stars[i].classList.remove('text-warning');
               stars[i].classList.add('text-secondary');
   
-              if (i < Number(star)) {
+              if (i < Number(this.star)) {
                 stars[i].classList.remove('text-secondary');
                 stars[i].classList.add('text-warning');
               }
             }
           }
-          console.log(star)
+          this.reviewForm = this.formBuilder.group({
+            rating: [this.star,Validators.required],
+            reviewText:['',Validators.required]
+          })
         });
       });
   
-      // Service rating stars
-      document.querySelectorAll('.star-rating.service-stars i[data-service-star]').forEach((starElement) => {
-        starElement.addEventListener('click', () => {
-          console.log('Service Star clicked:', starElement); // Ghi log khi ngôi sao dịch vụ được nhấn
-          const serviceStar = starElement.getAttribute('data-service-star');
-          const serviceStars = starElement.parentElement?.children;
-  
-          if (serviceStars) {
-            for (let i = 0; i < serviceStars.length; i++) {
-              serviceStars[i].classList.remove('text-warning');
-              serviceStars[i].classList.add('text-secondary');
-  
-              if (i < Number(serviceStar)) {
-                serviceStars[i].classList.remove('text-secondary');
-                serviceStars[i].classList.add('text-warning');
-              }
-            }
-          }
-        });
-      });
+      
     });
+    
+  }
+  send(){
+    
+    console.log(this.reviewForm.value)
+  }
+  back(){
+    window.location.href='user/home'
   }
 }
