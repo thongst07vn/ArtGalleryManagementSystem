@@ -15,7 +15,7 @@ public partial class Product
 
     public int? Type { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public int? CategoryId { get; set; }
 
@@ -44,4 +44,5 @@ public partial class Product
     public virtual Seller Seller { get; set; }
 
     public virtual ICollection<WishlistProduct> WishlistProducts { get; set; } 
+
 }

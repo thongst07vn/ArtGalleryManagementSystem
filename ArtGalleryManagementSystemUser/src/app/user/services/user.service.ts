@@ -29,4 +29,10 @@ export class UserService{
     async login(email: string, password:string){
         return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'user/login/',{email,password}));
     }
+    async sendmail(email: string){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL + 'user/send-reset-mail/',{email}));
+    }
+    async resetpass(formData: FormData){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'user/reset-password', formData));
+    }
 }

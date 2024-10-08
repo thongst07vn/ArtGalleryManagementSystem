@@ -118,4 +118,37 @@ public class UserServiceImpl : UserService
     {
         throw new NotImplementedException();
     }
+
+    public bool ResetPassword(UserDto userDto)
+    {
+        var account = db.Users.SingleOrDefault(u => u.Email == userDto.Email);
+        var user = mapper.Map<User>(userDto);
+        if (account != null)
+        {
+            if (DateTime.Compare((DateTime)account.ResetPasswordExpiry, (DateTime)user.ResetPasswordExpiry) >= 0)
+            {
+                if (account.ResetPasswordToken.Replace(" ", "+") == user.ResetPasswordToken.Replace(" ", "+"))
+                {
+                    account.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                    db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    return db.SaveChanges() > 0;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    public bool SendMail(UserDto userDto)
+    {
+        var account = db.Users.SingleOrDefault(u => u.Email == userDto.Email);
+        var user = mapper.Map<User>(userDto);
+        if (account != null)
+        {
+            account.ResetPasswordToken = user.ResetPasswordToken;
+            account.ResetPasswordExpiry = user.ResetPasswordExpiry;
+        }
+        db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
 }

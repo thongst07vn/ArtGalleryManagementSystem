@@ -9,6 +9,8 @@ export class User{
     password:string
     birthOfDate:string
     phoneNumber:string
+    resetPasswordToken:string
+    resetPasswordExpiry:string
     createdAt:string
     deletedAt:string
 }

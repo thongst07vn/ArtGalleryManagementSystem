@@ -13,7 +13,7 @@ public partial class ProductAttribute
 
     public string Value { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 

@@ -27,9 +27,13 @@ public partial class User
 
     public bool? Status { get; set; }
 
-    public DateTime BirthOfDate { get; set; }
+    public DateTime? BirthOfDate { get; set; }
 
     public string PhoneNumber { get; set; }
+
+    public string ResetPasswordToken { get; set; }
+
+    public DateTime? ResetPasswordExpiry { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

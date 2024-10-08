@@ -126,7 +126,7 @@ export const routes: Routes = [
                 path:'product-rate',
                 component: ProductRateComponent,
                 data: {
-                    addActive: 'product',
+                    addActive: 'review',
                 }
             }
         ]
@@ -171,11 +171,11 @@ export const routes: Routes = [
         component: SignUpComponent,
         canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
     },
-    {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent,
-        canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
-    },
+    // {
+    //     path: 'forgot-password',
+    //     component: ForgotPasswordComponent,
+    //     canActivate: [LoginRedirectGuard] // Chuyển hướng đến `/user/home` nếu đã đăng nhập
+    // },
     {
         path: 'reset-password',
         component: ResetPasswordComponent,

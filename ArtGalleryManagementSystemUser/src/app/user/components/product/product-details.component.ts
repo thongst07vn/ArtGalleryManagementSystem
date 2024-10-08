@@ -208,7 +208,4 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 }
-function Splide(arg0: string, arg1: { rewind: boolean; fixedWidth: number; fixedHeight: number; isNavigation: boolean; gap: number; focus: string; pagination: boolean; cover: boolean; dragMinThreshold: { mouse: number; touch: number; }; breakpoints: { 640: { fixedWidth: number; fixedHeight: number; }; }; }) {
-  throw new Error('Function not implemented.');
-}
 
