@@ -29,19 +29,19 @@ public partial class Product
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual ICollection<BidOrder> BidOrders { get; set; } = new List<BidOrder>();
+    public virtual ICollection<BidOrder> BidOrders { get; set; } 
 
-    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; } = new List<CartItemProduct>();
+    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; } 
 
     public virtual Category Category { get; set; }
 
-    public virtual ICollection<OrderItemProduct> OrderItemProducts { get; set; } = new List<OrderItemProduct>();
+    public virtual ICollection<OrderItemProduct> OrderItemProducts { get; set; }
 
     public virtual ICollection<ProductAttributesProduct> ProductAttributesProducts { get; set; }
 
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public virtual ICollection<Review> Reviews { get; set; }
 
     public virtual Seller Seller { get; set; }
 
-    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; } = new List<WishlistProduct>();
+    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; } 
 }

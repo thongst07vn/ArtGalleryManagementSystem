@@ -106,7 +106,7 @@ export class AddtoCardComponent implements OnInit {
   deleteAll(){
     if(this.cartItems!=''){
       this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
-      window.location.href = 'user/add-to-cart'
+      // window.location.href = 'user/add-to-cart'
     }else{
       Swal.fire({
         icon: 'warning',
@@ -119,7 +119,7 @@ export class AddtoCardComponent implements OnInit {
   DeleteItem(id:any){
     console.log(id)
     this.cartService.deleteItem(id);
-    window.location.href = 'user/add-to-cart'
+    // window.location.href = 'user/add-to-cart'
   }
   ChangeSelectedValueAll(evt:any){
     const isChecked = evt.target.checked;

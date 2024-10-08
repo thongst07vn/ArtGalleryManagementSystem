@@ -19,6 +19,18 @@ public class CartController : Controller
     [HttpPost("addtocart")]
     public IActionResult AddToCart([FromBody] CartItemDto cartItemDto)
     {
+
+        var itemsInCart = cartService.FindAllCartItem((int)cartItemDto.CartId);
+        foreach (var item in itemsInCart)
+        {
+            if (item.ProductId == cartItemDto.ProductId)
+            {
+                return Ok(new
+                {
+                    result = cartService.UpdateProductInCart(cartItemDto)
+                });
+            }
+        }
         try
         {
             return Ok(new

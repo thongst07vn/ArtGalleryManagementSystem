@@ -18,6 +18,13 @@ public class CartServiceImpl : CartService
     {
         var cartItem = mapper.Map<CartItem>(cartItemDto);
         db.CartItems.Add(cartItem);
+        if (db.SaveChanges() > 0)
+        {
+            var cartItemProduct = new CartItemProduct();
+            cartItemProduct.ProductsId = (int)cartItemDto.ProductId;
+            cartItemProduct.CartItemProductId = (int)cartItemDto.CartId;
+            db.CartItemProducts.Add(cartItemProduct);
+        }
         return db.SaveChanges() > 0;
     }
 
@@ -43,5 +50,18 @@ public class CartServiceImpl : CartService
     public CartDto FindById(int id)
     {
         return mapper.Map<CartDto>(db.Carts.Find(id));
+    }
+
+    public bool UpdateProductInCart(CartItemDto cartItemDto)
+    {
+        var item = db.CartItems.SingleOrDefault(i => i.ProductId == cartItemDto.ProductId && i.CartId == cartItemDto.CartId);
+        if (item != null)
+        {
+            item.Quantity += cartItemDto.Quantity;
+            db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return db.SaveChanges() > 0;
+        }
+        else { return false; }
+
     }
 }

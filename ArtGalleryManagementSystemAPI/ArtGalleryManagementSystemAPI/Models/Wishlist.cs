@@ -21,5 +21,5 @@ public partial class Wishlist
 
     public virtual User User { get; set; }
 
-    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; } = new List<WishlistProduct>();
+    public virtual ICollection<WishlistProduct> WishlistProducts { get; set; }
 }

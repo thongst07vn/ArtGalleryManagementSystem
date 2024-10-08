@@ -26,25 +26,23 @@
                                     <input class="form-check-input productchecked" type="checkbox" (change)="ChangeSelectedValue(product.selectedindex,$event)">
                                 </div>
                             </td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="usr-img-frame me-2">
-                                        @if(product.image.substring(0,5)=="https"){
-                                            <img alt="avatar" class="img-fluid" src="{{product.image}}">
-                                        }
-                                        @else {
-                                            <img alt="avatar" class="img-fluid" src="{{imageUrl+product.image}}">
-                                        } 
-                                        
-                                    </div>
-                                </div>
+                            <td>                            
+                                <div class="align-content-center">
+                                    @if(product.image.substring(0,5)=="https"){
+                                        <img alt="avatar" src="{{product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
+                                    }
+                                    @else {
+                                        <img alt="avatar" src="{{imageUrl+product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
+                                    } 
+                                    
+                                </div>                              
                             </td>
                             <td><span>{{product.name}}</span></td>
                             <td><span class="inv-amount">{{product.quantity}}</span></td>
                             
                             <td ><span class="">${{product.price}}</span></td>
                             <td>
-                                <div class="d-flex">
+                                <div class="d-flex align-items-baseline">
                                     <div class="usr-img-frame me-2 rounded-circle">
                                         @if(product.avatar.substring(0,5)=="https"){
                                             <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}">

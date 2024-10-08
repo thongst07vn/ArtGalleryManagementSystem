@@ -19,7 +19,7 @@ public partial class Province
 
     public string CodeName { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public virtual ICollection<Address> Addresses { get; set; }
 
-    public virtual ICollection<District> Districts { get; set; } = new List<District>();
+    public virtual ICollection<District> Districts { get; set; }
 }
