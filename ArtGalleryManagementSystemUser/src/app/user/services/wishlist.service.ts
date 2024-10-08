@@ -18,7 +18,7 @@ export class WishlistService{
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'wishlist/findallwishlist/'+userid))
     }
     async deleteItem(id:number){
-        return lastValueFrom(this.httpClient.delete(this.baseUrlService.BASE_URL+'cart/deleteitem/'+id))
+        return lastValueFrom(this.httpClient.delete(this.baseUrlService.BASE_URL+'wishlist/deleteitem/'+id))
     }
     async deleteallItem(cartid:number){
         return lastValueFrom(this.httpClient.delete(this.baseUrlService.BASE_URL+'cart/deleteallitem/'+cartid))

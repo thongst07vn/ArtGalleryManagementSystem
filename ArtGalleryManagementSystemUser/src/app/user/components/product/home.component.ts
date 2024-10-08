@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
     })
   }
   async ngOnInit(){
+    this.productswithseller = []
     this.imageUrl=this.baseURLService.IMAGE_URL
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))) as User
     this.user = userResult['result']
@@ -79,7 +80,6 @@ export class HomeComponent implements OnInit {
     this.productService.findallwithseller().then(
       async res => {
         const productswithsellerResult = res as ProductWithSeller[];
-        this.productswithseller = []
         for(let i=0; i< productswithsellerResult.length; i++){
           this.productswithseller.push({
               id: productswithsellerResult[i].id,
@@ -97,19 +97,20 @@ export class HomeComponent implements OnInit {
               liked:false
           });
         }
-        for(let i=0;i<this.productswithseller.length; i++){
-          for(let j=0 ; j<this.wishlists.length; j++){
-            const product = await this.productService.findProductIdWithSeller(this.wishlists[j].productId) as ProductWithSeller[];
-            if(product['result'].id == this.productswithseller[i].id){
-              this.productswithseller[i].liked = true
-              break
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+        this.updateDisplayedProducts();
+        for(let i =0; i< this.productswithseller.length; i++){
+          for(let j =0;j<this.wishlists.length;j++){
+            const product = await this.productService.findProductId(this.wishlists[j].productId) as ProductWithSeller
+            if(product.id == this.productswithseller[i].id){
+              this.productswithseller[i].liked = true;
+              break;
             }
           }
         }
+        console.log(this.productswithseller)
         
-
-        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
-        this.updateDisplayedProducts(); // Update displayed products on initial load
+         // Update displayed products on initial load
       },
       error => {
         console.log(error)
