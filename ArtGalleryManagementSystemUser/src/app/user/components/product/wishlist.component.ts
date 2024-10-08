@@ -8,6 +8,7 @@ import { ProductService } from '../../services/product.service';
 import { BaseURLService } from '../../services/baseURL.service';
 import Swal from 'sweetalert2';
 import { ConectActive } from '../../services/conectActive';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   standalone: true,
@@ -18,15 +19,16 @@ import { ConectActive } from '../../services/conectActive';
   }
 })
 export class WishlistComponent implements OnInit {
-  cartItems: any
+  wishlistItems: any
   buyItems: any = []
   imageUrl:any
-  cartResult:any
+  wishlistResult:any
   constructor(
     private conect : Conect,
     private userService: UserService,
     private cartService: CartService,
     private productService:ProductService,
+    private wishlistService: WishlistService,
     private baseURLService:BaseURLService,
     private activatedRoute: ActivatedRoute,
     private conectActive : ConectActive
@@ -38,34 +40,31 @@ export class WishlistComponent implements OnInit {
       }
     )
     this.imageUrl=this.baseURLService.IMAGE_URL
-    try {
-      const user = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
-      this.cartResult = await this.cartService.innerCart(user['result'].id);
-      if (this.cartResult['result']) {
-        this.cartItems = []; // Initialize cartItems array
-        for(let i=0; i<this.cartResult['result'].length; i++){
-          const product = await this.productService.findProductIdWithSeller(this.cartResult['result'][i].productId);
-          this.cartItems.push({
-            id : product['result'].id,
-            name:product['result'].name,           
-            categoryId:product['result'].categoryId,
+    const user = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.wishlistResult = await this.wishlistService.findallwishlist(user['result'].id)
+    console.log(this.wishlistResult)
+    if (this.wishlistResult['result']) {
+      this.wishlistItems = []; // Initialize cartItems array
+        for(let i=0; i<this.wishlistResult['result'].length; i++){
+          const product = await this.productService.findProductIdWithSeller(this.wishlistResult['result'][i].productId);
+          console.log(product)
+          this.wishlistItems.push({
+            id : this.wishlistResult['result'][i].id,
+            name : this.wishlistResult['result'][i].name,
+            productName:product['result'].name,           
+            // categoryId:product['result'].categoryId,
             image:product['result'].image,
             price:product['result'].price,
-            quantity: this.cartResult['result'][i].quantity,
-            cardid : this.cartResult['result'][i].id,
+            // quantity: this.cartResult['result'][i].quantity,
+            // cardid : this.wishlistResult['result'][i].id,
             avatar: product['result'].avatar,
             username: product['result'].username,
             selectedindex: i,
             selected:false
-        });
+          });
         }
-        console.log(this.cartItems[0])
-      }
-      console.log(this.cartItems[0])
-    } catch (error) {
-      console.log(error);
+      // this.wishlistItems = this.wishlistResult['result'] 
     }
-
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
@@ -99,42 +98,33 @@ export class WishlistComponent implements OnInit {
     return text; 
   }
   deleteAll(){
-    if(this.cartItems!=''){
-      this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
-      window.location.href = 'user/add-to-cart'
-    }else{
-      Swal.fire({
-        icon: 'warning',
-        title: 'There are no products to delete',
-      })
-    }
+    // if(this.cartItems!=''){
+    //   this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
+    //   window.location.href = 'user/add-to-cart'
+    // }else{
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'There are no products to delete',
+    //   })
+    // }
   }
   addToCardAll(){
 
+  }
+  ShareAll(){
+    
   }
   DeleteItem(id:any){
     console.log(id)
     this.cartService.deleteItem(id);
     window.location.href = 'user/add-to-cart'
   }
+  ShareItem(id:any){
+
+  }
   ChangeSelectedValueAll(evt:any){
     const isChecked = evt.target.checked;
     console.log(isChecked); // Log the checkbox state for debugging
-
-    const addtocardAButtonContainer = document.querySelector('.addtocartA');
-
-    // Create the button once initially outside the conditional block:
-    const addtocardAButton = document.createElement('button');
-    addtocardAButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-info','btn-lg');
-    addtocardAButton.setAttribute('tabindex', '0');
-    addtocardAButton.setAttribute('aria-controls', 'invoice-list');
-    addtocardAButton.textContent = 'Add All To Card';
-
-    // Add an event listener to the button outside the conditional block:
-    addtocardAButton.addEventListener('click', () => {
-      this.addToCardAll(); // Assuming this refers to a defined function
-    });
-    addtocardAButtonContainer.appendChild(addtocardAButton);
     const deleteButtonContainer = document.querySelector('.deleteA');
 
     // Create the button once initially outside the conditional block:
@@ -149,30 +139,63 @@ export class WishlistComponent implements OnInit {
       this.deleteAll(); // Assuming this refers to a defined function
     });
     deleteButtonContainer.appendChild(deleteButton);
+    
+    const addtocardAButtonContainer = document.querySelector('.addtocartA');
+    // Create the button once initially outside the conditional block:
+    const addtocardAButton = document.createElement('button');
+    addtocardAButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-info','btn-lg');
+    addtocardAButton.setAttribute('tabindex', '0');
+    addtocardAButton.setAttribute('aria-controls', 'invoice-list');
+    addtocardAButton.textContent = 'Add All To Card';
+
+    // Add an event listener to the button outside the conditional block:
+    addtocardAButton.addEventListener('click', () => {
+      this.addToCardAll(); // Assuming this refers to a defined function
+    });
+    addtocardAButtonContainer.appendChild(addtocardAButton);
+
+    
+
+    const shareAButtonContainer = document.querySelector('.shareA');
+
+    // Create the button once initially outside the conditional block:
+    const shareAButton = document.createElement('button');
+    shareAButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-success','btn-lg');
+    shareAButton.setAttribute('tabindex', '0');
+    shareAButton.setAttribute('aria-controls', 'invoice-list');
+    shareAButton.textContent = 'Share All';
+
+    // Add an event listener to the button outside the conditional block:
+    shareAButton.addEventListener('click', () => {
+      this.ShareAll(); // Assuming this refers to a defined function
+    });
+    shareAButtonContainer.appendChild(shareAButton);
+
     // Only conditionally append or remove the button based on checkbox state:
     if (!isChecked) {
-      deleteButtonContainer.removeChild(deleteButton);
-      addtocardAButtonContainer.removeChild(addtocardAButton);
+      deleteButtonContainer.removeChild(deleteButton)
+      addtocardAButtonContainer.removeChild(addtocardAButton)
+      shareAButtonContainer.removeChild(shareAButton)
       window.location.href='/user/wishlist'
     }
 
     const allCheckedBoxes = Array.from(document.querySelectorAll(".productchecked")) as HTMLInputElement[]
-    for(let i=0; i< this.cartItems.length; i++){
-      this.cartItems[i].selected = isChecked
+    for(let i=0; i< this.wishlistItems.length; i++){
+      this.wishlistItems[i].selected = isChecked
       allCheckedBoxes[i].checked = isChecked
     }
   }
   ChangeSelectedValue(selectedindex: number,evt:any){
     const isChecked = evt.target.checked;
-      this.cartItems[selectedindex].selected = isChecked
+      this.wishlistItems[selectedindex].selected = isChecked
   }
   BuyItems(){
     this.buyItems=[]
     sessionStorage.setItem('buyItems',JSON.stringify(this.buyItems))
 
-    for(let i = 0; i < this.cartItems.length; i++){
-      if(this.cartItems[i].selected){
-        this.buyItems.push(this.cartItems[i]);
+    for(let i = 0; i < this.wishlistItems.length; i++){
+      if(this.wishlistItems[i].selected){
+        this.buyItems.push(this.wishlistItems[i]);
       }
     }
     if(this.buyItems.length >0){

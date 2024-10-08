@@ -196,7 +196,7 @@
                                     <p>Changes to your <span class="text-success">Billing</span> information will take
                                         effect starting with scheduled payment and will be refelected on your next invoice.
                                     </p>
-                                    @for(address of allAddress;track address){
+                                    @for(address of allAddress;track address;let idx = $index){
                                         <div class="list-group mt-4">
                                             <label class="list-group-item">
                                                 <div class="d-flex w-100">
@@ -207,7 +207,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="billing-content">
-                                                        <div class="fw-bold">Address #{{address.id}}</div>
+                                                        <div class="fw-bold">Address #{{idx+1}}</div>
                                                         <p>{{address.addressLine}}, Phường {{address.wardName}}, {{address.districtName}}, {{address.provinceName}}</p>
                                                     </div>
                                                     <div class="billing-edit align-self-center ms-auto">
