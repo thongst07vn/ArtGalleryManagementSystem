@@ -21,5 +21,5 @@ public partial class CartItem
 
     public virtual Cart Cart { get; set; }
 
-    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; }
+    public virtual ICollection<CartItemProduct> CartItemProducts { get; set; } 
 }

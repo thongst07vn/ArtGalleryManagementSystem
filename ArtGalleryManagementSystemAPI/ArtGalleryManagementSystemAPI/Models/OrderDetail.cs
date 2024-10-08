@@ -21,5 +21,5 @@ public partial class OrderDetail
 
     public virtual PaymentDetail IdNavigation { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<OrderItem> OrderItems { get; set; } 
 }

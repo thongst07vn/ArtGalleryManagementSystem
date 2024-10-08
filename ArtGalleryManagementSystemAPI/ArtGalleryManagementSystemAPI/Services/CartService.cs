@@ -6,7 +6,7 @@ public interface CartService
 {
     public CartDto FindById(int id);
     public bool AddProductToCart(CartItemDto cartItemDto);
-
+    public bool UpdateProductInCart(CartItemDto cartItemDto);
     public List<CartItemDto> FindAllCartItem(int id);
     public bool DeleteItem(int id);
     public bool DeleteAllItem(int cartId);
