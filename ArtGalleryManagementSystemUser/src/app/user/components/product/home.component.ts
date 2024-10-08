@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../entities/product.entity';
 import { formatDate, NgClass } from '@angular/common';
@@ -14,6 +14,9 @@ import { CartItem } from '../../entities/cartitem.entity';
 import { User } from '../../entities/user.entity';
 import { CartService } from '../../services/cart.service';
 import { BaseURLService } from '../../services/baseURL.service';
+import { Wishlist } from '../../entities/wishlist.entity';
+import { WishlistService } from '../../services/wishlist.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -30,14 +33,20 @@ export class HomeComponent implements OnInit {
   itemsPerPage: number = 12;
   currentPage: number = 1;
   userId:any
+  proId:number
   user:any
-  productsToDisplay: ProductWithSeller[] = []; // Array for displaying current page items
+  wishlists:any
+  btnWishlists:any
+  wishlistResult:any
+  productsToDisplay: any = []; // Array for displaying current page items
   createWishList:FormGroup
-  productswithseller: ProductWithSeller[]
+  productswithseller: any
+  wishlistsSelect:any
   artName:any
   // min:any
   max:any
   imageUrl:any
+  // wishlists = new Wishlist()
   @ViewChild('input-number-min') min: ElementRef;
   constructor(
     private conect : Conect,
@@ -46,30 +55,67 @@ export class HomeComponent implements OnInit {
     private productService: ProductService,
     private userService:UserService,
     private cartService:CartService,
+    private wishlistService:WishlistService,
     private baseURLService:BaseURLService,
     private formBuilder : FormBuilder
   ){
+    this.createWishList = this.formBuilder.group({
+      userId:[''],
+      name:['',[Validators.required]],
+      productId:[''],
+      createdAt:['']
+    })
   }
-  ngOnInit(): void {
+  async ngOnInit(){
     this.imageUrl=this.baseURLService.IMAGE_URL
-    this.productService.findallwithseller().then(
-      res => {
-        this.productswithseller = res as ProductWithSeller[];
-        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))) as User
+    this.user = userResult['result']
+    if(this.user!=null){
+      this.userId = this.user.id
+    }
+    const wishlistResult = await this.wishlistService.findallwishlist(this.userId) as Wishlist[]
+    this.wishlists = wishlistResult['result']
 
+    this.productService.findallwithseller().then(
+      async res => {
+        const productswithsellerResult = res as ProductWithSeller[];
+        this.productswithseller = []
+        for(let i=0; i< productswithsellerResult.length; i++){
+          this.productswithseller.push({
+              id: productswithsellerResult[i].id,
+              sellerId: productswithsellerResult[i].sellerId,
+              name:productswithsellerResult[i].name,
+              description:productswithsellerResult[i].description,
+              categoryId:productswithsellerResult[i].categoryId,
+              price:productswithsellerResult[i].price,
+              quantity:productswithsellerResult[i].quantity,
+              image:productswithsellerResult[i].image,
+              createdAt:productswithsellerResult[i].createdAt,
+              deletedAt:productswithsellerResult[i].deletedAt,
+              username: productswithsellerResult[i].username,
+              avatar:productswithsellerResult[i].avatar,
+              liked:false
+          });
+        }
+        for(let i=0;i<this.productswithseller.length; i++){
+          for(let j=0 ; j<this.wishlists.length; j++){
+            const product = await this.productService.findProductIdWithSeller(this.wishlists[j].productId) as ProductWithSeller[];
+            if(product['result'].id == this.productswithseller[i].id){
+              this.productswithseller[i].liked = true
+              break
+            }
+          }
+        }
+        
+
+        this.totalItems = this.productswithseller?.length || 0; // Assuming products length
         this.updateDisplayedProducts(); // Update displayed products on initial load
       },
       error => {
         console.log(error)
       }
     )
-    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
-        this.user = res['result'] as User
-        if(this.user!=null){
-          this.userId = this.user.id
-        }
-      })
+    console.log(this.productswithseller)
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -92,7 +138,10 @@ export class HomeComponent implements OnInit {
 
 
     this.conect.addScriptAsync("src/plugins/src/noUiSlider/custom-nouiSlider.js")
-
+    
+    
+    this.wishlistsSelect = new Set(wishlistResult['result'].map(wishlist => wishlist.name));
+    
     // this.conect.reloadPage()
   }
   selectValueLowHigh(evt:any){
@@ -180,7 +229,6 @@ export class HomeComponent implements OnInit {
     const endIndex = startIndex + this.itemsPerPage; 
 
     this.productsToDisplay = this.productswithseller.slice(startIndex, endIndex);
-
   }
 
   // Event handlers for pagination interactions (implement in your component)
@@ -216,6 +264,7 @@ export class HomeComponent implements OnInit {
           cartItem.productId = productID;
           cartItem.quantity = 1;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
+          console.log(cartItem)
           this.cartService.addToCart(cartItem).then(
             res => {
               if(res['result']){
@@ -237,8 +286,67 @@ export class HomeComponent implements OnInit {
       }
     )
   }
-  async creatWishlist(productID:any){
-    const pro = await this.productService.findProductId(productID)
-    this.artName = pro['name']
+  chooseProduct(productID:number){
+    if(this.wishlists!=null){
+      for(let i = 0; i < this.wishlists.length;i++){
+        if(this.wishlists[i].productId == productID){
+          const popup = document.querySelector(".no-add-wl") as HTMLElement
+          popup.style.display = "none";
+          Swal.fire({
+            icon: 'info',
+            title: 'Item Already In WishList',
+          }).then(async()=>{  
+            const backdrop = document.querySelector('.modal-backdrop');
+            backdrop.parentNode.removeChild(backdrop);
+            const body = document.body
+            body.style.overflowY = 'scroll';
+          })
+          // this.proId = null
+        }
+      }
+    }
+      this.proId = productID
+  }
+  chooseWishList(event:any){
+    this.createWishList = this.formBuilder.group({
+      userId:[this.userId],
+      name:[event.target.value,[Validators.required]],
+      productId:[this.proId],
+      createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-us')]
+    })
+  }
+  newWishList(event:any){
+    this.createWishList = this.formBuilder.group({
+      userId:[this.userId],
+      name:[event.target.value,[Validators.required]],
+      productId:[this.proId],
+      createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-us')]
+    })
+  }
+  async addWishList(){
+    console.log(this.createWishList.value)
+    console.log("add: "+this.proId)
+    let wishlist =  JSON.stringify(this.createWishList.value)
+    let formdata = new FormData();
+    formdata.append('wishListInfo',wishlist);
+    this.wishlistService.addToWishList(formdata).then(
+      res => {
+        if(res['result']){
+          console.log('add success');
+          Swal.fire({
+            icon: 'success',
+            title: 'Add WishList Success',
+          }).then(()=>{
+            window.location.href = 'user/home'
+          })
+        }
+        else{
+          console.log('add failed')
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }

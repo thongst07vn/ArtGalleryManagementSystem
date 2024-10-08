@@ -33,7 +33,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
       }
     )
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
-    this.conect.removeScript("src/plugins/src/global/vendors.min.js")
+    // this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
 
     this.conect.removeScript("src/assets/js/apps/invoice-list.js")
@@ -97,8 +97,5 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   send(){
     
     console.log(this.reviewForm.value)
-  }
-  back(){
-    window.location.href='user/home'
   }
 }
