@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
     // console.log("hehe")
     console.log(this.username + this.password)
     if(this.username == 'admin' && this.password == '123'){
+      sessionStorage.setItem('loggedInAdmin',this.username)
       window.location.href = '/admin/dashboard'
       // this.router.navigate(['/admin/dashboard'])
     }

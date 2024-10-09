@@ -6,11 +6,15 @@ import { UserListComponent } from './admin/components/user-list/user-list.compon
 import { SellerListComponent } from './admin/components/user-list/seller-list.component';
 import { AuctionCreateComponent } from './admin/components/auction/auction-create.component';
 import { LoginComponent } from './admin/login/login.component';
+import { AuthGuard } from './auth.guard';
+import { LoginRedirectGuard } from './loginRedirect.guard';
+import { NotFoundComponent } from './admin/not-found/not-found.component';
 
 export const routes: Routes = [
     {
         path: 'admin',
         component:AdminComponent,
+        // canActivate: [AuthGuard],
         children: [
             {
                 path: '',
@@ -58,10 +62,17 @@ export const routes: Routes = [
     },
     {
         path: '',
-        component:LoginComponent
+        component:LoginComponent,
+        canActivate: [LoginRedirectGuard],
+
     },
     {
         path: 'login',
-        component:LoginComponent
+        component:LoginComponent,
+        canActivate: [LoginRedirectGuard],
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
     }
 ];

@@ -6,7 +6,7 @@ import { AdminService } from '../../services/admin.service';
 import { User } from '../../entities/user.entity';
 import { BaseURLService } from '../../services/baseURL.service';
 import Swal from 'sweetalert2';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -21,6 +21,8 @@ export class SellerListComponent {
   sellers:any
   imageUrl:any
   addSellerForm:FormGroup
+  typeInput:any = 'password'
+  typeInputRe:any = 'password'
   constructor(
     private conect : Conect,
     private activatedRoute :ActivatedRoute,
@@ -53,8 +55,14 @@ export class SellerListComponent {
         Validators.email]
       ],
       password:['',
-        [Validators.required,
-        Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+        [
+          Validators.required,
+          this.lengthValidator(),
+          this.digitValidator(),
+          this.lowercaseValidator(),
+          this.uppercaseValidator(),
+          this.specialCharacterValidator()
+        ]
       ],
       rePassword:['',[
         Validators.required
@@ -150,6 +158,51 @@ export class SellerListComponent {
     )
     
   }
+  lengthValidator():ValidatorFn{
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/.{6,20}/.test(value)) {
+        return { length: true };
+      }
+      return null; 
+    };
+  }
+  uppercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[A-Z]/.test(value)) {
+        return { uppercase: true };
+      }
+      return null; 
+    };
+  }
+  lowercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[a-z]/.test(value)) {
+        return { lowercase: true };
+      }
+      return null;
+    };
+  }
+  digitValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[0-9]/.test(value)) {
+        return { digit: true };
+      }
+      return null;
+    };
+  }
+  specialCharacterValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[@*#$%]/.test(value)) {
+        return { specialCharacter: true };
+      }
+      return null;
+    };
+  }
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
@@ -201,7 +254,7 @@ export class SellerListComponent {
           cancelButton: 'btn btn-danger'
         },
         buttonsStyling: false
-    })
+      })
       if (result.isConfirmed) {  
         let us =JSON.stringify(deleteU)
         let fromData = new FormData()
@@ -240,7 +293,16 @@ export class SellerListComponent {
       }
   })
   }
-  edit(event:any){
-
+  show(){
+    this.typeInput='text'
+  }
+  hide(){
+    this.typeInput='password'
+  }
+  showRe(){
+    this.typeInputRe='text'
+  }
+  hideRe(){
+    this.typeInputRe='password'
   }
 }

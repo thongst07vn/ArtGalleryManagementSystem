@@ -47,19 +47,23 @@ export class AddtoCardComponent implements OnInit {
         this.cartItems = []; // Initialize cartItems array
         for(let i=0; i<this.cartResult['result'].length; i++){
           const product = await this.productService.findProductIdWithSeller(this.cartResult['result'][i].productId);
-          this.cartItems.push({
-            id : product['result'].id,
-            name:product['result'].name,           
-            categoryId:product['result'].categoryId,
-            image:product['result'].image,
-            price:product['result'].price,
-            quantity: this.cartResult['result'][i].quantity,
-            cardid : this.cartResult['result'][i].id,
-            avatar: product['result'].avatar,
-            username: product['result'].username,
-            selectedindex: i,
-            selected:false
-        });
+          const checkdelete = await this.userService.findbyid(product['result'].sellerId)
+          if(checkdelete['result'].deletedAt == null){
+            this.cartItems.push({
+              id : product['result'].id,
+              name:product['result'].name,           
+              categoryId:product['result'].categoryId,
+              image:product['result'].image,
+              price:product['result'].price,
+              quantity: this.cartResult['result'][i].quantity,
+              cardid : this.cartResult['result'][i].id,
+              avatar: product['result'].avatar,
+              username: product['result'].username,
+              selectedindex: i,
+              selected:false
+            });
+          }
+          
         }
         console.log(this.cartItems[0])
       }

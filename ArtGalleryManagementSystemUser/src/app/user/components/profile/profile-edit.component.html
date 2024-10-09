@@ -14,7 +14,7 @@
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg> Home</button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    <!-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="animated-underline-profile-tab" data-bs-toggle="tab"
                             href="#animated-underline-profile" role="tab" aria-controls="animated-underline-profile"
                             aria-selected="false" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -23,7 +23,7 @@
                                 <line x1="12" y1="1" x2="12" y2="23"></line>
                                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                             </svg> Payment Details</button>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item" role="presentation">
                         <button class="nav-link" id="animated-underline-preferences-tab" data-bs-toggle="tab" href="#animated-underline-preferences" role="tab" aria-controls="animated-underline-preferences" aria-selected="false" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Preferences</button>
                     </li>
@@ -59,7 +59,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center mt-4 mb-4">
-                                                    <img src="{{avt}}" style="border: 2px solid darkgrey; object-fit: contain;" class="rounded-4" height="150px" width="150px">
+                                                    <img src="{{avt}}" style="border: 2px solid darkgrey" class="rounded-4  object-fit-cover shadow" height="150px" width="150px">
                                                 </div>
                                             </div>
                                             <div class="col-xl-8 col-lg-12 col-md-8 mt-md-0 mt-4">
@@ -71,6 +71,16 @@
                                                                     for="firstName">First Name: </label>
                                                                 <input type="text" class="form-control mb-3" id="firstName"
                                                                 formControlName="firstName">
+                                                                @if(editProfileForm.get('firstName').touched){
+                                                                    <ul>
+                                                                        @if(editProfileForm.hasError('required',['firstName'])){
+                                                                            <li style="padding-top: 5px; color: red;">First Name is blank</li>
+                                                                        }
+                                                                        @else if(editProfileForm.hasError('pattern',['firstName'])){
+                                                                            <li style="padding-top: 5px; color: red;">First Name must contain at uppercase the first letter</li>
+                                                                        }
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -79,6 +89,16 @@
                                                                     for="lastName">Last Name: </label>
                                                                 <input type="text" class="form-control mb-3" id="lastName"
                                                                 formControlName="lastName">
+                                                                @if(editProfileForm.get('lastName').touched){
+                                                                    <ul>
+                                                                        @if(editProfileForm.hasError('required',['lastName'])){
+                                                                            <li style="padding-top: 5px; color: red;">First Name is blank</li>
+                                                                        }
+                                                                        @else if(editProfileForm.hasError('pattern',['lastName'])){
+                                                                            <li style="padding-top: 5px; color: red;">First Name must contain at uppercase the first letter</li>
+                                                                        }
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -86,6 +106,13 @@
                                                                 <label style="font-weight: 600;" for="username">Username: </label>
                                                                 <input type="text" class="form-control mb-3"
                                                                     id="username" formControlName="username">
+                                                                    @if(editProfileForm.get('username').touched){
+                                                                        <ul>
+                                                                            @if(editProfileForm.hasError('required',['username'])){
+                                                                                <li style="padding-top: 5px; color: red;">Username is blank</li>
+                                                                            }
+                                                                        </ul>
+                                                                    }
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -93,6 +120,16 @@
                                                                 <label style="font-weight: 600;"
                                                                     for="email">Email</label>
                                                                 <input type="text" class="form-control mb-3" id="email" formControlName="email">
+                                                                @if(editProfileForm.get('email').touched){
+                                                                    <ul>
+                                                                        @if(editProfileForm.hasError('required',['email'])){
+                                                                            <li style="padding-top: 5px; color: red;">Email is blank</li>
+                                                                        }
+                                                                        @if(editProfileForm.hasError('email',['email'])){
+                                                                            <li style="padding-top: 5px; color: red;">Email invalid</li>
+                                                                        }
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
                                                         @if(user!=null){
@@ -142,6 +179,16 @@
                                                                     for="phoneNumber">PhoneNumber</label>
                                                                 <input type="text" class="form-control mb-3" id="phoneNumber"
                                                                 formControlName="phoneNumber">
+                                                                @if(editProfileForm.get('phoneNumber').touched){
+                                                                    <ul>
+                                                                        @if(editProfileForm.hasError('required',['phoneNumber'])){
+                                                                            <li style="padding-top: 5px; color: red;">Phone Number is blank</li>
+                                                                        }
+                                                                        @else if(editProfileForm.hasError('pattern',['phoneNumber'])){
+                                                                            <li style="padding-top: 5px; color: red;">Phone Number invalid</li>
+                                                                        }
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
 
@@ -151,6 +198,16 @@
                                                             <div class="form-group">
                                                                 <label for="rangeCalendarFlatpickr">Day of Birth: </label>
                                                                 <input id="rangeCalendarFlatpickr" class="form-control" type="text" readonly="readonly" formControlName="birthOfDate">
+                                                                @if(editProfileForm.get('birthOfDate').touched){
+                                                                    <ul>
+                                                                        @if(editProfileForm.hasError('required',['birthOfDate'])){
+                                                                            <li style="padding-top: 5px; color: red;">Day of Birth is blank</li>
+                                                                        }
+                                                                        @else if(editProfileForm.hasError('pattern',['birthOfDate'])){
+                                                                            <li style="padding-top: 5px; color: red;">You must be over 18 and under 60 years old</li>
+                                                                        }
+                                                                    </ul>
+                                                                }
                                                             </div>
                                                         </div>
 
@@ -250,6 +307,13 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" class="form-control" placeholder="Enter name" formControlName="name">
+                                                    @if(addAddressForm.get('name').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['name'])){
+                                                                <li style="padding-top: 5px; color: red;">Name is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -257,23 +321,47 @@
                                                     <label class="form-label">Phone</label>
                                                     <input type="text" class="form-control" placeholder="Enter phone"
                                                     formControlName="phoneNumber">
+                                                    @if(addAddressForm.get('phoneNumber').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['phoneNumber'])){
+                                                                <li style="padding-top: 5px; color: red;">Phone Number is blank</li>
+                                                            }
+                                                            @else if(addAddressForm.hasError('pattern',['phoneNumber'])){
+                                                                <li style="padding-top: 5px; color: red;">Phone Number invalid</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Address</label>
                                                     <input type="text" class="form-control" placeholder="Enter address" formControlName="addressLine">
+                                                    @if(addAddressForm.get('addressLine').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['addressLine'])){
+                                                                <li style="padding-top: 5px; color: red;">Address is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label class="form-label">City</label>
+                                                    <label class="form-label">Province</label>
                                                     <select formControlName="provinceCode" class="form-select" (change)="choosedProvince($event)" >
                                                         <option value="">Choose...</option>
                                                         @for(province of provinces;track province){
                                                             <option value="{{province.code}}">{{province.name}}</option>
                                                         }
-                                                    </select>                                               
+                                                    </select>
+                                                    @if(addAddressForm.get('provinceCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['provinceCode'])){
+                                                                <li style="padding-top: 5px; color: red;">Province is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }                                            
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -285,6 +373,13 @@
                                                                 <option value="{{district.code}}">{{district.name}}</option>
                                                             }
                                                         </select>
+                                                        @if(addAddressForm.get('districtCode').touched){
+                                                            <ul>
+                                                                @if(addAddressForm.hasError('required',['districtCode'])){
+                                                                    <li style="padding-top: 5px; color: red;">District is blank</li>
+                                                                }
+                                                            </ul>
+                                                        } 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -296,13 +391,27 @@
                                                             <option value="{{ward.code}}">{{ward.name}}</option>
                                                         }
                                                     </select>
+                                                    @if(addAddressForm.get('wardCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['wardCode'])){
+                                                                <li style="padding-top: 5px; color: red;">Ward is blank</li>
+                                                            }
+                                                        </ul>
+                                                    } 
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3">
-                                                    <label class="form-label">ZIP</label>
-                                                    <input type="tel" class="form-control" placeholder="Enter ZIP"
+                                                    <label class="form-label">ZIP CODE</label>
+                                                    <input type="tel" class="form-control" placeholder="Enter ZIP CODE"
                                                     formControlName="postalCode">
+                                                    @if(addAddressForm.get('postalCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['postalCode'])){
+                                                                <li style="padding-top: 5px; color: red;">ZIP CODE is blank</li>
+                                                            }
+                                                        </ul>
+                                                    } 
                                                 </div>
                                             </div>
                                         </div>
@@ -331,6 +440,13 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" class="form-control" placeholder="Enter name" formControlName="name">
+                                                    @if(addAddressForm.get('name').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['name'])){
+                                                                <li style="padding-top: 5px; color: red;">Name is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -338,56 +454,101 @@
                                                     <label class="form-label">Phone</label>
                                                     <input type="text" class="form-control" placeholder="Enter phone"
                                                     formControlName="phoneNumber">
+                                                    @if(addAddressForm.get('phoneNumber').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['phoneNumber'])){
+                                                                <li style="padding-top: 5px; color: red;">Phone Number is blank</li>
+                                                            }
+                                                            @else if(addAddressForm.hasError('pattern',['phoneNumber'])){
+                                                                <li style="padding-top: 5px; color: red;">Phone Number invalid</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Address</label>
                                                     <input type="text" class="form-control" placeholder="Enter address" formControlName="addressLine">
+                                                    @if(addAddressForm.get('addressLine').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['addressLine'])){
+                                                                <li style="padding-top: 5px; color: red;">Address is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label class="form-label">City</label>
+                                                    <label class="form-label">Province</label>
                                                     <select formControlName="provinceCode" class="form-select" (change)="choosedProvince($event)" >
                                                         <option value="">Choose...</option>
                                                         @for(province of provinces;track province){
                                                             <option value="{{province.code}}">{{province.name}}</option>
                                                         }
-                                                    </select>                                               
+                                                    </select>
+                                                    @if(addAddressForm.get('provinceCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['provinceCode'])){
+                                                                <li style="padding-top: 5px; color: red;">Province is blank</li>
+                                                            }
+                                                        </ul>
+                                                    }                                            
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">District</label>
-                                                        <select formControlName="districtCode" class="form-select" (change)="choosedDistrict($event)" >
+                                                        <select formControlName="districtCode" [disabled]=!districts class="form-select" (change)="choosedDistrict($event)" >
                                                             <option value="" selected>Choose...</option>
                                                             @for(district of districts;track district){
                                                                 <option value="{{district.code}}">{{district.name}}</option>
                                                             }
                                                         </select>
+                                                        @if(addAddressForm.get('districtCode').touched){
+                                                            <ul>
+                                                                @if(addAddressForm.hasError('required',['districtCode'])){
+                                                                    <li style="padding-top: 5px; color: red;">District is blank</li>
+                                                                }
+                                                            </ul>
+                                                        } 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">Ward</label>
-                                                    <select formControlName="wardCode" class="form-select" >
+                                                    <select formControlName="wardCode" [disabled]=!wards class="form-select" >
                                                         <option value="" selected>Choose...</option>
                                                         @for(ward of wards;track ward){
                                                             <option value="{{ward.code}}">{{ward.name}}</option>
                                                         }
                                                     </select>
+                                                    @if(addAddressForm.get('wardCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['wardCode'])){
+                                                                <li style="padding-top: 5px; color: red;">Ward is blank</li>
+                                                            }
+                                                        </ul>
+                                                    } 
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3">
-                                                    <label class="form-label">ZIP</label>
-                                                    <input type="tel" class="form-control" placeholder="Enter ZIP"
+                                                    <label class="form-label">ZIP CODE</label>
+                                                    <input type="tel" class="form-control" placeholder="Enter ZIP CODE"
                                                     formControlName="postalCode">
+                                                    @if(addAddressForm.get('postalCode').touched){
+                                                        <ul>
+                                                            @if(addAddressForm.hasError('required',['postalCode'])){
+                                                                <li style="padding-top: 5px; color: red;">ZIP CODE is blank</li>
+                                                            }
+                                                        </ul>
+                                                    } 
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" [disabled]="editAddressForm.invalid" style="padding-right: 30px; padding-left: 30px;">Add</button>
+                                        <button class="btn btn-primary" [disabled]="editAddressForm.invalid" style="padding-right: 30px; padding-left: 30px;">Change</button>
                                     </form>
                                 </div>
                             </div>
@@ -397,7 +558,7 @@
 
 
 
-                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                         <form id="social" class="section social">
                             <div class="info">
                                 <h5 class="">Social</h5>
@@ -483,7 +644,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
