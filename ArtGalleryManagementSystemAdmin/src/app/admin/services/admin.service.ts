@@ -20,6 +20,9 @@ export class AdminService{
     async deleteuserseller(formData: FormData){
         return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'admin/delete', formData));
     }
+    async changerole(formData: FormData){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'admin/changerole', formData));
+    }
     // async findbyemail(email: string){
     //     return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL + 'user/findbyemail/'+email));
     // }

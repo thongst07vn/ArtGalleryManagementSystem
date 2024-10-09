@@ -12,6 +12,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AdminHeaderComponent {
   logOut(){
+    sessionStorage.removeItem('loggedInAdmin')
     window.location.href = '/login'
   }
 }

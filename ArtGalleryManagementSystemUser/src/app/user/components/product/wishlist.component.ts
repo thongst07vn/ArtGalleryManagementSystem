@@ -51,20 +51,23 @@ export class WishlistComponent implements OnInit {
         for(let i=0; i<this.wishlistResult['result'].length; i++){
           const product = await this.productService.findProductIdWithSeller(this.wishlistResult['result'][i].productId);
           console.log(product)
-          this.wishlistItems.push({
-            id : this.wishlistResult['result'][i].id,
-            name : this.wishlistResult['result'][i].name,
-            productName:product['result'].name,           
-            productId:product['result'].id,
-            image:product['result'].image,
-            price:product['result'].price,
-            // quantity: this.cartResult['result'][i].quantity,
-            wishlisId : this.wishlistResult['result'][i].id,
-            avatar: product['result'].avatar,
-            username: product['result'].username,
-            selectedindex: i,
-            selected:false
-          });
+          const checkdelete = await this.userService.findbyid(product['result'].sellerId)
+          if(checkdelete['result'].deletedAt == null){
+            this.wishlistItems.push({
+              id : this.wishlistResult['result'][i].id,
+              name : this.wishlistResult['result'][i].name,
+              productName:product['result'].name,           
+              productId:product['result'].id,
+              image:product['result'].image,
+              price:product['result'].price,
+              // quantity: this.cartResult['result'][i].quantity,
+              wishlisId : this.wishlistResult['result'][i].id,
+              avatar: product['result'].avatar,
+              username: product['result'].username,
+              selectedindex: i,
+              selected:false
+            });
+          }
         }
       // this.wishlistItems = this.wishlistResult['result'] 
     }

@@ -202,7 +202,7 @@ public class UserController : Controller
             userDto.ResetPasswordExpiry = DateTime.Now.AddMinutes(15).ToString("dd-MM-yyyy HH:mm:ss");
             userService.SendMail(userDto);
             var mailHelper = new MailHelper(configuration);
-            mailHelper.Send("thongst07vn@gmail.com", userDto.Email, "Reset Password!!!!", EmailBody.EmailStringBody(userDto.Email, emailToken));
+            mailHelper.Send("artgallerykbktm@gmail.com", userDto.Email, "Reset Password!!!!", EmailBody.EmailStringBody(userDto.Email, emailToken));
             return Ok();
         }
         catch

@@ -73,7 +73,7 @@
                             <div class="emoji me-2">
                                 <img src="../src/assets/img/waving-hand.svg" style="border: none;">
                             </div>
-                            <div class="media-body">
+                            <a class="media-body" [routerLink]="['profile']" href="javascript:void(0);">
                                 <h5>{{user.username}}</h5>
                                 @if(user.role == 1){
                                     <p>User</p>
@@ -81,7 +81,7 @@
                                 @else if(user.role == 2){
                                     <p>Seller</p>                    
                                 }
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="dropdown-item">

@@ -99,4 +99,36 @@ public class AdminController : Controller
         }
 
     }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("changerole")]
+    public IActionResult updateDto(string profile)
+    {
+        try
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "dd-MM-yyyy"
+            });
+            var userDto = JsonConvert.DeserializeObject<UserDto>(profile);
+            //if (!userDto.Avatar.StartsWith("https"))
+            //{
+            //    Uri uri = new Uri(userDto.Avatar);
+            //    userDto.Avatar = Path.GetFullPath(uri.AbsolutePath);
+            //}
+
+            //convert JSon to productDTO
+
+
+            return Ok(new
+            {
+                Result = adminService.ChangeRole(userDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }

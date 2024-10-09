@@ -14,6 +14,13 @@ public class AdminServiceImpl : AdminService
         mapper = _mapper;
     }
 
+    public bool ChangeRole(UserDto userDto)
+    {
+        var user = mapper.Map<User>(userDto);
+        db.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
     public bool CreateUserSeller(UserDto userdto)
     {
         try
