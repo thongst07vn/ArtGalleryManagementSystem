@@ -4,6 +4,8 @@ INSERT INTO [users] ([role],[avatar],first_name,last_name,email,gender,birth_of_
 values (2,'seller1.jpg','Kiet','Tran','trananhkietzxz@gmail.com',1,'2000-02-06','$2y$10$i6ekL7NcL2rRS762PAKpueRA4Gyslq3SaS7BCVl4Nn0ISNVc1tGbu','0763820602',1,'KietTran','2024-08-01')
 INSERT INTO [sellers](id,income,created_at)
 VALUES (1,1500,'2024-08-01')
+INSERT INTO [cart](id,total,created_at)
+VALUES (1,0,'2024-08-01')
 INSERT INTO [users] ([role],[avatar],first_name,last_name,email,gender,birth_of_date,[password],[phone_number],[status],username,created_at)
 values (2,'seller1.jpg','Kiet','Tran','thongst07vn@gmail.com',1,'2000-02-06','$2y$10$i6ekL7NcL2rRS762PAKpueRA4Gyslq3SaS7BCVl4Nn0ISNVc1tGbu','0763820602',1,'Thong','2024-08-01')
 INSERT INTO [sellers](id,income,created_at)
@@ -11,14 +13,14 @@ VALUES (2,1500,'2024-08-01')
 INSERT INTO [cart](id,total,created_at)
 VALUES (2,0,'2024-08-01')
 
-INSERT INTO [categories] ( [name],[description])
+INSERT INTO [categories] ( [name],[description],created_at)
 values 
-('painting',''),
-('drawing',''),
-('mix media',''),
-('sculpture',''),
-('print making',''),
-('digital','')
+('painting','','2024-10-10 00:00:00.000'),
+('drawing','','2024-10-10 00:00:00.000'),
+('mix media','','2024-10-10 00:00:00.000'),
+('sculpture','','2024-10-10 00:00:00.000'),
+('print making','','2024-10-10 00:00:00.000'),
+('digital','','2024-10-10 00:00:00.000')
 INSERT INTO [product_attributes] (type, value) VALUES ('Origin', 'Argentina');
 INSERT INTO [product_attributes] (type, value) VALUES ('Origin', 'Australia');
 INSERT INTO [product_attributes] (type, value) VALUES ('Origin', 'Austria');
