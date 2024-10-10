@@ -228,7 +228,159 @@
                     </div>
                 </div>
             </div> -->
-        
+            @if(user.role == 2){
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="payment-history layout-spacing ">
+                        <div class="widget-content widget-content-area">
+                            <h3 class="">Art List</h3>
+                            <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Seller</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>1</strong>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2">
+                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-13.jpeg">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span> A Hair Under My Skin </span></td>
+                                        <td><span>1</span></td>
+                                        <td><span class="inv-amount">$234.40</span></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2 rounded-circle">
+                                                    <img alt="avatar" class="img-fluid rounded-circle"
+                                                        src="../src/assets/img/profile-13.jpeg">
+                
+                                                </div>
+                                                <p class="inv-amount mx-2">Kiet Tran</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                                data-bs-target="#reviewModal">
+                                                Review Product
+                                            </button>
+                
+                                        </td>
+                                    </tr>
+                
+                                    <tr>
+                                        <td>
+                                            <strong>2</strong>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2">
+                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-14.jpeg">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span> Lily Pond Hand knotted Rug </span></td>
+                                        <td><span>1</span></td>
+                                        <td><span class="inv-amount">$534.40</span></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2 rounded-circle">
+                                                    <img alt="avatar" class="img-fluid rounded-circle"
+                                                        src="../src/assets/img/profile-13.jpeg">
+                
+                                                </div>
+                                                <p class="inv-amount mx-2">Kiet Tran</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                                data-bs-target="#reviewModal">
+                                                Review Product
+                                            </button>
+                
+                                        </td>
+                                    </tr>
+                
+                                    <tr>
+                                        <td>
+                                            <strong>3</strong>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2">
+                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-15.jpeg">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span> NEXUS 18.01 - Series Archaic/Modern </span></td>
+                                        <td><span>1</span></td>
+                                        <td><span class="inv-amount">$35.40</span></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2 rounded-circle">
+                                                    <img alt="avatar" class="img-fluid rounded-circle"
+                                                        src="../src/assets/img/profile-13.jpeg">
+                
+                                                </div>
+                                                <p class="inv-amount mx-2">Kiet Tran</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                                data-bs-target="#reviewModal">
+                                                Review Product
+                                            </button>
+                
+                                        </td>
+                                    </tr>
+                
+                                    <tr>
+                                        <td>
+                                            <strong>4</strong>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2">
+                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-16.jpeg">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span> Unknown Lady, Eva? </span></td>
+                                        <td><span>1</span></td>
+                                        <td><span class="inv-amount">$874.40</span></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="usr-img-frame me-2 rounded-circle">
+                                                    <img alt="avatar" class="img-fluid rounded-circle"
+                                                        src="../src/assets/img/profile-13.jpeg">
+                
+                                                </div>
+                                                <p class="inv-amount mx-2">Kiet Tran</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                                                Review Product
+                                              </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
             <!-- END PRO PLAN  -->   
 
             <!-- START PAYMENT HISTORY  -->   
@@ -237,89 +389,155 @@
                 <div class="payment-history layout-spacing ">
                     <div class="widget-content widget-content-area">
                         <h3 class="">Payment History</h3>
-                        <div class="row mb-3 mt-3 align-items-center">
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2">
-                                    <img alt="avatar" class="img-fluid rounded" src="../src/assets/img/profile-16.jpeg">
-                                </div>
-                                <span class="sub-title mb-0">Name art</span>
-                            </div>
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2 rounded-circle">
-                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                        src="../src/assets/img/profile-13.jpeg">
-
-                                </div>
-                                <span class="inv-amount mx-2">Kiet Tran</span>
-                            </div>
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">$45</span>
-                            </div>
-                            
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">dd/mm/yyyy</span>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">Review Product</button>
-                            </div>
-                        </div>
-                        <div class="row mb-3 mt-3 align-items-center">
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2">
-                                    <img alt="avatar" class="img-fluid rounded" src="../src/assets/img/profile-16.jpeg">
-                                </div>
-                                <span class="sub-title mb-0">Name art</span>
-                            </div>
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2 rounded-circle">
-                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                        src="../src/assets/img/profile-13.jpeg">
-
-                                </div>
-                                <span class="inv-amount mx-2">Kiet Tran</span>
-                            </div>
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">$45</span>
-                            </div>
-                            
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">dd/mm/yyyy</span>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">Review Product</button>
-                            </div>
-                        </div>
-                        <div class="row mb-3 mt-3 align-items-center">
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2">
-                                    <img alt="avatar" class="img-fluid rounded" src="../src/assets/img/profile-16.jpeg">
-                                </div>
-                                <span class="sub-title mb-0">Name art</span>
-                            </div>
-                            <div class="col-2">
-                                <div class="usr-img-frame me-2 rounded-circle">
-                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                        src="../src/assets/img/profile-13.jpeg">
-
-                                </div>
-                                <span class="inv-amount mx-2">Kiet Tran</span>
-                            </div>
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">$45</span>
-                            </div>
-                            
-                            <div class="col-2">
-                                <span class="pay-pricing align-self-center me-3">dd/mm/yyyy</span>
-                            </div>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">Review Product</button>
-                            </div>
-                        </div>
+                        <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Seller</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>1</strong>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2">
+                                                <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-13.jpeg">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span> A Hair Under My Skin </span></td>
+                                    <td><span>1</span></td>
+                                    <td><span class="inv-amount">$234.40</span></td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2 rounded-circle">
+                                                <img alt="avatar" class="img-fluid rounded-circle"
+                                                    src="../src/assets/img/profile-13.jpeg">
+            
+                                            </div>
+                                            <p class="inv-amount mx-2">Kiet Tran</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                            data-bs-target="#reviewModal">
+                                            Review Product
+                                        </button>
+            
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td>
+                                        <strong>2</strong>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2">
+                                                <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-14.jpeg">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span> Lily Pond Hand knotted Rug </span></td>
+                                    <td><span>1</span></td>
+                                    <td><span class="inv-amount">$534.40</span></td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2 rounded-circle">
+                                                <img alt="avatar" class="img-fluid rounded-circle"
+                                                    src="../src/assets/img/profile-13.jpeg">
+            
+                                            </div>
+                                            <p class="inv-amount mx-2">Kiet Tran</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                            data-bs-target="#reviewModal">
+                                            Review Product
+                                        </button>
+            
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td>
+                                        <strong>3</strong>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2">
+                                                <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-15.jpeg">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span> NEXUS 18.01 - Series Archaic/Modern </span></td>
+                                    <td><span>1</span></td>
+                                    <td><span class="inv-amount">$35.40</span></td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2 rounded-circle">
+                                                <img alt="avatar" class="img-fluid rounded-circle"
+                                                    src="../src/assets/img/profile-13.jpeg">
+            
+                                            </div>
+                                            <p class="inv-amount mx-2">Kiet Tran</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                            data-bs-target="#reviewModal">
+                                            Review Product
+                                        </button>
+            
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <td>
+                                        <strong>4</strong>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2">
+                                                <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-16.jpeg">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span> Unknown Lady, Eva? </span></td>
+                                    <td><span>1</span></td>
+                                    <td><span class="inv-amount">$874.40</span></td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="usr-img-frame me-2 rounded-circle">
+                                                <img alt="avatar" class="img-fluid rounded-circle"
+                                                    src="../src/assets/img/profile-13.jpeg">
+            
+                                            </div>
+                                            <p class="inv-amount mx-2">Kiet Tran</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                                            Review Product
+                                          </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <!-- START PAYMENT HISTORY  -->   
-
+            
             <!-- START PAYMENT METHOd  -->   
 
             <!-- <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
