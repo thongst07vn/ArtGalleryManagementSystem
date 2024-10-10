@@ -236,6 +236,25 @@ public class MappingDto : Profile
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
+        CreateMap<Category, CategoryDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
+            );
+        CreateMap<CategoryDto, Category>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+
     }
 }
 

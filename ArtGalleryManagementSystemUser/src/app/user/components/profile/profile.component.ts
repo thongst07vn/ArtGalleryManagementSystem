@@ -53,24 +53,24 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
 
     
-    // this.conect.addStyle("src/plugins/src/table/datatable/datatables.css")
-    // this.conect.addStyle("src/plugins/css/light/table/datatable/dt-global_style.css")
-    // this.conect.addStyle("src/assets/css/light/apps/invoice-list.css")
-    // this.conect.addStyle("src/plugins/css/dark/table/datatable/dt-global_style.css")
-    // this.conect.addScriptAsync("src/assets/js/custom.js")
-    // this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
+    this.conect.addStyle("src/plugins/src/table/datatable/datatables.css")
+    this.conect.addStyle("src/plugins/css/light/table/datatable/dt-global_style.css")
+    this.conect.addStyle("src/assets/css/light/apps/invoice-list.css")
+    this.conect.addStyle("src/plugins/css/dark/table/datatable/dt-global_style.css")
+    this.conect.addScriptAsync("src/assets/js/custom.js")
+    this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
 
-    // this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
-    // this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
-    // this.conect.addStyle("src/assets/css/dark/apps/invoice-list.css")
-    // this.conect.addStyle("layouts/horizontal-light-menu/css/product-rate.css")
-    // this.conect.addScriptAsync("src/plugins/src/table/datatable/datatables.js")
-    // this.conect.addScriptAsync("src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js")
-    // this.conect.addScriptAsync("src/assets/js/apps/invoice-list.js")
+    this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
+    this.conect.addStyle("src/assets/css/dark/apps/invoice-list.css")
+    this.conect.addStyle("layouts/horizontal-light-menu/css/product-rate.css")
+    this.conect.addScriptAsync("src/plugins/src/table/datatable/datatables.js")
+    this.conect.addScriptAsync("src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js")
+    this.conect.addScriptAsync("src/assets/js/apps/invoice-list.js")
 
 
-    // this.conect.addStyle("src/assets/css/light/components/modal.css");
-    // this.conect.addStyle("src/assets/css/dark/components/modal.css");
+    this.conect.addStyle("src/assets/css/light/components/modal.css");
+    this.conect.addStyle("src/assets/css/dark/components/modal.css");
 
     this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{

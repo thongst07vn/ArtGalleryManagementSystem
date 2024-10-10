@@ -12,6 +12,7 @@ import { User } from '../../entities/user.entity';
 import { formatDate } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import Swal from 'sweetalert2';
+import { Category } from '../../entities/category.entity';
 
 @Component({
   standalone: true,
@@ -32,6 +33,7 @@ export class PostcartComponent implements OnInit {
   // user:any
   userId:any
   attribute: any
+  categories:any
   constructor(
     private conect : Conect,
     private activatedRoute: ActivatedRoute,
@@ -68,7 +70,12 @@ export class PostcartComponent implements OnInit {
         if(user!=null){
           this.userId = user.id
         }
-      })
+    })
+    this.productService.findallcategory().then(
+      res=>{
+        this.categories= res as Category[]
+      }
+    )
     this.conect.removeScript('src/plugins/src/editors/quill/quill.js')
     this.conect.removeScript('src/plugins/src/tagify/tagify.min.js')
     this.conect.removeScript('src/assets/js/apps/ecommerce-create.js')
@@ -122,6 +129,7 @@ export class PostcartComponent implements OnInit {
       quantity:['',[Validators.required,Validators.pattern(/100|[1-9]\d?/)]],
       createdAt:[''],
       deletedAt:[''],
+      categoryId:['',Validators.required],
       size:['',Validators.required],
       paint:['',Validators.required],
       material:['',Validators.required],

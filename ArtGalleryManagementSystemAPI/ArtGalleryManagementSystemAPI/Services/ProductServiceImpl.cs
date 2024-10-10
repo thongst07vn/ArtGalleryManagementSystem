@@ -26,6 +26,16 @@ public class ProductServiceImpl : ProductService
         return mapper.Map<List<ProductDto>>(db.Products.ToList());
     }
 
+    public List<CategoryDto> FindAllCategory()
+    {
+        return mapper.Map<List<CategoryDto>>(db.Categories.ToList());
+    }
+
+    public List<ProductWithSellerDto> FindByCategoryId(int id)
+    {
+        return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.CategoryId == id && p.Seller.IdNavigation.DeletedAt == null && p.Type == 1).ToList());
+    }
+
     public ProductDto FindById(int id)
     {
         return mapper.Map<ProductDto>(db.Products.Find(id));

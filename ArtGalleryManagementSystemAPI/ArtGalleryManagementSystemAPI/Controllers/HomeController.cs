@@ -33,7 +33,34 @@ public class HomeController : Controller
             return BadRequest();
         }
     }
+    [Produces("application/json")]
+    [HttpGet("findallcategory")]
+    public IActionResult FindAllCategory()
+    {
 
+        try
+        {
+            return Ok(productService.FindAllCategory());
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [HttpGet("findbycategoryid/{id}")]
+    public IActionResult FindByCategoryid(int id)
+    {
+
+        try
+        {
+            return Ok(productService.FindByCategoryId(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
     [Produces("application/json")]
     [HttpGet("findallproductwithseller")]
     public IActionResult FindAllProductWithSeller()

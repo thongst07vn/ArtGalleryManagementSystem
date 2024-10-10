@@ -92,7 +92,24 @@
                                     </ul>
                                 }
                             </div>
-                            
+                            <div class="col-xxl-12 col-md-6 mb-4">
+                                <label for="Type">Category</label>
+                                @if(categories!=null){
+                                    <select class="form-select" id="Type" formControlName="categoryId">
+                                        <option value="">Choose Category...</option>
+                                        @for(category of categories;track category){
+                                            <option value="{{category.id}}">{{category.name}}</option>
+                                        }
+                                    </select>
+                                    @if(postArtForm.get('categoryId').touched){
+                                        <ul>
+                                            @if(postArtForm.hasError('required',['categoryId'])){
+                                                <li style="padding-top: 5px; color: red;">Category is blank</li>
+                                            }
+                                        </ul>
+                                    }
+                                }
+                            </div>
                             <div class="col-xxl-12 col-md-6 mb-4">
                                 <label for="Type">Type</label>
                                 <select class="form-select" id="Type" formControlName="type">
@@ -108,6 +125,8 @@
                                     </ul>
                                 }
                             </div>
+
+                            
                             
                             
                         </div>
