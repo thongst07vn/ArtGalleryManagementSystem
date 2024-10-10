@@ -28,6 +28,23 @@ public class CartServiceImpl : CartService
         return db.SaveChanges() > 0;
     }
 
+    public bool CreateOrder(OrderDetailDto orderDetailDto, List<OrderItemDto> orderItems)
+    {
+        var orderDetail = mapper.Map<OrderDetail>(orderDetailDto);
+        db.OrderDetails.Add(orderDetail);
+        if (db.SaveChanges() > 0)
+        {
+            foreach (var item in orderItems)
+            {
+                item.OrderId = orderDetail.Id;
+                item.CreatedAt = orderDetailDto.CreatedAt;
+                var orderItem = mapper.Map<OrderItem>(item);
+                db.OrderItems.Add(orderItem);
+            }
+        }
+        return db.SaveChanges() > 0;
+    }
+
     public bool DeleteAllItem(int cartId)
     {
         var item = db.CartItems.Where(c => c.CartId == cartId).ToList();

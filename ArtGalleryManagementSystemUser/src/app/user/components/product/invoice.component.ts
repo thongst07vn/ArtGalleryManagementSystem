@@ -14,17 +14,22 @@ import { District } from '../../entities/district.entity';
 import { Ward } from '../../entities/ward.entity';
 import { Province } from '../../entities/province.entity';
 import { formatDate } from '@angular/common';
-
+import { CartService } from '../../services/cart.service';
+import {IPayPalConfig, NgxPayPalModule, } from 'ngx-paypal';
 @Component({
   standalone: true,
-  imports: [RouterOutlet,RouterLink,ReactiveFormsModule],
+  imports: [RouterOutlet,RouterLink,ReactiveFormsModule, NgxPayPalModule],
   templateUrl: './invoice.component.html',
   host:{
     'collision': 'InvoiceComponent'
   }
 })
 export class InvoiceComponent implements OnInit {
+  public payPalConfig?: IPayPalConfig;
+
   invoiceList: any = [];
+  subtotal:number;
+  tax:number;
   total:number;
   imageUrl:any
   user:any
@@ -32,18 +37,20 @@ export class InvoiceComponent implements OnInit {
   alladdress:any
   addAddressForm:FormGroup
   editAddressForm:FormGroup
-  
+  orderForm:FormGroup
   provinces:any
   districts:any
   wards:any
 
   invoiceDay: any
+  paymentimg:string
   constructor(
     private conect : Conect,
     private baseURLService:BaseURLService,
     private userService:UserService,
     private addressService:AddressService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cartService:CartService
   ){
     this.addAddressForm = this.formBuilder.group({
       userId:[''],
@@ -67,18 +74,33 @@ export class InvoiceComponent implements OnInit {
     postalCode:[''],
     createdAt:['']
   })
+  this.orderForm = this.formBuilder.group(
+    {
+      userId:[''],
+      paymentType:['1'],
+      total:[this.total],
+      createdAt:[''],
+      updateAt:['']
+    }
+  );
   }
   async ngOnInit() {
+    this.paymentimg = ''
+
     this.invoiceDay = formatDate(new Date(),'dd-MM-yyyy','en-us');
     console.log(document.getElementById('#changecurrentaddress'));
     this.imageUrl=this.baseURLService.IMAGE_URL
     this.invoiceList = JSON.parse(sessionStorage.getItem('buyItems'))
     console.log(this.invoiceList);
+    this.subtotal=0;
+    
     this.total=0;
     for(let i =0; i< this.invoiceList.length; i++){
      
-      this.total += (this.invoiceList[i].price * this.invoiceList[i].quantity);
+      this.subtotal += (this.invoiceList[i].price * this.invoiceList[i].quantity);
     }
+    this.tax=this.subtotal*10/100;
+    this.total = this.tax + this.subtotal;
     // Các Script không sử dụng
     this.conect.removeScript("src/plugins/src/global/vendors.min.js");
     this.conect.removeScript("layouts/horizontal-light-menu/app.js");
@@ -106,6 +128,7 @@ export class InvoiceComponent implements OnInit {
     
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")))
     this.user = userResult['result'] as User
+    this.orderForm.value.userId = this.user.id
     const addAddressResult = await this.addressService.findallprovince()
     this.provinces = addAddressResult['result'] as Province[]
     const addressResult = await this.addressService.findalladdress(this.user.id)
@@ -139,6 +162,7 @@ export class InvoiceComponent implements OnInit {
     ]],
     createdAt:[formatDate(new Date(),'dd-MM-yyyy','en-US')]
   })
+  this.initConfig();
 
   }
   async saveCurrentAddress(){
@@ -152,7 +176,7 @@ export class InvoiceComponent implements OnInit {
         const backdrop = document.querySelector('.modal-backdrop');
         backdrop.parentNode.removeChild(backdrop);
         const body = document.body
-        body.style.overflow = 'scroll';
+        body.style.overflowY = 'scroll';
       }
     }
   }
@@ -281,7 +305,100 @@ export class InvoiceComponent implements OnInit {
     )
 
   }
-  buy(){
-    window.location.href="/user/product-rate"
+  BuyItems(){
+
+    let formdata = new FormData();
+    this.orderForm.value.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
+    this.orderForm.value.total = this.total;
+    let order = JSON.stringify(this.orderForm.value);
+    console.log(this.orderForm.value);
+    console.log(JSON.stringify(this.invoiceList));
+    const OrderItems:any = [];
+    for(let i=0;  i < this.invoiceList.length; i++){
+        OrderItems.push(
+            {
+              productId: this.invoiceList[i].id,
+              quantity: this.invoiceList[i].quantity
+            }
+        )
+    }
+    console.log(JSON.stringify(OrderItems));
+    formdata.append('invoicelist',JSON.stringify(OrderItems));
+    formdata.append('order', order)
+
+    this.cartService.createOrder(formdata).then(
+      res => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order sucessfully',
+        })
+      },
+      error => {
+        Swal.fire({
+          icon: 'error',
+          title: error,
+        })
+      }
+    );
+  }
+    private initConfig(): void {
+    const OrderItems:any = [];
+    for(let i=0;  i < this.invoiceList.length; i++){
+        OrderItems.push(
+            {
+              Name: this.invoiceList[i].name,
+              Price:this.invoiceList[i].price,
+              quantity: this.invoiceList[i].quantity
+            }
+        )
+    }
+      this.payPalConfig = {
+          clientId: 'Ae6Y-DSVMPCs7f8-GdUCFkW5bDRL9pnrSOz4SVwwWpBzexBF9MBrtb-Vt6J6DUBX3aVPrLAR6JWWpgsX',
+          // for creating orders (transactions) on server see
+          // https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
+          createOrderOnServer: (data) => fetch('http://localhost:5204/createpayment',{
+            method: "post",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body: JSON.stringify(OrderItems)
+          })
+              .then((res) => res.json())
+              .then((order) => order.token),
+          authorizeOnServer: (approveData:any) => {
+            console.log(approveData);
+              return fetch('http://localhost:5204/executepayment', {
+              method: 'post',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                PayerId: approveData.payerID,
+                PaymentId: approveData.paymentID
+              })
+            }).then((res) => {
+              this.BuyItems();
+              return res.json();
+            }).then((details) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Payment sucessfully for ' + this.user.username,
+              })
+            });
+          },
+          onCancel: (data, actions) => {
+              console.log('OnCancel', data, actions);
+              // this.showCancel = true;
+          },
+          onError: err => {
+              console.log('OnError', err);
+              // this.showError = true;
+          },
+          onClick: (data, actions) => {
+            console.log(data);
+              console.log('onClick', data, actions);
+              // this.resetStatus();
+          },
+      };
   }
 }
