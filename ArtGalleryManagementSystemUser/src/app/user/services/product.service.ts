@@ -39,4 +39,10 @@ export class ProductService{
     async postart(formData:FormData){
         return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'home/createrart',formData))
     }
+    async findallcategory(){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallcategory'))
+    }
+    async findbycategoryid(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findbycategoryid/'+id))
+    }
 }
