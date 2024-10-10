@@ -17,5 +17,5 @@ public partial class Seller
 
     public virtual User IdNavigation { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } 
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -21,7 +21,7 @@ public partial class Ward
 
     public string DistrictCode { get; set; }
 
-    public virtual ICollection<Address> Addresses { get; set; }
+    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
 
     public virtual District DistrictCodeNavigation { get; set; }
 }
