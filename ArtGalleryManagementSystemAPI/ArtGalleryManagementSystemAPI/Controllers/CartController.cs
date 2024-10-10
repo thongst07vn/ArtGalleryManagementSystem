@@ -1,6 +1,8 @@
 ﻿using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/cart")]
@@ -8,10 +10,12 @@ public class CartController : Controller
 {
     private CartService cartService;
     private UserService userService;
-    public CartController(CartService _cartService, UserService _userService)
+    private PayPalService payPalService;
+    public CartController(CartService _cartService, UserService _userService, PayPalService _payPalService)
     {
         cartService = _cartService;
         userService = _userService;
+        payPalService = _payPalService;
     }
 
     [Consumes("application/json")]
@@ -100,4 +104,67 @@ public class CartController : Controller
             return BadRequest();
         }
     }
+
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPost("createorder")]
+    public IActionResult CreateOrder(string invoicelist, string order)
+    {
+        var setting = new JsonSerializerSettings();
+        setting.Converters.Add(new IsoDateTimeConverter()
+        {
+            DateTimeFormat = "dd-MM-yyyy"
+        });
+        var invoicelistDto = JsonConvert.DeserializeObject<List<OrderItemDto>>(invoicelist);
+        var orderDto = JsonConvert.DeserializeObject<OrderDetailDto>(order);
+        try
+        {
+            return Ok(new
+            {
+                result = cartService.CreateOrder(orderDto, invoicelistDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [HttpPost("createpayment")]
+    public IActionResult CreatePayment([FromBody] IEnumerable<ItemDto> items, HttpContext context)
+    {
+        var base_url = context.Request.Host.Value;
+        try
+        {
+            return Ok(new
+            {
+                result = payPalService.CreatePayment(items, base_url)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [HttpPost(" ")]
+    public IActionResult CreatePayment([FromBody] ExecutePaymentDto dto)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = payPalService.ExecutePayment(dto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
 }

@@ -11,15 +11,11 @@ public partial class OrderDetail
 
     public int? UserId { get; set; }
 
-    public int? PaymentId { get; set; }
-
     public double? Total { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual PaymentDetail IdNavigation { get; set; }
-
-    public virtual ICollection<OrderItem> OrderItems { get; set; } 
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

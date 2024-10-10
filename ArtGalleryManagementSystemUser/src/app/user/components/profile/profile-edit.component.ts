@@ -335,7 +335,7 @@ export class ProfileEditComponent implements OnInit {
     this.userService.editprofile(fromData).then(
       res=>{
           if(res['result']){
-            window.location.href = '/user/profile'
+            window.location.href = '/user/edit-profile'
           }else{
             Swal.fire({
               icon: 'error',
