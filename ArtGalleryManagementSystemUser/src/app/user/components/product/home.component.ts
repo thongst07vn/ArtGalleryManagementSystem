@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit {
     this.productService.findallwithseller().then(
       async res => {
         const productswithsellerResult = res as ProductWithSeller[];
+        productswithsellerResult.reverse()
         for(let i=0; i< productswithsellerResult.length; i++){
           this.productswithseller.push({
               id: productswithsellerResult[i].id,

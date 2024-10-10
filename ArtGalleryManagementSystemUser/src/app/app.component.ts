@@ -12,25 +12,25 @@ import { SidbarComponent } from './user/layouts/sidebar/sidbar.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor(
-    private conect : Conect,
-){}
+    constructor(
+      private conect : Conect,
+  ){}
 
-ngOnInit(): void {
-  // this.conect.addStyle("layouts/horizontal-light-menu/css/light/loader.css")
-  // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/loader.css")
-  // this.conect.addScript("layouts/horizontal-light-menu/loader.js")
-  // this.conect.addStyle("src/bootstrap/css/bootstrap.min.css")
-  // this.conect.addStyle("layouts/horizontal-light-menu/css/light/plugins.css")
-  // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
+  ngOnInit(): void {
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/light/loader.css")
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/loader.css")
+    // this.conect.addScript("layouts/horizontal-light-menu/loader.js")
+    // this.conect.addStyle("src/bootstrap/css/bootstrap.min.css")
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/light/plugins.css")
+    // this.conect.addStyle("layouts/horizontal-light-menu/css/dark/plugins.css")
 
-  
-  // this.conect.addScript("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")
-  // this.conect.addScriptDefer("src/bootstrap/js/bootstrap.bundle.min.js")
-  // this.conect.addScriptDefer("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
-  // this.conect.addScriptDefer("src/plugins/src/mousetrap/mousetrap.min.js")
-  // this.conect.addScriptDefer("src/plugins/src/waves/waves.min.js")
-  // this.conect.addScriptDefer("layouts/horizontal-light-menu/app.js")  
-  
-}
+    
+    // this.conect.addScript("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")
+    // this.conect.addScriptDefer("src/bootstrap/js/bootstrap.bundle.min.js")
+    // this.conect.addScriptDefer("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
+    // this.conect.addScriptDefer("src/plugins/src/mousetrap/mousetrap.min.js")
+    // this.conect.addScriptDefer("src/plugins/src/waves/waves.min.js")
+    // this.conect.addScriptDefer("layouts/horizontal-light-menu/app.js")  
+    
+  }
 }

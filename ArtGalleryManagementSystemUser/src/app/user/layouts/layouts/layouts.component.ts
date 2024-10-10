@@ -35,7 +35,7 @@ export class LayoutsComponent {
     // this.conect.addScriptDefer("src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js")
     // this.conect.addScriptDefer("src/plugins/src/mousetrap/mousetrap.min.js")
     // this.conect.addScriptDefer("src/plugins/src/waves/waves.min.js")
-    this.conect.addScriptAsync("layouts/horizontal-light-menu/app.js")
+    this.conect.addScript("layouts/horizontal-light-menu/app.js")
     
     this.conect.reloadPage()
   }

@@ -16,6 +16,6 @@ public interface ProductService
     public List<ProductWithSellerDto> SortByPriceLowHigh(string value, double min, double max);
     public List<ProductWithSellerDto> SearchByKeyword(string value);
 
-
+    public bool PostArt(ProductWithAttributesDto productWithAttributesDto);
 }
 

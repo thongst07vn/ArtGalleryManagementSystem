@@ -13,6 +13,7 @@ public class ProductWithAttributesDto
     public int? CategoryId { get; set; }
 
     public double? Price { get; set; }
+    public int? Type { get; set; }
 
     public int? Quantity { get; set; }
     public string? Image { get; set; }

@@ -29,28 +29,34 @@ export class Conect implements OnDestroy{
         script.type = 'text/javascript';
         script.src = scriptSrc;
         script.defer = true;
-        this.document.head.appendChild(script);
+        // this.document.head.appendChild(script);
+        // setTimeout(()=>{},500)
+        this.document.head.appendChild(script)
     }
     public addScriptDefer(scriptSrc: string) {
         const script = this.document.createElement('script');
         script.type = 'text/javascript';
         script.src = scriptSrc;
         // script.defer = true;
-        this.document.body.appendChild(script);
+        // this.document.body.appendChild(script);
+        setTimeout(()=>{this.document.body.appendChild(script)},500)
+
     }
     public addScriptAsync(scriptSrc: string) {
         const script = this.document.createElement('script');
         script.type = 'text/javascript';
         script.src = scriptSrc;
         // script.defer = true;
-        this.document.body.appendChild(script);
+        setTimeout(()=>{this.document.body.appendChild(script)},200)
     }
     public addStyle(styleSrc: string) {
         const link = this.document.createElement('link');
         link.rel = 'stylesheet';
         link.href = styleSrc;
         link.type = 'text/css';
-        this.document.head.appendChild(link);
+        // this.document.head.appendChild(link);
+        this.document.head.appendChild(link)
+
     }
     public reloadPage(){
         this.routerSubscription = this.router.events.subscribe(event => {
@@ -61,18 +67,21 @@ export class Conect implements OnDestroy{
     }
     public removeScript(scriptSrc: string) {
         const scripts = this.document.querySelectorAll('script[src="' + scriptSrc + '"]');
-        scripts.forEach(script => script.remove());
+        scripts.forEach(script => script.remove())
+
+        
     }
     
     public removeStyle(styleSrc: string) {
         const styles = this.document.querySelectorAll('link[href="' + styleSrc + '"]');
-        styles.forEach(style => style.remove());
+        styles.forEach(style => style.remove())
+
+        
     }
     setData(data: boolean) {
         this.theme.next(data);
-      }
-    
-      getData() {
+    }
+    getData() {
         return this.theme.asObservable();
-      }
+    }
 }
