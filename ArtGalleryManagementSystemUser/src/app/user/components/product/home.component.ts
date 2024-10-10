@@ -116,8 +116,8 @@ export class HomeComponent implements OnInit {
       },
       error => {
         console.log(error)
-      }
-    }
+      })
+    
 
     // this.productService.findallwithseller().then(
     //   async res => {
@@ -212,6 +212,7 @@ export class HomeComponent implements OnInit {
           this.totalItems = this.productswithseller?.length || 0; // Assuming products length
           this.currentPage = 1;
           this.updateDisplayedProducts(); // Update displayed products on initial load
+          evt.target.value=''
         },
         error => {
           console.log(error)
@@ -225,6 +226,7 @@ export class HomeComponent implements OnInit {
           this.totalItems = this.productswithseller?.length || 0; // Assuming products length
           this.currentPage = 1;
           this.updateDisplayedProducts();
+          evt.target.value=''
         },
         error => {
           console.log(error);

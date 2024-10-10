@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS [order_item_products]
 DROP TABLE IF EXISTS [bid_order]
 DROP TABLE IF EXISTS [order_item]
 DROP TABLE IF EXISTS [order_details]
-DROP TABLE IF EXISTS [payment_details]
 DROP TABLE IF EXISTS [cart_item]
 DROP TABLE IF EXISTS [cart]
 DROP TABLE IF EXISTS [wishlist]
@@ -133,7 +132,6 @@ GO
 CREATE TABLE [order_details] (
 	[id] integer PRIMARY KEY IDENTITY,
 	[user_id] integer,
-	[payment_id] integer,
 	[total] FLOAT,  
 	[created_at] datetime,
 	[updated_at] datetime
@@ -150,15 +148,6 @@ CREATE TABLE [order_item] (
 )
 GO
 
-CREATE TABLE [payment_details] (
-	[id] integer PRIMARY KEY IDENTITY,
-	[amount] FLOAT,  
-	[provider] nvarchar(255),
-	[status] integer,
-	[created_at] datetime,
-	[updated_at] datetime
-)
-GO
 
 CREATE TABLE [bid_order] (
 	[id] integer PRIMARY KEY IDENTITY,
@@ -295,7 +284,4 @@ ALTER TABLE [order_item_products] ADD FOREIGN KEY ([order_item_product_id]) REFE
 GO
 
 ALTER TABLE [order_item_products] ADD FOREIGN KEY ([products_id]) REFERENCES [products] ([id]);
-GO
-
-ALTER TABLE [order_details] ADD FOREIGN KEY ([id]) REFERENCES [payment_details] ([id])
 GO
