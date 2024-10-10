@@ -5,7 +5,7 @@ import { ConectActive } from '../../services/conectActive';
 import { AdminService } from '../../services/admin.service';
 import { User } from '../../entities/user.entity';
 import { BaseURLService } from '../../services/baseURL.service';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import flatpickr from 'flatpickr';
 import Swal from 'sweetalert2';
@@ -21,7 +21,9 @@ import Swal from 'sweetalert2';
 export class UserListComponent {
   users:any
   imageUrl:any
-  addUserForm: FormGroup;
+  addUserForm: FormGroup
+  typeInput:any = 'password'
+  typeInputRe:any = 'password'
   constructor(
     private conect : Conect,
     private activatedRoute :ActivatedRoute,
@@ -54,8 +56,14 @@ export class UserListComponent {
         Validators.email]
       ],
       password:['',
-        [Validators.required,
-        Validators.pattern(/^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@*#$%]).{6,20})$/)]
+        [
+          Validators.required,
+          this.lengthValidator(),
+          this.digitValidator(),
+          this.lowercaseValidator(),
+          this.uppercaseValidator(),
+          this.specialCharacterValidator()
+        ]
       ],
       rePassword:['',[
         Validators.required
@@ -160,6 +168,51 @@ export class UserListComponent {
       dateFormat:'d-m-Y',
     });
   }
+  lengthValidator():ValidatorFn{
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/.{6,20}/.test(value)) {
+        return { length: true };
+      }
+      return null; 
+    };
+  }
+  uppercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[A-Z]/.test(value)) {
+        return { uppercase: true };
+      }
+      return null; 
+    };
+  }
+  lowercaseValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[a-z]/.test(value)) {
+        return { lowercase: true };
+      }
+      return null;
+    };
+  }
+  digitValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[0-9]/.test(value)) {
+        return { digit: true };
+      }
+      return null;
+    };
+  }
+  specialCharacterValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value || !/[@*#$%]/.test(value)) {
+        return { specialCharacter: true };
+      }
+      return null;
+    };
+  }
   CheckP(control:AbstractControl){
     return control.value.password === control.value.rePassword ? null:{mismatch:true}
   }
@@ -174,7 +227,7 @@ export class UserListComponent {
             icon: 'success',
             title: 'Add User Success',
           }).then(()=>{
-            window.location.href = 'admin/seller-list'
+            window.location.href = 'admin/user-list'
           }) 
         }
         else {
@@ -182,7 +235,7 @@ export class UserListComponent {
               icon: 'error',
               title: 'Email Already Exists',
           }).then(()=>{
-            window.location.href = 'admin/seller-list'
+            window.location.href = 'admin/user-list'
           }) 
         } 
       },
@@ -227,7 +280,7 @@ export class UserListComponent {
                 'Your file has been deleted.',
                 'success'
               ).then(()=>{
-                window.location.href = 'admin/seller-list'
+                window.location.href = 'admin/user-list'
               })
             }else{
               Swal.fire({
@@ -252,6 +305,73 @@ export class UserListComponent {
         )
       }
     })
+  }
+  async edit(event:any){
+    const u = await this.adminService.findbyid(event)
+    const roleU = u['result']
+    Swal.fire({
+      title: 'Are you sure change role?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Change it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      if (result.isConfirmed) {  
+        roleU.role = 2
+        roleU.income = 0
+        let us =JSON.stringify(roleU)
+        let fromData = new FormData()
+        fromData.append('profile',us)
+        this.adminService.changerole(fromData).then(
+          res=>{
+            if(res['result']){
+              swalWithBootstrapButtons.fire(
+                'Changed!',
+                roleU.username+" became a seller",
+                'success'
+              ).then(()=>{
+                window.location.href = 'admin/user-list'
+              })
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Delete User Fail',
+              })
+            }
+          },
+          ()=>{
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete User Fail',
+            })
+          }
+        )
+        
+      }
+      console.log(roleU)
+
+  })
+  }
+  show(){
+    this.typeInput='text'
+  }
+  hide(){
+    this.typeInput='password'
+  }
+  showRe(){
+    this.typeInputRe='text'
+  }
+  hideRe(){
+    this.typeInputRe='password'
   }
 }
 

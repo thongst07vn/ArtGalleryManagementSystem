@@ -3,17 +3,17 @@
  *    Product Description Editor 
  * ===================================
 */
-var quill = new Quill('#product-description', {
-    modules: {
-        toolbar: [
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline'],
-        ['image', 'code-block']
-        ]
-    },
-    placeholder: 'Write product description...',
-    theme: 'snow'  // or 'bubble'
-});
+// var quill = new Quill('#product-description', {
+//     modules: {
+//         toolbar: [
+//         [{ header: [1, 2, false] }],
+//         ['bold', 'italic', 'underline'],
+//         ['image', 'code-block']
+//         ]
+//     },
+//     placeholder: 'Write product description...',
+//     theme: 'snow'  // or 'bubble'
+// });
 
 
 /**

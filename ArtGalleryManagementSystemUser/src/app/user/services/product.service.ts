@@ -36,4 +36,7 @@ export class ProductService{
     async findProductIdWithAttributes(productId:number){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findproductbyidwithattributes/'+productId))
     }
+    async postart(formData:FormData){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'home/createrart',formData))
+    }
 }

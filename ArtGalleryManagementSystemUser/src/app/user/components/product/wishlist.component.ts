@@ -9,6 +9,9 @@ import { BaseURLService } from '../../services/baseURL.service';
 import Swal from 'sweetalert2';
 import { ConectActive } from '../../services/conectActive';
 import { WishlistService } from '../../services/wishlist.service';
+import { CartItem } from '../../entities/cartitem.entity';
+import { User } from '../../entities/user.entity';
+import { formatDate } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -48,20 +51,23 @@ export class WishlistComponent implements OnInit {
         for(let i=0; i<this.wishlistResult['result'].length; i++){
           const product = await this.productService.findProductIdWithSeller(this.wishlistResult['result'][i].productId);
           console.log(product)
-          this.wishlistItems.push({
-            id : this.wishlistResult['result'][i].id,
-            name : this.wishlistResult['result'][i].name,
-            productName:product['result'].name,           
-            // categoryId:product['result'].categoryId,
-            image:product['result'].image,
-            price:product['result'].price,
-            // quantity: this.cartResult['result'][i].quantity,
-            // cardid : this.wishlistResult['result'][i].id,
-            avatar: product['result'].avatar,
-            username: product['result'].username,
-            selectedindex: i,
-            selected:false
-          });
+          const checkdelete = await this.userService.findbyid(product['result'].sellerId)
+          if(checkdelete['result'].deletedAt == null){
+            this.wishlistItems.push({
+              id : this.wishlistResult['result'][i].id,
+              name : this.wishlistResult['result'][i].name,
+              productName:product['result'].name,           
+              productId:product['result'].id,
+              image:product['result'].image,
+              price:product['result'].price,
+              // quantity: this.cartResult['result'][i].quantity,
+              wishlisId : this.wishlistResult['result'][i].id,
+              avatar: product['result'].avatar,
+              username: product['result'].username,
+              selectedindex: i,
+              selected:false
+            });
+          }
         }
       // this.wishlistItems = this.wishlistResult['result'] 
     }
@@ -98,8 +104,9 @@ export class WishlistComponent implements OnInit {
     return text; 
   }
   deleteAll(){
-    // if(this.cartItems!=''){
-    //   this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
+    console.log(this.wishlistItems)
+    // if(this.wishlistItems!=''){
+    //   this.wishlistService.deleteallItem(this.wishlistItems[0].wishlisId)
     //   window.location.href = 'user/add-to-cart'
     // }else{
     //   Swal.fire({
@@ -116,8 +123,41 @@ export class WishlistComponent implements OnInit {
   }
   DeleteItem(id:any){
     console.log(id)
-    this.cartService.deleteItem(id);
-    window.location.href = 'user/add-to-cart'
+    this.wishlistService.deleteItem(id);
+    window.location.href = 'user/wishlist'
+  }
+  async addItemToCart(id:any){
+    console.log(id)
+    await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
+      res=>{
+        if(res['result']){
+          const user = res['result'] as User;
+          const cartItem = new CartItem();
+          cartItem.cartId = user.id;
+          cartItem.productId = id;
+          cartItem.quantity = 1;
+          cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
+          console.log(cartItem)
+          this.cartService.addToCart(cartItem).then(
+            res => {
+              if(res['result']){
+                console.log('add success');
+                window.location.href = 'user/wishlist'
+              }
+              else{
+                console.log('add failed')
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          )
+        }
+      },
+      error=>{
+        console.log(error)
+      }
+    )
   }
   ShareItem(id:any){
 
@@ -188,20 +228,5 @@ export class WishlistComponent implements OnInit {
   ChangeSelectedValue(selectedindex: number,evt:any){
     const isChecked = evt.target.checked;
       this.wishlistItems[selectedindex].selected = isChecked
-  }
-  BuyItems(){
-    this.buyItems=[]
-    sessionStorage.setItem('buyItems',JSON.stringify(this.buyItems))
-
-    for(let i = 0; i < this.wishlistItems.length; i++){
-      if(this.wishlistItems[i].selected){
-        this.buyItems.push(this.wishlistItems[i]);
-      }
-    }
-    if(this.buyItems.length >0){
-      sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
-      // console.log(sessionStorage.getItem('buyItems'));
-      window.location.href = '../user/invoice'
-    }
   }
 }

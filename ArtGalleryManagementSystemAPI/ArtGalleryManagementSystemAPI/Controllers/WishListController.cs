@@ -53,25 +53,24 @@ public class WishListController : Controller
             return BadRequest();
         }
     }
-    //[Produces("application/json")]
-    //[Consumes("application/json")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [HttpDelete("deleteitem/{id}")]
+    public IActionResult DeleteItem(int id)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = wishLishService.DeleteItem(id)
+            });
 
-    //[HttpDelete("deleteitem/{id}")]
-    //public IActionResult DeleteItem(int id)
-    //{
-    //    try
-    //    {
-    //        return Ok(new
-    //        {
-    //            result = cartService.DeleteItem(id)
-    //        });
-
-    //    }
-    //    catch
-    //    {
-    //        return BadRequest();
-    //    }
-    //}
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
     //[Produces("application/json")]
     //[Consumes("application/json")]
 

@@ -189,6 +189,14 @@ public class MappingDto : Profile
 
         CreateMap<Product, ProductWithAttributesDto>()
             .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(desc => desc.DeletedAt != null ? ((DateTime)desc.DeletedAt).ToString("dd-MM-yyyy") : null)
+            )
+            .ForMember(
                 des => des.Username,
                 src => src.MapFrom(des => des.Seller.IdNavigation.Username)
             )
@@ -199,6 +207,15 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.ProductAttributes,
                  src => src.MapFrom(desc => desc.ProductAttributesProducts.Select(pap => pap.ProductAttributes)));
+        CreateMap<ProductWithAttributesDto, Product>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.DeletedAt,
+                src => src.MapFrom(src => src.DeletedAt != "" ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
         CreateMap<Wishlist, WishListDto>()
             .ForMember(
                 des => des.CreatedAt,

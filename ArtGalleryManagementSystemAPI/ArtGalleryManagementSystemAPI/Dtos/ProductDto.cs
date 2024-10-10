@@ -1,5 +1,5 @@
 
-﻿namespace ArtGalleryManagementSystemAPI.Dtos;
+namespace ArtGalleryManagementSystemAPI.Dtos;
 
 public class ProductDto
 {
@@ -8,6 +8,7 @@ public class ProductDto
     public int? SellerId { get; set; }
 
     public string? Name { get; set; }
+    public int? Type { get; set; }
 
     public string? Description { get; set; }
 

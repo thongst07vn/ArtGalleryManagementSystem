@@ -99,23 +99,60 @@
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label">Password: </label>
-                                <input type="password" class="form-control" formControlName="password">
+                                <div class="input-group mb-3">
+                                    <input [type]="typeInput" class="form-control" formControlName="password" aria-describedby="basic-addon2">
+                                    @if(typeInput == 'text'){
+                                        <a href="javascript:void(0);" (click)="hide()" class="input-group-text" id="basic-addon2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    }
+                                    @else if(typeInput == 'password'){
+                                        <a href="javascript:void(0);" (click)="show()" class="input-group-text" id="basic-addon2" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                        </a>
+                                    }
+                                </div>
                                 @if(addSellerForm.get('password').touched){
                                     <ul>
                                         @if(addSellerForm.hasError('required',['password'])){
-                                            <li style="padding-top: 5px; color: red;">password is blank</li>
+                                            <li style="padding-top: 5px; color: red;">password is blank.</li>
                                         }
-                                        @else if(addSellerForm.hasError('pattern',['password'])){
-                                            <li style="padding-top: 5px; color: red;">password does not meet the require</li>
+                                        @if(addSellerForm.hasError('length', ['password'])){
+                                            <li style="padding-top: 5px; color: red;">Password must be between 6 and 20 characters.</li>
+                                        }
+                                        @if(addSellerForm.hasError('digit', ['password'])){
+                                            <li style="padding-top: 5px; color: red;">Password must contain at least one digit.</li>
+                                        }
+                                        @if(addSellerForm.hasError('lowercase', ['password'])){
+                                            <li style="padding-top: 5px; color: red;">Password must contain at least one lowercase letter.</li>
+                                        }
+                                        @if(addSellerForm.hasError('uppercase', ['password'])){
+                                            <li style="padding-top: 5px; color: red;">Password must contain at least one uppercase letter.</li>
+                                        }
+                                        @if(addSellerForm.hasError('specialCharacter', ['password'])){
+                                            <li style="padding-top: 5px; color: red;">Password must contain at least one special character.</li>
                                         }
                                     </ul>
                                 }
+                                
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label">Confirm Password: </label>
-                                <input type="password" class="form-control" formControlName="rePassword">
+                                <div class="input-group mb-3">
+                                    <input [type]="typeInputRe" class="form-control" formControlName="rePassword" aria-describedby="basic-addon2">
+                                    @if(typeInputRe == 'text'){
+                                        <a href="javascript:void(0);" (click)="hideRe()" class="input-group-text" id="basic-addon2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    }
+                                    @else if(typeInputRe == 'password'){
+                                        <a href="javascript:void(0);" (click)="showRe()" class="input-group-text" id="basic-addon2" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                        </a>
+                                    }
+                                </div>
                                 @if(addSellerForm.get('rePassword').touched){
                                     <ul>
                                         @if(addSellerForm.hasError('required',['rePassword'])){
@@ -278,9 +315,7 @@
                                     }
                                     <td>
                                         @if(seller.deletedAt==null){
-                                            <div class="btn-group me-3">
-                                                <a (click)="edit(seller.id)" class="badge badge-light-success text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
-                                            </div>
+                                            
                                             <div class="btn-group">
                                                 <a (click)="delete(seller.id)" class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
                                             </div>

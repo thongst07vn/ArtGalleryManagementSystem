@@ -75,10 +75,9 @@ export class ProductDetailsComponent implements OnInit {
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")
     this.conect.addStyle("src/plugins/css/dark/sweetalerts2/custom-sweetalert.css")
     
-
     this.conect.addScriptAsync("src/plugins/src/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js")
     this.conect.addScriptAsync("src/plugins/src/glightbox/glightbox.min.js")
-    // this.conect.addScriptAsync("src/plugins/src/splide/splide.min.js")
+    this.conect.addScriptAsync("src/plugins/src/splide/splide.min.js")
     this.conect.addScriptAsync("src/assets/js/apps/ecommerce-details.js")
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
     this.conect.addScriptAsync("src/plugins/src/sweetalerts2/sweetalerts2.min.js")

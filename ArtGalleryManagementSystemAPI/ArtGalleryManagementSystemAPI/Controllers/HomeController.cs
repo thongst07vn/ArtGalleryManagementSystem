@@ -1,8 +1,10 @@
 
 using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Helpers;
 using ArtGalleryManagementSystemAPI.Services;
-
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/home")]
@@ -147,6 +149,44 @@ public class HomeController : Controller
 
             }
 
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Consumes("multipart/form-data")]
+    [Produces("application/json")]
+    [HttpPost("createrart")]
+    public IActionResult CreateArt(IFormFile image, string productInfo, string attributeInfo)
+    {
+        var setting = new JsonSerializerSettings();
+        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd-MM-yyyy" });
+        var productAttributeDto = JsonConvert.DeserializeObject<List<ProductAttributeDto>>(attributeInfo);
+        var productDto = JsonConvert.DeserializeObject<ProductWithAttributesDto>(productInfo);
+        if (image != null && image.Length > 0)
+        {
+            var newFileName = FileHelper.generateFileName(image.FileName);
+            var path = Path.Combine(webHostEnvironment.WebRootPath, "images", newFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                image.CopyTo(fileStream);
+            }
+            productDto.Image = newFileName;
+        }
+        else
+        {
+            productDto.Image = "noimg.jpg";
+
+        }
+        productDto.ProductAttributes = productAttributeDto;
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.PostArt(productDto)
+            });
         }
         catch
         {

@@ -4,11 +4,12 @@ INSERT INTO [users] ([role],[avatar],first_name,last_name,email,gender,birth_of_
 values (2,'seller1.jpg','Kiet','Tran','trananhkietzxz@gmail.com',1,'2000-02-06','$2y$10$i6ekL7NcL2rRS762PAKpueRA4Gyslq3SaS7BCVl4Nn0ISNVc1tGbu','0763820602',1,'KietTran','2024-08-01')
 INSERT INTO [sellers](id,income,created_at)
 VALUES (1,1500,'2024-08-01')
-
 INSERT INTO [users] ([role],[avatar],first_name,last_name,email,gender,birth_of_date,[password],[phone_number],[status],username,created_at)
 values (2,'seller1.jpg','Kiet','Tran','thongst07vn@gmail.com',1,'2000-02-06','$2y$10$i6ekL7NcL2rRS762PAKpueRA4Gyslq3SaS7BCVl4Nn0ISNVc1tGbu','0763820602',1,'Thong','2024-08-01')
 INSERT INTO [sellers](id,income,created_at)
 VALUES (2,1500,'2024-08-01')
+INSERT INTO [cart](id,total,created_at)
+VALUES (2,0,'2024-08-01')
 
 INSERT INTO [categories] ( [name],[description])
 values 
