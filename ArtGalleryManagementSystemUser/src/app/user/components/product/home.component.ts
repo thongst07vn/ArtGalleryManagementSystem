@@ -78,7 +78,6 @@ export class HomeComponent implements OnInit {
     }
     const wishlistResult = await this.wishlistService.findallwishlist(this.userId) as Wishlist[]
     this.wishlists = wishlistResult['result']
-
     this.productService.findallwithseller().then(
       async res => {
         const productswithsellerResult = res as ProductWithSeller[];
@@ -118,7 +117,26 @@ export class HomeComponent implements OnInit {
       error => {
         console.log(error)
       }
-    )
+    }
+
+    // this.productService.findallwithseller().then(
+    //   async res => {
+    //     const productswithsellerResult = res as ProductWithSeller[];
+        
+    //     for(let i=0;i<this.productswithseller.length; i++){
+    //       for(let j=0 ; j<this.wishlists.length; j++){
+    //         const product = await this.productService.findProductIdWithSeller(this.wishlists[j].productId) as ProductWithSeller[];
+    //         if(product['result'].id == this.productswithseller[i].id){
+    //           this.productswithseller[i].liked = true
+    //           break
+    //         }
+    //       }
+    //     }     
+    //   },
+    //   error => {
+    //     console.log(error)
+    //   }
+    // )
     console.log(this.productswithseller)
     this.activatedRoute.data.subscribe(
       params => {

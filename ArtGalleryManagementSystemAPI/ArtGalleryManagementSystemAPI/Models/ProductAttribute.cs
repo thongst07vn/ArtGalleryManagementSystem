@@ -13,9 +13,9 @@ public partial class ProductAttribute
 
     public string Value { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual ICollection<ProductAttributesProduct> ProductAttributesProducts { get; set; }
+    public virtual ICollection<ProductAttributesProduct> ProductAttributesProducts { get; set; } = new List<ProductAttributesProduct>();
 }

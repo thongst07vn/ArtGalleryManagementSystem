@@ -318,7 +318,11 @@
 .invoice-actions-btn .invoice-action-btn a.btn-edit {
   width: 100%;
 }
-
+@media print {
+  .noprint {
+     display: none;
+  }
+}
 /* Invoice Actions -> action-btn */
 @media (max-width: 1199px) {
   .invoice-actions-btn {

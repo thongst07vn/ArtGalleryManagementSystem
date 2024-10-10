@@ -7,9 +7,11 @@ namespace ArtGalleryManagementSystemAPI.Dtos;
 
 public class MappingDto : Profile
 {
+    private DatabaseContext db;
     private IMapper mapper;
-    public MappingDto(IMapper _mapper)
+    public MappingDto(DatabaseContext _db, IMapper _mapper)
     {
+        db = _db;
         mapper = _mapper;
     }
     public MappingDto()
@@ -236,6 +238,59 @@ public class MappingDto : Profile
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
+        CreateMap<OrderDetail, OrderDetailDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(desc => desc.UpdatedAt != null ? ((DateTime)desc.UpdatedAt).ToString("dd-MM-yyyy") : null)
+            );
+        CreateMap<OrderDetailDto, OrderDetail>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(src => src.UpdatedAt != null ? DateTime.ParseExact(src.UpdatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+
+        CreateMap<OrderItem, OrderItemDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(desc => desc.UpdatedAt != null ? ((DateTime)desc.UpdatedAt).ToString("dd-MM-yyyy") : null)
+            );
+        CreateMap<OrderItemDto, OrderItem>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(src => src.UpdatedAt != null ? DateTime.ParseExact(src.UpdatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+
+        CreateMap<OrderItem, OrderItemWithPaypalDto>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+            )
+            .ForMember(
+                des => des.UpdatedAt,
+                src => src.MapFrom(desc => desc.UpdatedAt != null ? ((DateTime)desc.UpdatedAt).ToString("dd-MM-yyyy") : null)
+            ).ForMember(
+                des => des.ProductPrice,
+                src => src.MapFrom(desc => db.Products.Find(desc.ProductId).Price)
+            ).ForMember(
+                des => des.ProductName,
+                src => src.MapFrom(desc => db.Products.Find(desc.ProductId).Name)
+            );
         CreateMap<Category, CategoryDto>()
             .ForMember(
                 des => des.CreatedAt,
@@ -254,7 +309,6 @@ public class MappingDto : Profile
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
-
-    }
+       }
 }
 
