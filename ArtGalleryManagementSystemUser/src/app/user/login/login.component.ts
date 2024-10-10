@@ -146,9 +146,14 @@ export class LoginComponent implements OnInit {
       username: payLoad.name,
       avatar: payLoad.picture,
       createdAt: formatDate(new Date(),'dd-MM-yyyy','en-US'),
-      role: 1 
+      role: 1
     }
-    // this.downloadImage(this.account.avatar)
+    console.log("dữ liệu dạng token: ") 
+    console.log( resp)
+    console.log("decodeToken: ")
+    console.log( payLoad)
+
+    this.downloadImage(this.account.avatar)
     this.userService.findbyemail(this.account.email).then(
       res=>{
         if(res['result']){

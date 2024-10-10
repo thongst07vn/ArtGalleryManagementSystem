@@ -172,13 +172,13 @@
                                                                     <p class="">Sub Total :</p>
                                                                 </div>
                                                                 <div class="col-sm-4 col-5">
-                                                                    <p class="">$3155</p>
+                                                                    <p class="">${{total}}</p>
                                                                 </div>
                                                                 <div class="col-sm-8 col-7">
-                                                                    <p class="">Tax 10% :</p>
+                                                                    <p class="">Tax 8% :</p>
                                                                 </div>
                                                                 <div class="col-sm-4 col-5">
-                                                                    <p class="">$315</p>
+                                                                    <p class="">${{(total*8)/100}}</p>
                                                                 </div>
                                                                 <div class="col-sm-8 col-7">
                                                                     <p class=" discount-rate">Shipping :</p>
@@ -186,20 +186,13 @@
                                                                 <div class="col-sm-4 col-5">
                                                                     <p class="">$10</p>
                                                                 </div>
-                                                                <div class="col-sm-8 col-7">
-                                                                    <p class=" discount-rate">Discount 5% :
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-sm-4 col-5">
-                                                                    <p class="">$150</p>
-                                                                </div>
                                                                 <div
                                                                     class="col-sm-8 col-7  mt-3">
                                                                     <h4 class="">Grand Total : </h4>
                                                                 </div>
                                                                 <div
                                                                     class="col-sm-4 col-5  mt-3 mb-4">
-                                                                    <h4 class="">${{total}}</h4>
+                                                                    <h4 class="">${{total+((total*8)/100)+10}}</h4>
                                                                 </div>
                                                                 <div class="col-xl-12 col-md-3 col-sm-6" style="padding: 0;">
                                                                     <a href="javascript:void(0);"
