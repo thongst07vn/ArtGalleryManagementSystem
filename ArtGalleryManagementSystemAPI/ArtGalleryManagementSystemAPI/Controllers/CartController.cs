@@ -67,6 +67,23 @@ public class CartController : Controller
         }
     }
     [Produces("application/json")]
+    [HttpGet("findcartbyproductid/{id}")]
+    public IActionResult FindCartByProductId(int id)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = cartService.FindByProId(id)
+            });
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
     [Consumes("application/json")]
 
     [HttpDelete("deleteitem/{id}")]

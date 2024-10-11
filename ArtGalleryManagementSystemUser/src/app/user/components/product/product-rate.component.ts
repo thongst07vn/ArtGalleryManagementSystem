@@ -23,6 +23,8 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   user:any
   orders:any
   seller:any
+  productReviewName:string
+  productReviewImage:string
   constructor(
     private conect : Conect,
     private formBuilder: FormBuilder,
@@ -115,6 +117,11 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
       
     });
   }
+  showReview(productName:any,productImage:any){
+    this.productReviewName = productName
+    this.productReviewImage = productImage
+    this.reviewForm.value.productName
+  }
   send(){
     
     console.log(this.reviewForm.value)
@@ -124,4 +131,7 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   //     console.warn("Camera access was not allowed by user!");
   //   }
   // }
+  close(){
+    window.location.href = 'user/product-rate'
+  }
 }

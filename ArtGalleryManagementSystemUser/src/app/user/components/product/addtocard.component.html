@@ -29,7 +29,7 @@
                             <td>                            
                                 <div class="align-content-center">
                                     @if(product.image.substring(0,5)=="https"){
-                                        <img alt="avatar" src="{{product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
+                                        <img alt="avatar" src="{{product.image}}" referrerpolicy="no-referrer" style="object-fit: cover; max-width: 60px; max-height:60px">
                                     }
                                     @else {
                                         <img alt="avatar" src="{{imageUrl+product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
@@ -45,7 +45,7 @@
                                 <div class="d-flex align-items-baseline">
                                     <div class="usr-img-frame me-2 rounded-circle">
                                         @if(product.avatar.substring(0,5)=="https"){
-                                            <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}">
+                                            <img alt="avatar" referrerpolicy="no-referrer" class="img-fluid rounded-circle" src="{{product.avatar}}">
                          
                                         }
                                         @else {

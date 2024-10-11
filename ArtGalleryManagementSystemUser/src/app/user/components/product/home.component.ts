@@ -313,34 +313,84 @@ export class HomeComponent implements OnInit {
   }
   async addToCart(productID:any){
     await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
+      async res=>{
         if(res['result']){
           this.user = res['result'] as User;
+          const product = await this.productService.findProductId(productID) as Product
+          const cart = await this.cartService.findcartbyproductid(productID) as CartItem
           const cartItem = new CartItem();
           cartItem.cartId = this.user.id;
           cartItem.productId = productID;
           cartItem.quantity = 1;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
           console.log(cartItem)
-          this.cartService.addToCart(cartItem).then(
-            res => {
-              if(res['result']){
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Add To Cart Success',
-                })
-              }
-              else{
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Add To Cart Fail',
-                })
-              }
-            },
-            error => {
-              console.log(error);
+          console.log(product)
+          console.log(cart['result'])
+          if(cart['result']==null){
+            if(product.quantity<=0){
+              Swal.fire({
+                icon: 'error',
+                title: 'Product quantity is not sufficient',
+              })
             }
-          )
+            else{
+              console.log("đã add")
+              this.cartService.addToCart(cartItem).then(
+                res => {
+                  if(res['result']){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Add To Cart Success',
+                    })
+                  }
+                  else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Add To Cart Fail',
+                    })
+                  }
+                },
+                error => {
+                  console.log(error);
+                }
+              )
+            }
+            
+          }
+          else{
+            if(product.quantity <= cart['result'].quantity){
+              Swal.fire({
+                icon: 'error',
+                title: 'Product quantity is not sufficient',
+              })
+            }
+            else{
+              console.log("đã add")
+              this.cartService.addToCart(cartItem).then(
+                res => {
+                  if(res['result']){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Add To Cart Success',
+                    })
+                  }
+                  else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Add To Cart Fail',
+                    })
+                  }
+                },
+                error => {
+                  console.log(error);
+                }
+              )
+            }
+          }
+          
+          
+          
+          
         }
       },
       error=>{

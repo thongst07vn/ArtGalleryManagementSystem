@@ -83,7 +83,7 @@
                     <div class="card style-2 mb-md-0 mb-4">
                         <a [routerLink]="['../product-details',{productId:product.id}]" appReloadPage>
                             @if(product.image.substring(0,5)=="https"){
-                                <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
+                                <img src="{{product.image}}" referrerpolicy="no-referrer" class="card-img-top" alt="..." height="300px">
                             }
                             @else {
                                 <img src="{{imageUrl+product.image}}" class="card-img-top" alt="..." height="300px">
@@ -103,7 +103,7 @@
                             <div class="media mt-4 mb-0 pt-1">
                                 <a [routerLink]="['../profile',{sellerId:product.sellerId}]" appReloadPage>
                                     @if(product.avatar.substring(0,5)=="https"){
-                                        <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
+                                        <img src="{{product.avatar}}" referrerpolicy="no-referrer" class="card-media-image me-3" alt="">
                                     }
                                     @else {
                                         <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">
@@ -151,7 +151,7 @@
                     <div class="card style-2 mb-md-0 mb-4">
                         <a [routerLink]="['product-details',{productId:product.id}]" appReloadPage>
                             @if(product.image.substring(0,5)=="https"){
-                                <img src="{{product.image}}" class="card-img-top" alt="..." height="300px">
+                                <img src="{{product.image}}" referrerpolicy="no-referrer" class="card-img-top" alt="..." height="300px">
                             }
                             @else {
                                 <img src="{{imageUrl+product.image}}" class="card-img-top" alt="..." height="300px">
@@ -171,7 +171,7 @@
                             <div class="media mt-4 mb-0 pt-1">
                                 <a appReloadPage>
                                     @if(product.avatar.substring(0,5)=="https"){
-                                        <img src="{{product.avatar}}" class="card-media-image me-3" alt="">
+                                        <img src="{{product.avatar}}" referrerpolicy="no-referrer" class="card-media-image me-3" alt="">
                                     }
                                     @else {
                                         <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">

@@ -32,4 +32,7 @@ export class CartService{
     async findallorder(userId:any){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'cart/findallorder/'+userId))
     }
+    async findcartbyproductid(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'cart/findcartbyproductid/'+id))
+    }
 }
