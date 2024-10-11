@@ -114,8 +114,8 @@ export class HomeComponent implements OnInit {
       },
       error => {
         console.log(error)
-      }
-    }
+      })
+    
 
     // this.productService.findallwithseller().then(
     //   async res => {
@@ -288,8 +288,10 @@ export class HomeComponent implements OnInit {
           this.cartService.addToCart(cartItem).then(
             res => {
               if(res['result']){
-                console.log('add success');
-                window.location.href = 'user/home'
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Item added',
+                })
               }
               else{
                 console.log('add failed')

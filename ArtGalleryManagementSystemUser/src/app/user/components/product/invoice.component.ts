@@ -383,7 +383,9 @@ export class InvoiceComponent implements OnInit {
               Swal.fire({
                 icon: 'success',
                 title: 'Payment sucessfully for ' + this.user.username,
-              })
+              }).then(() =>
+                window.location.href = 'user/home'
+              )
             });
           },
           onCancel: (data, actions) => {
