@@ -18,12 +18,12 @@ import { Category } from '../../entities/category.entity';
   standalone: true,
   imports: [RouterOutlet,RouterLink,ReactiveFormsModule],
   
-  templateUrl: './postcart.component.html',
+  templateUrl: './editart.component.html',
   host:{
-    'collision': 'PostcartComponent'
+    'collision': 'EditArtComponent'
   }
 })
-export class PostcartComponent implements OnInit {
+export class EditArtComponent implements OnInit {
   postArtForm:FormGroup
   postArtAttributes:any
   selectedFile:any
@@ -77,15 +77,15 @@ export class PostcartComponent implements OnInit {
         this.categories= res as Category[]
       }
     )
-    // this.activatedRoute.paramMap.subscribe(
-    //   async param=>{
-    //     const productIdResult = await this.productService.findbyid(parseInt(param.get('productId')))
-    //     if(productIdResult!=null){
-    //       this.product = productIdResult as Product
-    //       console.log(this.product)
-    //     }
-    //   }
-    // )
+    this.activatedRoute.paramMap.subscribe(
+      async param=>{
+        const productIdResult = await this.productService.findbyid(parseInt(param.get('productId')))
+        if(productIdResult!=null){
+          this.product = productIdResult as Product
+          console.log(this.product)
+        }
+      }
+    )
     this.conect.removeScript('src/plugins/src/editors/quill/quill.js')
     this.conect.removeScript('src/plugins/src/tagify/tagify.min.js')
     this.conect.removeScript('src/assets/js/apps/ecommerce-create.js')

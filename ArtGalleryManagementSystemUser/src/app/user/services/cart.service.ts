@@ -29,4 +29,7 @@ export class CartService{
     async createPayment(formdata:FormData){
         return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'cart/createpayment',formdata))
     }
+    async findallorder(userId:any){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'cart/findallorder/'+userId))
+    }
 }

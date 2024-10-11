@@ -45,4 +45,11 @@ export class ProductService{
     async findbycategoryid(id:number){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findbycategoryid/'+id))
     }
+    async findallbyseller(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallbyseller/'+id))
+        
+    }
+    async findbyid(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findproductbyid/'+id))
+    }
 }

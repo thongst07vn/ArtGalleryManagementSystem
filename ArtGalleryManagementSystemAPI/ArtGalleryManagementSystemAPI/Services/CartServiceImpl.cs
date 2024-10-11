@@ -40,6 +40,15 @@ public class CartServiceImpl : CartService
                 item.CreatedAt = orderDetailDto.CreatedAt;
                 var orderItem = mapper.Map<OrderItem>(item);
                 db.OrderItems.Add(orderItem);
+                if (db.SaveChanges() > 0)
+                {
+                    var orderItemProduct = new OrderItemProduct();
+                    orderItemProduct.ProductsId = (int)orderItem.ProductId;
+                    orderItemProduct.OrderItemProductId = (int)orderItem.Id;
+                    db.OrderItemProducts.Add(orderItemProduct);
+                }
+
+
             }
         }
         return db.SaveChanges() > 0;
@@ -62,6 +71,20 @@ public class CartServiceImpl : CartService
     public List<CartItemDto> FindAllCartItem(int id)
     {
         return mapper.Map<List<CartItemDto>>(db.CartItems.Where(c => c.CartId == id).ToList());
+    }
+
+    public List<OrderDetailDto> FindAllOrder(int id)
+    {
+        return mapper.Map<List<OrderDetailDto>>(db.OrderDetails.Where(p => p.UserId == id).SelectMany(od => od.OrderItems, (od, oi) => new OrderDetailDto()
+        {
+            ProductName = oi.OrderItemProducts.Select(op => op.Products.Name).FirstOrDefault(),
+            ProductImage = oi.OrderItemProducts.Select(op => op.Products.Image).FirstOrDefault(),
+            ProductPrice = oi.OrderItemProducts.Select(op => op.Products.Price).FirstOrDefault(),
+            ProductQuantity = oi.Quantity,
+            SellerName = oi.OrderItemProducts.Select(op => op.Products.Seller.IdNavigation.Username).FirstOrDefault(),
+            SellerAvatar = oi.OrderItemProducts.Select(op => op.Products.Seller.IdNavigation.Avatar).FirstOrDefault(),
+            CreatedAt = oi.CreatedAt.ToString("dd/MM/yyyy"),
+        }).ToList());
     }
 
     public CartDto FindById(int id)

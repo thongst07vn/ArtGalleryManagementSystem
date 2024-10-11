@@ -3,6 +3,11 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConectActive } from '../../services/conectActive';
+import { CartService } from '../../services/cart.service';
+import { User } from '../../entities/user.entity';
+import { UserService } from '../../services/user.service';
+import { BaseURLService } from '../../services/baseURL.service';
+import { Order } from '../../entities/order.entity';
 // import {WebcamInitError, WebcamModule} from 'ngx-webcam';
 @Component({
   standalone: true,
@@ -14,11 +19,18 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   star:any
   serviceStar:any
   reviewForm:FormGroup
+  imageUrl:any
+  user:any
+  orders:any
+  seller:any
   constructor(
     private conect : Conect,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private conectActive: ConectActive
+    private conectActive: ConectActive,
+    private cartService : CartService,
+    private userService : UserService,
+    private baseURLService : BaseURLService
   ) {
     this.reviewForm = this.formBuilder.group({
       rating: ['',Validators.required],
@@ -27,11 +39,15 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit(){
+    this.imageUrl=this.baseURLService.IMAGE_URL
+
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
       }
     )
+    
+
     this.conect.removeScript("src/plugins/src/glightbox/glightbox.min.js")
     // this.conect.removeScript("src/plugins/src/global/vendors.min.js")
     this.conect.removeScript("src/plugins/src/splide/splide.min.js")
@@ -60,7 +76,13 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
 
     this.conect.addStyle("src/assets/css/light/components/modal.css");
     this.conect.addStyle("src/assets/css/dark/components/modal.css");
-    
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    this.user = userResult['result'];
+    if(this.user != null){
+      const result = await this.cartService.findallorder(this.user.id);
+      this.orders = result['result'] as Order[]
+    }
+    console.log(this.orders)
   }
 
   ngAfterViewInit() {
@@ -92,7 +114,6 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
   
       
     });
-    
   }
   send(){
     

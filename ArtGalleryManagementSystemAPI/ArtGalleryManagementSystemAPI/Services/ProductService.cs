@@ -6,8 +6,8 @@ namespace ArtGalleryManagementSystemAPI.Services;
 public interface ProductService
 {
     public List<ProductDto> FindAll();
-
-    public ProductDto FindById(int id);
+    public List<ProductDto> FindBySellerId(int id);
+    public ProductWithAttributesDto FindById(int id);
     public ProductWithSellerDto FindByIdWithSeller(int id);
     public ProductWithAttributesDto FindByIdWithAttributes(int id);
     public List<ProductWithSellerDto> FindByCategoryId(int id);

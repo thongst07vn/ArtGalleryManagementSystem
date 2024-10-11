@@ -12,11 +12,12 @@ public class HomeController : Controller
 {
     private ProductService productService;
     private IWebHostEnvironment webHostEnvironment;
-    public HomeController(ProductService _productService, IWebHostEnvironment _webHostEnvironment)
+    private CartService cartService;
+    public HomeController(ProductService _productService, IWebHostEnvironment _webHostEnvironment, CartService _cartService)
     {
         productService = _productService;
         webHostEnvironment = _webHostEnvironment;
-
+        cartService = _cartService;
     }
 
     [Produces("application/json")]
@@ -90,7 +91,20 @@ public class HomeController : Controller
             return BadRequest();
         }
     }
+    [Produces("application/json")]
+    [HttpGet("findallbyseller/{id}")]
+    public IActionResult FindProductBySellerId(int id)
+    {
 
+        try
+        {
+            return Ok(productService.FindBySellerId(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
     [Produces("application/json")]
     [HttpGet("findproductbyidwithseller/{id}")]
     public IActionResult FindProductByIdWithSeller(int id)
@@ -220,5 +234,6 @@ public class HomeController : Controller
             return BadRequest();
         }
     }
+
 }
 

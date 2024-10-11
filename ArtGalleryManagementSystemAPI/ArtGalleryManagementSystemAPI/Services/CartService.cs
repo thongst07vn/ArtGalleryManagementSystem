@@ -11,4 +11,6 @@ public interface CartService
     public bool DeleteItem(int id);
     public bool DeleteAllItem(int cartId);
     public bool CreateOrder(OrderDetailDto orderDetailDto, List<OrderItemDto> orderItems);
+    public List<OrderDetailDto> FindAllOrder(int id);
+
 }

@@ -114,6 +114,14 @@ export const routes: Routes = [
                 data: {
                     addActive: 'postArt',
                 }
+            }
+            ,
+            {
+                path: 'edit-art',
+                component: PostcartComponent,
+                data: {
+                    addActive: 'editArt',
+                }
             },
             {
                 path: 'wishlist',
