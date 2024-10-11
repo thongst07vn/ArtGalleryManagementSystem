@@ -17,6 +17,7 @@ import { BaseURLService } from '../../services/baseURL.service';
 import { Wishlist } from '../../entities/wishlist.entity';
 import { WishlistService } from '../../services/wishlist.service';
 import Swal from 'sweetalert2';
+import { Category } from '../../entities/category.entity';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
   imageUrl:any
   // wishlists = new Wishlist()
   @ViewChild('input-number-min') min: ElementRef;
+  categories: Category[];
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
@@ -141,7 +143,11 @@ export class HomeComponent implements OnInit {
         this.conectActive.setData(params['addActive'])
       }
     )
-
+    this.productService.findallcategory().then(
+      res => {
+        this.categories = res as Category[];
+      }
+    )
     this.conect.addStyle("src/plugins/src/noUiSlider/nouislider.min.css")
     this.conect.addStyle("src/assets/css/light/scrollspyNav.cs")
     this.conect.addStyle("src/plugins/css/light/noUiSlider/custom-nouiSlider.css")
@@ -186,6 +192,7 @@ export class HomeComponent implements OnInit {
     this.productService.sortbyprice(parseFloat(inputmin.value),parseFloat(inputmax.value)).then(
       res => {
         this.productswithseller = res as ProductWithSeller[];
+        
         this.totalItems = this.productswithseller?.length || 0; // Assuming products length
         this.currentPage = 1;
         this.updateDisplayedProducts();
@@ -200,9 +207,12 @@ export class HomeComponent implements OnInit {
       this.productService.findallwithseller().then(
         res => {
           this.productswithseller = res as ProductWithSeller[];
+          this.productswithseller.reverse()
+
           this.totalItems = this.productswithseller?.length || 0; // Assuming products length
           this.currentPage = 1;
           this.updateDisplayedProducts(); // Update displayed products on initial load
+          evt.target.value=''
         },
         error => {
           console.log(error)
@@ -216,6 +226,7 @@ export class HomeComponent implements OnInit {
           this.totalItems = this.productswithseller?.length || 0; // Assuming products length
           this.currentPage = 1;
           this.updateDisplayedProducts();
+          evt.target.value=''
         },
         error => {
           console.log(error);
@@ -273,7 +284,33 @@ export class HomeComponent implements OnInit {
   next(){
     return Math.ceil(this.totalItems / this.itemsPerPage)
   }
+  sortbycategory(event:any){
+    if(event.target.value == '' || event.target.value == null){
+      this.productService.findallwithseller().then(
+        res => {
+          this.productswithseller = res as ProductWithSeller[];
+          this.productswithseller.reverse()
 
+          this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+          this.currentPage = 1;
+          this.updateDisplayedProducts(); // Update displayed products on initial load
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+    else {
+    this.productService.findbycategoryid(event.target.value).then(
+      res=>{
+          this.productswithseller = res as ProductWithSeller[];
+          this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+          this.currentPage = 1;
+          this.updateDisplayedProducts();
+      }
+    )
+   }
+  }
   async addToCart(productID:any){
     await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
       res=>{
@@ -290,11 +327,14 @@ export class HomeComponent implements OnInit {
               if(res['result']){
                 Swal.fire({
                   icon: 'success',
-                  title: 'Item added',
+                  title: 'Add To Cart Success',
                 })
               }
               else{
-                console.log('add failed')
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Add To Cart Fail',
+                })
               }
             },
             error => {

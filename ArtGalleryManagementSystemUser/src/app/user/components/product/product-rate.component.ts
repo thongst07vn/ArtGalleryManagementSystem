@@ -3,10 +3,10 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConectActive } from '../../services/conectActive';
-import {WebcamInitError, WebcamModule} from 'ngx-webcam';
+// import {WebcamInitError, WebcamModule} from 'ngx-webcam';
 @Component({
   standalone: true,
-  imports: [RouterOutlet, RouterLink,ReactiveFormsModule,WebcamModule],
+  imports: [RouterOutlet, RouterLink,ReactiveFormsModule],
   templateUrl: './product-rate.component.html',
   // styleUrls: ['./product-rate.component.css']
 })
@@ -98,9 +98,9 @@ export class ProductRateComponent implements OnInit, AfterViewInit {
     
     console.log(this.reviewForm.value)
   }
-  handleInitError(error: WebcamInitError): void {
-    if (error.mediaStreamError && error.mediaStreamError.name === "NotAllowedError") {
-      console.warn("Camera access was not allowed by user!");
-    }
-  }
+  // handleInitError(error: WebcamInitError): void {
+  //   if (error.mediaStreamError && error.mediaStreamError.name === "NotAllowedError") {
+  //     console.warn("Camera access was not allowed by user!");
+  //   }
+  // }
 }

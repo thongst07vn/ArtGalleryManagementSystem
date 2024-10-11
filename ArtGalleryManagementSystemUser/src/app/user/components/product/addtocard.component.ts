@@ -122,7 +122,16 @@ export class AddtoCardComponent implements OnInit {
   }
   DeleteItem(id:any){
     console.log(id)
-    this.cartService.deleteItem(id);
+    this.cartService.deleteItem(id).then(
+      res=>{
+        Swal.fire({
+          icon: 'success',
+          title: 'Delete Success',
+        }).then(()=>{
+          window.location.href = 'user/add-to-cart'
+        })
+      }
+    );
     // window.location.href = 'user/add-to-cart'
   }
   ChangeSelectedValueAll(evt:any){
