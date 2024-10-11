@@ -229,154 +229,73 @@
                 </div>
             </div> -->
             @if(user.role == 2){
+                
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    
                     <div class="payment-history layout-spacing ">
+                        
                         <div class="widget-content widget-content-area">
-                            <h3 class="">Art List</h3>
+                            <div style="float: left;" class="deleteA mb-2 ">
+                                <!-- <button class="btn btn-success mb-2  btn-lg " style="padding-left: 55px; padding-right: 55px;" (click)="deleteAll()">Delete All</button> -->
+                            </div>
+                            <div style="text-align: center;" class="">
+                                <h3 class="">Art List</h3>
+                            </div>
+                            
                             <table id="zero-config" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th class="checkbox-area" scope="col">
+                                            <div class="form-check form-check-primary">
+                                                <input class="form-check-input" id="checkbox_parent_all" type="checkbox" (change)="ChangeSelectedValueAll($event)">
+                                            </div>
+                                        </th>
                                         <th>Image</th>
                                         <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
-                                        <th>Seller</th>
+                                        <th>Created At</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong>1</strong>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2">
-                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-13.jpeg">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span> A Hair Under My Skin </span></td>
-                                        <td><span>1</span></td>
-                                        <td><span class="inv-amount">$234.40</span></td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2 rounded-circle">
-                                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                                        src="../src/assets/img/profile-13.jpeg">
-                
-                                                </div>
-                                                <p class="inv-amount mx-2">Kiet Tran</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                                                data-bs-target="#reviewModal">
-                                                Review Product
-                                            </button>
-                
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <strong>2</strong>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2">
-                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-14.jpeg">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span> Lily Pond Hand knotted Rug </span></td>
-                                        <td><span>1</span></td>
-                                        <td><span class="inv-amount">$534.40</span></td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2 rounded-circle">
-                                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                                        src="../src/assets/img/profile-13.jpeg">
-                
-                                                </div>
-                                                <p class="inv-amount mx-2">Kiet Tran</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                                                data-bs-target="#reviewModal">
-                                                Review Product
-                                            </button>
-                
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <strong>3</strong>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2">
-                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-15.jpeg">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span> NEXUS 18.01 - Series Archaic/Modern </span></td>
-                                        <td><span>1</span></td>
-                                        <td><span class="inv-amount">$35.40</span></td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2 rounded-circle">
-                                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                                        src="../src/assets/img/profile-13.jpeg">
-                
-                                                </div>
-                                                <p class="inv-amount mx-2">Kiet Tran</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                                                data-bs-target="#reviewModal">
-                                                Review Product
-                                            </button>
-                
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <strong>4</strong>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2">
-                                                    <img alt="avatar" class="img-fluid" src="../src/assets/img/profile-16.jpeg">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><span> Unknown Lady, Eva? </span></td>
-                                        <td><span>1</span></td>
-                                        <td><span class="inv-amount">$874.40</span></td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame me-2 rounded-circle">
-                                                    <img alt="avatar" class="img-fluid rounded-circle"
-                                                        src="../src/assets/img/profile-13.jpeg">
-                
-                                                </div>
-                                                <p class="inv-amount mx-2">Kiet Tran</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                                                Review Product
-                                              </button>
-                                        </td>
-                                    </tr>
+                                        @if(productswithsellers!=null){
+                                            @for(product of productswithsellers; track product;let i = $index){
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check form-check-primary">
+                                                            <input class="form-check-input productchecked" type="checkbox" (change)="ChangeSelectedValue(i+1,$event)">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="align-content-center">
+                                                            @if(product.image.substring(0,5)=="https"){
+                                                                <img alt="avatar" src="{{product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
+                                                            }
+                                                            @else {
+                                                                <img alt="avatar" src="{{imageUrl+product.image}}" style="object-fit: cover; max-width: 60px; max-height:60px">
+                                                            } 
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td><span>{{product.name}}</span></td>
+                                                    <td><span>{{product.quantity}}</span></td>
+                                                    <td><span class="inv-amount">${{product.price}}</span></td>
+                                                    <td><span>{{product.createdAt}}</span></td>
+                                                    <td>
+                                                        <div class="btn-group me-3">
+                                                            <a [routerLink]="['/user/post-art',{productId:product.id}]" class="badge badge-light-success text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <a (click)="delete(product.id)" class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
                                 </tbody>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
@@ -389,7 +308,7 @@
                 <div class="payment-history layout-spacing ">
                     <div class="widget-content widget-content-area">
                         <h3 class="">Payment History</h3>
-                        <table id="zero-config" class="table dt-table-hover" style="width:100%">
+                        <table id="zero-configs" class="table dt-table-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>No</th>

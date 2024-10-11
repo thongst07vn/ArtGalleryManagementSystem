@@ -36,11 +36,14 @@ public class ProductServiceImpl : ProductService
         return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.CategoryId == id && p.Seller.IdNavigation.DeletedAt == null && p.Type == 1).ToList());
     }
 
-    public ProductDto FindById(int id)
+    public ProductWithAttributesDto FindById(int id)
     {
-        return mapper.Map<ProductDto>(db.Products.Find(id));
+        return mapper.Map<ProductWithAttributesDto>(db.Products.Find(id));
     }
-
+    public List<ProductDto> FindBySellerId(int id)
+    {
+        return mapper.Map<List<ProductDto>>(db.Products.Where(src => src.SellerId == id));
+    }
     public ProductWithAttributesDto FindByIdWithAttributes(int id)
     {
         return mapper.Map<ProductWithAttributesDto>(

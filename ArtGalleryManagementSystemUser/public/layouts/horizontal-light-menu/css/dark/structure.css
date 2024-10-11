@@ -1069,7 +1069,8 @@ body.dark #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=t
 }
 body.dark #sidebar ul.menu-categories li.menu > .dropdown-toggle[aria-expanded=true]:hover svg {
   color: #25d5e4 !important;
-  fill: rgba(67, 97, 238, 0.0392156863);
+  fill: #25d5e4 !important;
+  /* fill: rgba(67, 97, 238, 0.0392156863); */
 }
 body.dark #sidebar ul.menu-categories li.menu > .dropdown-toggle svg.feather-chevron-right {
   vertical-align: middle;

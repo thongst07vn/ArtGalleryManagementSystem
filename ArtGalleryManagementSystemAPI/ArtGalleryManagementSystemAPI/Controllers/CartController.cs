@@ -151,14 +151,14 @@ public class CartController : Controller
 
     [Produces("application/json")]
     [Consumes("application/json")]
-    [HttpPost(" ")]
-    public IActionResult CreatePayment([FromBody] ExecutePaymentDto dto)
+    [HttpGet("findallorder/{id}")]
+    public IActionResult FindAllorder(int id)
     {
         try
         {
             return Ok(new
             {
-                result = payPalService.ExecutePayment(dto)
+                result = cartService.FindAllOrder(id)
             });
         }
         catch

@@ -328,13 +328,13 @@ export class InvoiceComponent implements OnInit {
 
     this.cartService.createOrder(formdata).then(
       res => {
-        // if(res['result']){
-        //   window.location.href = 'user/home'
-        // }
-        Swal.fire({
-          icon: 'success',
-          title: 'Order sucessfully',
-        })
+        if(res['result']){
+          window.location.href = 'user/home'
+        }
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: 'Order sucessfully',
+          // })
       },
       error => {
         Swal.fire({

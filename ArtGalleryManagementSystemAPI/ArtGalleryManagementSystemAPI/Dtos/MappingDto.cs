@@ -247,6 +247,30 @@ public class MappingDto : Profile
                 des => des.UpdatedAt,
                 src => src.MapFrom(desc => desc.UpdatedAt != null ? ((DateTime)desc.UpdatedAt).ToString("dd-MM-yyyy") : null)
             );
+        //.ForMember(
+        //    des => des.ProductImage,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.OrderItemProducts.Select(src => src.Products.Image)))
+        //)
+        //.ForMember(
+        //    des => des.ProductName,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.OrderItemProducts.Select(src => src.Products.Name)))
+        //)
+        //.ForMember(
+        //    des => des.ProductPrice,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.OrderItemProducts.Select(src => src.Products.Price)))
+        //)
+        //.ForMember(
+        //    des => des.ProductQuantity,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.Quantity))
+        //)
+        //.ForMember(
+        //    des => des.SellerName,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.OrderItemProducts.Select(src => src.Products.Seller.IdNavigation.Username)))
+        //)
+        //.ForMember(
+        //    des => des.SellerAvatar,
+        //    src => src.MapFrom(src => src.OrderItems.Select(src => src.OrderItemProducts.Select(src => src.Products.Seller.IdNavigation.Avatar)))
+        //);
         CreateMap<OrderDetailDto, OrderDetail>()
             .ForMember(
                 des => des.CreatedAt,
@@ -309,6 +333,6 @@ public class MappingDto : Profile
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
-       }
+    }
 }
 

@@ -7,6 +7,8 @@ import { UserService } from '../../services/user.service';
 import { BaseURLService } from '../../services/baseURL.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../entities/user.entity';
+import { ProductWithSeller } from '../../entities/productwithseller.entity';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   standalone: true,
@@ -23,6 +25,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   star:any
   serviceStar:any
   reviewForm:FormGroup
+  productswithsellers:any
+  productItems:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
@@ -30,13 +34,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private userService:UserService,
     private baseURLService : BaseURLService,
     private formBuilder: FormBuilder,
+    private productService : ProductService
   ){
     this.reviewForm = this.formBuilder.group({
       rating: ['',Validators.required],
       reviewText:['',Validators.required]
     })
   }
-  ngOnInit(){
+  async ngOnInit(){
     this.imageUrl = this.baseURLService.IMAGE_URL
     
     this.activatedRoute.data.subscribe(
@@ -72,28 +77,41 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.conect.addStyle("src/assets/css/light/components/modal.css");
     this.conect.addStyle("src/assets/css/dark/components/modal.css");
 
-    this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
-        this.user = res['result'] as User;
-        // this.conect.reloadPage()
-        this.activatedRoute.paramMap.subscribe(
-          param=>{
-            console.log(param.get('sellerId'))
-            this.userService.findbyid(param.get('sellerId')).then(
-              res=>{
-                if(res['result']!=null){
-                  if(res['result'].role == 2){
-                    this.user = null
-                    this.seller = res['result'] as User
-                  }
-                }
-              }
-            );
-            
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")))
+    this.user = userResult['result'] as User;
+    this.activatedRoute.paramMap.subscribe(
+      param=>{
+        console.log(param.get('sellerId'))
+        const sellerResult = this.userService.findbyid(parseInt(param.get('sellerId')))
+        if(sellerResult['result']!=null){
+          if(sellerResult['result'].role == 2){
+            this.user = null
+            this.seller = sellerResult['result'] as User
           }
-        )
+        }
+        
       }
-    );
+    )
+    console.log(this.user)
+    this.productService.findallbyseller(this.user.id).then(
+      async res => {
+        this.productswithsellers = res as ProductWithSeller[];
+        // this.productItems = []; // Initialize cartItems array
+        // this.productItems.push({
+        //   id : this.productswithsellers.id,
+        //   name:this.productswithsellers.name,           
+        //   // categoryId:product['result'].categoryId,
+        //   image:this.productswithsellers.image,
+        //   price:this.productswithsellers.price,
+        //   quantity: this.productswithsellers.quantity,
+        //   // cardid : this.cartResult['result'][i].id,
+        //   // avatar: product['result'].avatar,
+        //   // username: product['result'].username,
+        //   // selectedindex: this.productswithsellers.id,
+        //   selected:false
+        // });
+            
+      })
     
   }
   ngAfterViewInit() {
@@ -128,5 +146,57 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
   send(){
     console.log(this.reviewForm.value)
+  }
+  
+  deleteAll(){
+    // if(this.cartItems!=''){
+    //   this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
+    //   // window.location.href = 'user/add-to-cart'
+    // }else{
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'There are no products to delete',
+    //   }).then(()=>{
+    //     window.location.href = 'user/home'
+    //   })
+    // }
+  }
+  ChangeSelectedValueAll(evt:any){
+    const isChecked = evt.target.checked;
+    console.log(isChecked); // Log the checkbox state for debugging
+
+    const deleteButtonContainer = document.querySelector('.deleteA');
+
+    // Create the button once initially outside the conditional block:
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('dt-button', 'dt-delete', 'btn', 'btn-danger','btn-lg');
+    deleteButton.setAttribute('tabindex', '0');
+    deleteButton.setAttribute('aria-controls', 'invoice-list');
+    deleteButton.textContent = 'Delete All';
+
+    // Add an event listener to the button outside the conditional block:
+    deleteButton.addEventListener('click', () => {
+      this.deleteAll(); // Assuming this refers to a defined function
+    });
+    deleteButtonContainer.appendChild(deleteButton);
+
+    // Only conditionally append or remove the button based on checkbox state:
+    if (!isChecked) {
+      deleteButtonContainer.removeChild(deleteButton);
+      window.location.href='/user/profile'
+    }
+
+    const allCheckedBoxes = Array.from(document.querySelectorAll(".productchecked")) as HTMLInputElement[]
+    for(let i=0; i< this.productswithsellers.length; i++){
+      this.productswithsellers[i].selected = isChecked
+      allCheckedBoxes[i].checked = isChecked
+    }
+  }
+  ChangeSelectedValue(selectedindex: number,evt:any){
+    const isChecked = evt.target.checked;
+    this.productswithsellers[selectedindex].selected = isChecked
+  }
+  delete(event:any){
+
   }
 }
