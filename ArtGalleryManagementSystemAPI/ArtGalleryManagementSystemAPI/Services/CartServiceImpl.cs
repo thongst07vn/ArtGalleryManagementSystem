@@ -17,12 +17,13 @@ public class CartServiceImpl : CartService
     public bool AddProductToCart(CartItemDto cartItemDto)
     {
         var cartItem = mapper.Map<CartItem>(cartItemDto);
+        cartItem.CreatedAt = DateTime.Now;
         db.CartItems.Add(cartItem);
         if (db.SaveChanges() > 0)
         {
             var cartItemProduct = new CartItemProduct();
-            cartItemProduct.ProductsId = (int)cartItemDto.ProductId;
-            cartItemProduct.CartItemProductId = (int)cartItemDto.CartId;
+            cartItemProduct.ProductsId = (int)cartItem.ProductId;
+            cartItemProduct.CartItemProductId = (int)cartItem.Id;
             db.CartItemProducts.Add(cartItemProduct);
         }
         return db.SaveChanges() > 0;
@@ -40,6 +41,33 @@ public class CartServiceImpl : CartService
                 item.CreatedAt = orderDetailDto.CreatedAt;
                 var orderItem = mapper.Map<OrderItem>(item);
                 db.OrderItems.Add(orderItem);
+                if (db.SaveChanges() > 0)
+                {
+                    var OrderItems_Product = new OrderItemProduct();
+                    OrderItems_Product.ProductsId = (int)orderItem.ProductId;
+                    OrderItems_Product.OrderItemProductId = (int)orderItem.Id;
+                    db.OrderItemProducts.Add(OrderItems_Product);
+                    if (db.SaveChanges() > 0)
+                    {
+                        var cartItems = FindAllCartItem((int)orderDetail.UserId);
+                        foreach (var cartItem in cartItems)
+                        {
+                            var cartItem_product = db.CartItemProducts.SingleOrDefault(i => i.ProductsId == orderItem.ProductId && i.CartItemProductId == cartItem.Id);
+                            db.CartItemProducts.Remove(cartItem_product);
+                            if (db.SaveChanges() > 0)
+                            {
+                                var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItem.ProductId && i.Id == cartItem.Id);
+                                db.CartItems.Remove(ci);
+                            }
+                        }
+
+
+                    }
+
+
+
+                }
+
             }
         }
         return db.SaveChanges() > 0;

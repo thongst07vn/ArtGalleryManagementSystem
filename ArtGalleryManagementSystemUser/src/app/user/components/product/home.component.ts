@@ -328,8 +328,6 @@ export class HomeComponent implements OnInit {
                 Swal.fire({
                   icon: 'success',
                   title: 'Add To Cart Success',
-                }).then(()=>{
-                  window.location.href = 'user/home'
                 })
               }
               else{
