@@ -355,48 +355,54 @@ export class InvoiceComponent implements OnInit {
             }
         )
     }
-    this.payPalConfig = {
-        clientId: 'Ae6Y-DSVMPCs7f8-GdUCFkW5bDRL9pnrSOz4SVwwWpBzexBF9MBrtb-Vt6J6DUBX3aVPrLAR6JWWpgsX',
-        // for creating orders (transactions) on server see
-        // https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
-        createOrderOnServer: (data) => fetch('http://localhost:5204/createpayment',{
-          method: "post",
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body: JSON.stringify(OrderItems)
-        }).then((res) => res.json()).then((order) => order.token),
-        authorizeOnServer: async (approveData:any) => {
-          console.log(approveData);
-            const res = await fetch('http://localhost:5204/executepayment', {
-            method: 'post',
-            headers: {
-              "Content-Type": "application/json"
+      this.payPalConfig = {
+          clientId: 'Ae6Y-DSVMPCs7f8-GdUCFkW5bDRL9pnrSOz4SVwwWpBzexBF9MBrtb-Vt6J6DUBX3aVPrLAR6JWWpgsX',
+          // for creating orders (transactions) on server see
+          // https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
+          createOrderOnServer: (data) => fetch('http://localhost:5204/createpayment',{
+            method: "post",
+            headers:{
+              "Content-Type":"application/json"
             },
-            body: JSON.stringify({
-              PayerId: approveData.payerID,
-              PaymentId: approveData.paymentID
-            })
-          });
-          this.BuyItems();
-          const details = await res.json();
-          Swal.fire({
-            icon: 'success',
-            title: 'Payment sucessfully for ' + this.user.username,
-          });
-        },
-        onCancel: (data, actions) => {
-            console.log('OnCancel', data, actions);
-            // this.showCancel = true;
-        },
-        onError: err => {
-            console.log('OnError', err);
-            // this.showError = true;
-        },
-        onClick: (data, actions) => {
-          console.log(data);
-            console.log('onClick', data, actions);
-            // this.resetStatus();
+            body: JSON.stringify(OrderItems)
+          })
+              .then((res) => res.json())
+              .then((order) => order.token),
+          authorizeOnServer: (approveData:any) => {
+            console.log(approveData);
+              return fetch('http://localhost:5204/executepayment', {
+              method: 'post',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                PayerId: approveData.payerID,
+                PaymentId: approveData.paymentID
+              })
+            }).then((res) => {
+              this.BuyItems();
+              return res.json();
+            }).then((details) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Payment sucessfully for ' + this.user.username,
+              }).then(() =>
+                window.location.href = 'user/home'
+              )
+            });
+          },
+          onCancel: (data, actions) => {
+              console.log('OnCancel', data, actions);
+              // this.showCancel = true;
+          },
+          onError: err => {
+              console.log('OnError', err);
+              // this.showError = true;
+          },
+          onClick: (data, actions) => {
+            console.log(data);
+              console.log('onClick', data, actions);
+              // this.resetStatus();
         },
     };
     
