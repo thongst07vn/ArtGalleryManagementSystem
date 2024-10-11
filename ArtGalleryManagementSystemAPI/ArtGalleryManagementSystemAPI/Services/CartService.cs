@@ -5,6 +5,8 @@ namespace ArtGalleryManagementSystemAPI.Services;
 public interface CartService
 {
     public CartDto FindById(int id);
+    public CartItemDto FindByProId(int id);
+
     public bool AddProductToCart(CartItemDto cartItemDto);
     public bool UpdateProductInCart(CartItemDto cartItemDto);
     public List<CartItemDto> FindAllCartItem(int id);

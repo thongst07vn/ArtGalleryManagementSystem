@@ -11,6 +11,7 @@ public class OrderDetailDto
     public string CreatedAt { get; set; }
 
     public string UpdatedAt { get; set; }
+    public int ProductId { get; set; }
 
     public string ProductName { get; set; }
     public string ProductImage { get; set; }

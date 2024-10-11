@@ -49,19 +49,21 @@ export class AddtoCardComponent implements OnInit {
           const product = await this.productService.findProductIdWithSeller(this.cartResult['result'][i].productId);
           const checkdelete = await this.userService.findbyid(product['result'].sellerId)
           if(checkdelete['result'].deletedAt == null){
-            this.cartItems.push({
-              id : product['result'].id,
-              name:product['result'].name,           
-              categoryId:product['result'].categoryId,
-              image:product['result'].image,
-              price:product['result'].price,
-              quantity: this.cartResult['result'][i].quantity,
-              cardid : this.cartResult['result'][i].id,
-              avatar: product['result'].avatar,
-              username: product['result'].username,
-              selectedindex: i,
-              selected:false
-            });
+            // if(product['result'].quantity>0){
+              this.cartItems.push({
+                id : product['result'].id,
+                name:product['result'].name,           
+                categoryId:product['result'].categoryId,
+                image:product['result'].image,
+                price:product['result'].price,
+                quantity: this.cartResult['result'][i].quantity,
+                cardid : this.cartResult['result'][i].id,
+                avatar: product['result'].avatar,
+                username: product['result'].username,
+                selectedindex: i,
+                selected:false
+              });
+            // }
           }
           
         }
@@ -109,8 +111,16 @@ export class AddtoCardComponent implements OnInit {
   }
   deleteAll(){
     if(this.cartItems!=''){
-      this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
-      // window.location.href = 'user/add-to-cart'
+      this.cartService.deleteallItem(this.cartResult['result'][0].cartId).then(
+        ()=>{
+          Swal.fire({
+            icon: 'success',
+            title: 'Delete Success',
+          }).then(()=>{
+            window.location.href = 'user/home'
+          })
+        }
+      )
     }else{
       Swal.fire({
         icon: 'warning',
