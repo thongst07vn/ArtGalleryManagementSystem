@@ -40,6 +40,9 @@ public class CartServiceImpl : CartService
                 item.OrderId = orderDetail.Id;
                 item.CreatedAt = orderDetailDto.CreatedAt;
                 var orderItem = mapper.Map<OrderItem>(item);
+                var product = db.Products.Find(orderItem.ProductId);
+                product.Quantity -= orderItem.Quantity;
+                db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.OrderItems.Add(orderItem);
                 if (db.SaveChanges() > 0)
                 {
@@ -53,11 +56,14 @@ public class CartServiceImpl : CartService
                         foreach (var cartItem in cartItems)
                         {
                             var cartItem_product = db.CartItemProducts.SingleOrDefault(i => i.ProductsId == orderItem.ProductId && i.CartItemProductId == cartItem.Id);
-                            db.CartItemProducts.Remove(cartItem_product);
-                            if (db.SaveChanges() > 0)
+                            if (cartItem_product != null)
                             {
-                                var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItem.ProductId && i.Id == cartItem.Id);
-                                db.CartItems.Remove(ci);
+                                db.CartItemProducts.Remove(cartItem_product);
+                                if (db.SaveChanges() > 0)
+                                {
+                                    var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItem.ProductId && i.Id == cartItem.Id);
+                                    db.CartItems.Remove(ci);
+                                }
                             }
                         }
                     }
@@ -69,15 +75,30 @@ public class CartServiceImpl : CartService
 
     public bool DeleteAllItem(int cartId)
     {
-        var item = db.CartItems.Where(c => c.CartId == cartId).ToList();
-        db.CartItems.RemoveRange(item);
+        var items = db.CartItems.Where(c => c.CartId == cartId).ToList();
+        foreach (var item in items)
+        {
+            var cartproductitem = db.CartItemProducts.SingleOrDefault(p => p.ProductsId == item.ProductId && p.CartItemProductId == item.Id);
+            db.CartItemProducts.Remove(cartproductitem);
+        }
+        if (db.SaveChanges() > 0)
+        {
+            db.CartItems.RemoveRange(items);
+
+        }
         return db.SaveChanges() > 0;
     }
 
     public bool DeleteItem(int id)
     {
         var item = db.CartItems.Find(id);
-        db.CartItems.Remove(item);
+        var cartproductitem = db.CartItemProducts.SingleOrDefault(p => p.ProductsId == item.ProductId && p.CartItemProductId == item.Id);
+        db.CartItemProducts.Remove(cartproductitem);
+        if (db.SaveChanges() > 0)
+        {
+            db.CartItems.Remove(item);
+
+        }
         return db.SaveChanges() > 0;
     }
 

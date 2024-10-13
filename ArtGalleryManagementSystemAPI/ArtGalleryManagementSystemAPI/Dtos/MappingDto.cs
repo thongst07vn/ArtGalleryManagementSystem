@@ -333,6 +333,35 @@ public class MappingDto : Profile
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
             );
+
+        //Bid Order
+        CreateMap<BidOrder, BidOrderDto>()
+            .ForMember(
+                des => des.BidStartTime,
+                src => src.MapFrom(des => des.BidStartTime.ToString("dd-MM-yyyy HH:mm:ss"))
+            )
+            .ForMember(
+                des => des.BidEndTime,
+                src => src.MapFrom(des => des.BidEndTime.ToString("dd-MM-yyyy HH:mm:ss"))
+            )
+            .ForMember(
+                des => des.IncrementInTime,
+                src => src.MapFrom(des => des.IncrementInTime.ToString("HH:mm:ss"))
+            );
+
+        CreateMap<BidOrderDto, BidOrder>()
+            .ForMember(
+                des => des.BidStartTime,
+                src => src.MapFrom(src => DateTime.ParseExact(src.BidStartTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
+            )
+            .ForMember(
+                des => des.IncrementInTime,
+                src => src.MapFrom(src => TimeOnly.FromDateTime(DateTime.ParseExact(src.IncrementInTime, "HH:mm:ss", CultureInfo.InvariantCulture)))
+            )
+            .ForMember(
+                des => des.BidEndTime,
+                src => src.MapFrom(src => DateTime.ParseExact(src.BidEndTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
+            );
     }
 }
 

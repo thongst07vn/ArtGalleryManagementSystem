@@ -17,5 +17,8 @@ public interface ProductService
     public List<ProductWithSellerDto> SearchByKeyword(string value);
     public List<CategoryDto> FindAllCategory();
     public bool PostArt(ProductWithAttributesDto productWithAttributesDto);
+
+    public List<ProductWithSellerDto> AllAuctionProductWithSeller();
+
 }
 

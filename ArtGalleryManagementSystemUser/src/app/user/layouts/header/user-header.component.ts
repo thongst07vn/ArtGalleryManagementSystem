@@ -6,6 +6,9 @@ import { UserService } from '../../services/user.service';
 import { CartService } from '../../services/cart.service';
 import { BaseURLService } from '../../services/baseURL.service';
 import Swal from 'sweetalert2';
+import { AuctionService } from '../../services/auction.service';
+import { BidOrder } from '../../entities/bidorder.entity';
+import { error } from 'jquery';
 
 @Component({
   selector: 'user-header',
@@ -21,13 +24,27 @@ export class UserHeaderComponent implements OnInit {
   theme:boolean
   cartItems :any
   imageUrl:any
+  bidOrdersInfo:any
   constructor(
     private conect : Conect,
     private userService : UserService,
     private cartService : CartService,
-    private baseURLService : BaseURLService
+    private baseURLService : BaseURLService,
+    private auctionService: AuctionService
   ){}
   async ngOnInit() {
+    this.bidOrdersInfo = '';
+    this.auctionService.FindAllAuction().then(
+      res => {
+        const bidOrders = res as BidOrder[];
+        this.bidOrdersInfo = bidOrders.length;
+      },
+      error => {
+        console.log(error);
+      }
+
+    );
+
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
 
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")

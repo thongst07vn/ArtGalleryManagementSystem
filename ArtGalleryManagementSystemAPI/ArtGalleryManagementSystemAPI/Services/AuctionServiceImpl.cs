@@ -1,0 +1,83 @@
+﻿using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.Models;
+using AutoMapper;
+
+namespace ArtGalleryManagementSystemAPI.Services;
+
+public class AuctionServiceImpl : AuctionService
+{
+    private DatabaseContext db;
+    private IMapper mapper;
+    private ProductService productService;
+    public AuctionServiceImpl(DatabaseContext _db, IMapper _mapper, ProductService _productService)
+    {
+        db = _db;
+        mapper = _mapper;
+        productService = _productService;
+    }
+
+    public bool AddBidOrder(List<ProductWithSellerDto> bidlist, BidOrderDto bidinfo)
+    {
+        var bidorder = mapper.Map<BidOrder>(bidinfo);
+        bidorder.BidStamp = BitConverter.GetBytes(0);
+        foreach (var pro in bidlist)
+        {
+            bidorder.ProductId = pro.Id;
+            db.BidOrders.Add(bidorder);
+            if (db.SaveChanges() > 0)
+            {
+                var product = db.Products.Find(pro.Id);
+                product.Type = 4;
+                db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+        }
+        return db.SaveChanges() > 0;
+    }
+
+    public bool AuctionToProduct(int id)
+    {
+        var product = db.Products.Find(id);
+        if (product != null)
+        {
+            product.Type = 1;
+        }
+        db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
+    public bool AuctionToProductCancle(int id)
+    {
+        var product = db.Products.Find(id);
+        if (product != null)
+        {
+            product.DeletedAt = DateTime.Now;
+        }
+        db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
+    public List<BidOrderDto> FindAllValidAuction()
+    {
+        var validBidOrders = new List<BidOrderDto>();
+        var bidOrders = db.BidOrders;
+        foreach (var bidOrder in bidOrders)
+        {
+            if (BitConverter.ToInt32(bidOrder.BidStamp, 0) < 1 && DateTime.Compare(DateTime.Now, bidOrder.BidEndTime) < 0)
+            {
+                validBidOrders.Add(mapper.Map<BidOrderDto>(bidOrder));
+            }
+        }
+        return validBidOrders;
+    }
+
+    public bool RejectAuction(int id)
+    {
+        var product = db.Products.Find(id);
+        if (product != null)
+        {
+            product.Type = 3;
+        }
+        db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+}

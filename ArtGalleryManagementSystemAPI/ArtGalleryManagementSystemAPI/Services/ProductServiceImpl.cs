@@ -122,5 +122,10 @@ public class ProductServiceImpl : ProductService
         }
 
     }
+
+    public List<ProductWithSellerDto> AllAuctionProductWithSeller()
+    {
+        return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.Seller.IdNavigation.DeletedAt == null && p.Type == 2).ToList());
+    }
 }
 

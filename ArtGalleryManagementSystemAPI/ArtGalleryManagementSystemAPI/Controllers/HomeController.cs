@@ -235,5 +235,20 @@ public class HomeController : Controller
         }
     }
 
+
+    [Produces("application/json")]
+    [HttpGet("findallauctionproductwithseller")]
+    public IActionResult FindAllAuctionProductWithSeller()
+    {
+
+        try
+        {
+            return Ok(productService.AllAuctionProductWithSeller());
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }
 

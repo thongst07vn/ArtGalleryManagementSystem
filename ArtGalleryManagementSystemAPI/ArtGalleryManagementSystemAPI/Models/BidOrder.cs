@@ -9,13 +9,11 @@ public partial class BidOrder
 {
     public int Id { get; set; }
 
-    public int? BidderId { get; set; }
-
     public int? ProductId { get; set; }
 
-    public DateTime? BidStartTime { get; set; }
+    public DateTime BidStartTime { get; set; }
 
-    public DateTime? BidEndTime { get; set; }
+    public DateTime BidEndTime { get; set; }
 
     public double? BidBasePrice { get; set; }
 
@@ -23,15 +21,11 @@ public partial class BidOrder
 
     public double? IncrementInPrice { get; set; }
 
-    public TimeOnly? IncrementInTime { get; set; }
-
-    public DateTime? BidTransactionTime { get; set; }
-
-    public double? BidTransactionAmount { get; set; }
+    public TimeOnly IncrementInTime { get; set; }
 
     public byte[] BidStamp { get; set; }
 
-    public virtual User Bidder { get; set; }
+    public virtual ICollection<BidOrderUser> BidOrderUsers { get; set; } = new List<BidOrderUser>();
 
     public virtual Product Product { get; set; }
 }

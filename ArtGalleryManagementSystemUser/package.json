@@ -30,6 +30,7 @@
     "glightbox": "^3.3.0",
     "jquery": "^3.7.1",
     "js-base64": "^3.7.7",
+    "moment": "^2.30.1",
     "ngx-filepond": "^7.0.3",
     "ngx-paypal": "^11.0.0",
     "nouislider": "^15.8.1",
