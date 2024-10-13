@@ -1,4 +1,3 @@
-
 USE ARTGALLERY
 GO
 
@@ -169,7 +168,8 @@ CREATE TABLE [reviews](
 	[product_id] integer,
 	[user_id] integer,
 	[rating] integer,
-	[review_text] nvarchar(255)
+	[review_text] nvarchar(255),
+	[created_at] datetime
 )
 GO
 CREATE TABLE provinces 

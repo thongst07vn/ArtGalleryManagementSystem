@@ -130,7 +130,7 @@ public class CartController : Controller
         var setting = new JsonSerializerSettings();
         setting.Converters.Add(new IsoDateTimeConverter()
         {
-            DateTimeFormat = "dd-MM-yyyy"
+            DateTimeFormat = "dd-MM-yyyy HH:mm:ss"
         });
         var invoicelistDto = JsonConvert.DeserializeObject<List<OrderItemDto>>(invoicelist);
         var orderDto = JsonConvert.DeserializeObject<OrderDetailDto>(order);

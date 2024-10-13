@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { User } from '../../entities/user.entity';
 import { ProductWithSeller } from '../../entities/productwithseller.entity';
 import { ProductService } from '../../services/product.service';
+import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -18,7 +20,7 @@ import { ProductService } from '../../services/product.service';
     'collision': 'ProfileComponent'
   }
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
+export class ProfileComponent implements OnInit {
   user: any
   seller:any
   imageUrl:any
@@ -93,60 +95,42 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       }
     )
     console.log(this.user)
-    this.productService.findallbyseller(this.user.id).then(
-      async res => {
-        this.productswithsellers = res as ProductWithSeller[];
-        // this.productItems = []; // Initialize cartItems array
-        // this.productItems.push({
-        //   id : this.productswithsellers.id,
-        //   name:this.productswithsellers.name,           
-        //   // categoryId:product['result'].categoryId,
-        //   image:this.productswithsellers.image,
-        //   price:this.productswithsellers.price,
-        //   quantity: this.productswithsellers.quantity,
-        //   // cardid : this.cartResult['result'][i].id,
-        //   // avatar: product['result'].avatar,
-        //   // username: product['result'].username,
-        //   // selectedindex: this.productswithsellers.id,
-        //   selected:false
-        // });
-            
-      })
-    
+    this.productswithsellers = await this.productService.findallbyseller(this.user.id) as ProductWithSeller[]
+    console.log(this.productswithsellers)
   }
-  ngAfterViewInit() {
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log(this.star)
-      // Product rating stars
-      document.querySelectorAll('.star-rating.product-stars i[data-star]').forEach((starElement) => {
-        starElement.addEventListener('click', () => {
-           // Ghi log khi ngôi sao được nhấn
-          this.star = starElement.getAttribute('data-star');
-          const stars = starElement.parentElement?.children;
+  // ngAfterViewInit() {
+  //   document.addEventListener('DOMContentLoaded', () => {
+  //     console.log(this.star)
+  //     // Product rating stars
+  //     document.querySelectorAll('.star-rating.product-stars i[data-star]').forEach((starElement) => {
+  //       starElement.addEventListener('click', () => {
+  //          // Ghi log khi ngôi sao được nhấn
+  //         this.star = starElement.getAttribute('data-star');
+  //         const stars = starElement.parentElement?.children;
   
-          if (stars) {
-            for (let i = 0; i < stars.length; i++) {
-              stars[i].classList.remove('text-warning');
-              stars[i].classList.add('text-secondary');
+  //         if (stars) {
+  //           for (let i = 0; i < stars.length; i++) {
+  //             stars[i].classList.remove('text-warning');
+  //             stars[i].classList.add('text-secondary');
   
-              if (i < Number(this.star)) {
-                stars[i].classList.remove('text-secondary');
-                stars[i].classList.add('text-warning');
-              }
-            }
-          }
-          this.reviewForm = this.formBuilder.group({
-            rating: [this.star,Validators.required],
-            reviewText:['',Validators.required]
-          })
-        });
-      });
-    });
+  //             if (i < Number(this.star)) {
+  //               stars[i].classList.remove('text-secondary');
+  //               stars[i].classList.add('text-warning');
+  //             }
+  //           }
+  //         }
+  //         this.reviewForm = this.formBuilder.group({
+  //           rating: [this.star,Validators.required],
+  //           reviewText:['',Validators.required]
+  //         })
+  //       });
+  //     });
+  //   });
     
-  }
-  send(){
-    console.log(this.reviewForm.value)
-  }
+  // }
+  // send(){
+  //   console.log(this.reviewForm.value)
+  // }
   
   deleteAll(){
     // if(this.cartItems!=''){
@@ -196,7 +180,62 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     const isChecked = evt.target.checked;
     this.productswithsellers[selectedindex].selected = isChecked
   }
-  delete(event:any){
-
+  async delete(proId:number){
+    const u = await this.productService.findbyid(proId)
+    const deleteU = u as ProductWithSeller
+    deleteU.deletedAt = formatDate(new Date(),'dd-MM-yyyy','en-US')
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      if (result.isConfirmed) {  
+        let us =JSON.stringify(deleteU)
+        let fromData = new FormData()
+        fromData.append('deleteAt',us)
+        this.productService.deleteproduct(fromData).then(
+          res=>{
+            if(res['result']){
+              swalWithBootstrapButtons.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              ).then(()=>{
+                window.location.href = 'user/profile'
+              })
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Delete User Fail',
+              })
+            }
+          },
+          ()=>{
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete User Fail',
+            })
+          }
+        )
+        
+      } else if (result.dismiss === Swal.DismissReason.cancel){
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
   }
 }

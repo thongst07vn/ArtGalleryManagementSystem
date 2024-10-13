@@ -21,5 +21,5 @@ public partial class OrderItem
 
     public virtual OrderDetail Order { get; set; }
 
-    public virtual ICollection<OrderItemProduct> OrderItemProducts { get; set; }
+    public virtual ICollection<OrderItemProduct> OrderItemProducts { get; set; } = new List<OrderItemProduct>();
 }

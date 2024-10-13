@@ -274,7 +274,7 @@ public class MappingDto : Profile
         CreateMap<OrderDetailDto, OrderDetail>()
             .ForMember(
                 des => des.CreatedAt,
-                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
             )
             .ForMember(
                 des => des.UpdatedAt,
@@ -284,7 +284,7 @@ public class MappingDto : Profile
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(
                 des => des.CreatedAt,
-                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss"))
             )
             .ForMember(
                 des => des.UpdatedAt,
@@ -293,7 +293,7 @@ public class MappingDto : Profile
         CreateMap<OrderItemDto, OrderItem>()
             .ForMember(
                 des => des.CreatedAt,
-                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture))
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
             )
             .ForMember(
                 des => des.UpdatedAt,
@@ -303,7 +303,7 @@ public class MappingDto : Profile
         CreateMap<OrderItem, OrderItemWithPaypalDto>()
             .ForMember(
                 des => des.CreatedAt,
-                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy"))
+                src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss"))
             )
             .ForMember(
                 des => des.UpdatedAt,
@@ -332,6 +332,24 @@ public class MappingDto : Profile
             .ForMember(
                 des => des.DeletedAt,
                 src => src.MapFrom(src => src.DeletedAt != null ? DateTime.ParseExact(src.DeletedAt, "dd-MM-yyyy", CultureInfo.InvariantCulture) : default(DateTime?))
+            );
+        CreateMap<Review, ReviewDto>()
+           .ForMember(
+               des => des.CreatedAt,
+               src => src.MapFrom(des => des.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss"))
+           )
+           .ForMember(
+                des => des.UserName,
+                src => src.MapFrom(src => src.User.Username)
+            )
+           .ForMember(
+                des => des.UserAvatar,
+                src => src.MapFrom(src => src.User.Avatar)
+            );
+        CreateMap<ReviewDto, Review>()
+            .ForMember(
+                des => des.CreatedAt,
+                src => src.MapFrom(src => DateTime.ParseExact(src.CreatedAt, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
             );
     }
 }

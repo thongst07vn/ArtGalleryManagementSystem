@@ -39,6 +39,9 @@ export class ProductService{
     async postart(formData:FormData){
         return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'home/createrart',formData))
     }
+    async editart(formData:FormData){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL+'home/editart',formData))
+    }
     async findallcategory(){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallcategory'))
     }
@@ -51,5 +54,23 @@ export class ProductService{
     }
     async findbyid(id:number){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findproductbyid/'+id))
+    }
+    async addreview(formdata:any){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'home/addreview',formdata))
+    }
+    async findreviewbyproId(proId:number,userId:number,createdAt:string){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'home/findreviewbyproId',{proId,userId,createdAt}))
+    }
+    async findreviewbyuserid(userId:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findreviewbyuserid/'+userId))
+    }
+    async findallreview(){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallreview'))
+    }
+    async findallreviewbyproid(proId:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'home/findallreviewbyproid/'+proId))
+    }
+    async deleteproduct(formData:FormData){
+        return lastValueFrom(this.httpClient.put(this.baseUrlService.BASE_URL + 'home/delete', formData));
     }
 }
