@@ -31,7 +31,7 @@
                                 <div class="d-flex">
                                     <div class="">
                                         @if(product.image.substring(0,5)=="https"){
-                                            <img alt="avatar" class="img-fluid rounded" style="width: 60px; object-fit: cover;" src="{{product.image}}">
+                                            <img alt="avatar" class="img-fluid rounded" style="width: 60px; object-fit: cover;" src="{{product.image}}" referrerpolicy="no-referrer">
                          
                                         }
                                         @else {
@@ -47,7 +47,7 @@
                                 <div class="d-flex">
                                     <div class="usr-img-frame me-2 rounded-circle">
                                         @if(product.avatar.substring(0,5)=="https"){
-                                            <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}">
+                                            <img alt="avatar" class="img-fluid rounded-circle" src="{{product.avatar}}" referrerpolicy="no-referrer">
                          
                                         }
                                         @else {

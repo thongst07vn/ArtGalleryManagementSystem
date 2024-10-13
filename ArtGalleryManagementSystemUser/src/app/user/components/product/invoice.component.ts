@@ -306,9 +306,8 @@ export class InvoiceComponent implements OnInit {
 
   }
   BuyItems(){
-
     let formdata = new FormData();
-    this.orderForm.value.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
+    this.orderForm.value.createdAt = formatDate(new Date(),'dd-MM-yyyy HH:mm:ss','en-us');
     this.orderForm.value.total = this.total;
     let order = JSON.stringify(this.orderForm.value);
     console.log(this.orderForm.value);
@@ -344,7 +343,7 @@ export class InvoiceComponent implements OnInit {
       }
     );
   }
-    private initConfig(): void {
+  private initConfig(): void {
     const OrderItems:any = [];
     for(let i=0;  i < this.invoiceList.length; i++){
         OrderItems.push(

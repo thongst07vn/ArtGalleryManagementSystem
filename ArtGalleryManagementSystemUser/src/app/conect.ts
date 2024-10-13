@@ -39,7 +39,7 @@ export class Conect implements OnDestroy{
         script.src = scriptSrc;
         // script.defer = true;
         // this.document.body.appendChild(script);
-        setTimeout(()=>{this.document.body.appendChild(script)},500)
+        setTimeout(()=>{this.document.body.appendChild(script)},200)
 
     }
     public addScriptAsync(scriptSrc: string) {

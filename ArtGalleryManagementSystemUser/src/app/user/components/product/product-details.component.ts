@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Conect } from '../../../conect';
 import { ConectActive } from '../../services/conectActive';
@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import { BaseURLService } from '../../services/baseURL.service';
 import { ProductWithAttributes } from '../../entities/productwithattributes.entity';
 import { ProductWithSeller } from '../../entities/productwithseller.entity';
+import { Review } from '../../entities/review.entity';
 
 @Component({
   standalone: true,
@@ -33,6 +34,14 @@ export class ProductDetailsComponent implements OnInit {
   imageUrl:any
   buyItems: any = []
   buyQuantity: number
+  reviews:any
+  rating:number=0
+  fivestar:number=0
+  fourstar:number=0
+  threestar:number=0
+  twostar:number=0
+  onestar:number=0
+  ratingcount:any
   constructor(
     private conect : Conect,
     private activatedRoute : ActivatedRoute,
@@ -40,8 +49,10 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductService,
     private userService: UserService,
     private cartService: CartService,
-    private baseURLService:BaseURLService
+    private baseURLService:BaseURLService,
+    private elementRef: ElementRef
   ){
+    
   }
   async ngOnInit() {
     this.buyQuantity = 1;
@@ -94,11 +105,22 @@ export class ProductDetailsComponent implements OnInit {
         this.productId = params.get('productId');
         await this.productService.findProductIdWithAttributes(parseInt(params.get('productId'))).then(
           res => {
-            this.product = res as ProductWithAttributes
-            console.log(this.product);
+            if(res){
+              this.product = res as ProductWithAttributes
+              console.log(this.product);
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Árt Has Been Deleted',
+              }).then(()=>window.location.href='user/home')
+            }
+            
           },
           error => {
-            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Árt Has Been Deleted',
+            }).then(()=>window.location.href='user/home')
           }
         )
       },
@@ -106,6 +128,49 @@ export class ProductDetailsComponent implements OnInit {
         console.log(error)
       }
     )
+    const reviewsResult = await this.productService.findallreviewbyproid(parseInt(this.productId))
+    this.reviews = reviewsResult['result'] as Review[]
+    this.reviews.forEach((element: { rating: string; }) => {
+      // console.log(element.rating)
+      if(parseInt(element.rating) == 5){
+        this.fivestar = this.fivestar + 1
+      }
+      if(parseInt(element.rating) == 4){
+        this.fourstar = this.fourstar + 1
+      }
+      if(parseInt(element.rating) == 3){
+        this.threestar = this.threestar + 1
+      }
+      if(parseInt(element.rating) == 2){
+        this.twostar = this.twostar + 1
+      }
+      if(parseInt(element.rating) == 1){
+        this.onestar = this.onestar + 1
+      }
+      this.rating += parseInt(element.rating)
+    });
+    // for(let i=0;i<this.reviews.length;i++){
+    //   this.rating += this.reviews[i].rating
+    // }
+    console.log(this.rating)
+    this.ratingcount = this.reviews.length
+    this.rating = parseFloat((this.rating / this.reviews.length).toFixed(2))
+    // const star5 = document.querySelector("#star-five") as HTMLElement
+    // star5.style.width = (this.fivestar/this.reviews.length)*100+"%"
+    // const star4 = document.querySelector("#star-four") as HTMLElement
+    // star4.style.width = (this.fourstar/this.reviews.length)*100+"%"
+    // const star3 = document.querySelector("#star-three") as HTMLElement
+    // star3.style.width = (this.threestar/this.reviews.length)*100+"%"
+    // const star2 = document.querySelector("#star-two") as HTMLElement
+    // star2.style.width = (this.twostar/this.reviews.length)*100+"%"
+    // const star1 = document.querySelector("#star-one") as HTMLElement
+    // star1.style.width = (this.onestar/this.reviews.length)*100+"%"
+    // console.log(this.star5)
+    
+    console.log(this.reviews)
+    console.log(this.rating)
+    console.log(this.ratingcount)
+
   }
   addQuantity(){
     if(this.buyQuantity < this.product.quantity){
@@ -127,26 +192,35 @@ export class ProductDetailsComponent implements OnInit {
           cartItem.productId = productID;
           cartItem.quantity = this.buyQuantity;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
-          await this.cartService.addToCart(cartItem).then(
-            res => {
-              if(res['result']){
-                console.log('add success');
-                this.addsuccess = true;               
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Add success',
-                  })                                         
-                 
-                // window.location.href = 'user/home'
+          if(this.product.quantity < cartItem.quantity){
+            Swal.fire({
+              icon: 'error',
+              title: 'Product quantity is not sufficient',
+            })
+          }
+          else{
+            await this.cartService.addToCart(cartItem).then(
+              res => {
+                if(res['result']){
+                  console.log('add success');
+                  this.addsuccess = true;               
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Add success',
+                    })                                         
+                  
+                  // window.location.href = 'user/home'
+                }
+                else{
+                  console.log('add failed');
+                }
+              },
+              error => {
+                console.log(error);
               }
-              else{
-                console.log('add failed');
-              }
-            },
-            error => {
-              console.log(error);
-            }
-          )
+            )
+          }
+          
         }
       },
       error=>{
@@ -175,11 +249,21 @@ export class ProductDetailsComponent implements OnInit {
               username: product.username,
           }
         )
-        if(this.buyItems.length >0){
-          sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
-          // console.log(sessionStorage.getItem('buyItems'));
-          window.location.href = '../user/invoice'
+        // console.log(this.buyItems)
+        if(product.quantity < this.buyItems[0].quantity){
+          Swal.fire({
+            icon: 'error',
+            title: 'Product quantity is not sufficient',
+          })
         }
+        else{
+          if(this.buyItems.length >0){
+            sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
+            // console.log(sessionStorage.getItem('buyItems'));
+            window.location.href = '../user/invoice'
+          }
+        }
+        
       },
       error =>{
         console.log(error);

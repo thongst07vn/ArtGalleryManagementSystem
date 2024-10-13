@@ -22,7 +22,6 @@ public class ProductWithAttributesDto
 
     public string DeletedAt { get; set; }
 
-
     public string Username { get; set; } = null!;
     public string? Avatar { get; set; }
     public List<ProductAttributeDto> ProductAttributes { get; set; } = new List<ProductAttributeDto>();

@@ -67,6 +67,23 @@ public class CartController : Controller
         }
     }
     [Produces("application/json")]
+    [HttpGet("findcartbyproductid/{id}")]
+    public IActionResult FindCartByProductId(int id)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = cartService.FindByProId(id)
+            });
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
     [Consumes("application/json")]
 
     [HttpDelete("deleteitem/{id}")]
@@ -113,7 +130,7 @@ public class CartController : Controller
         var setting = new JsonSerializerSettings();
         setting.Converters.Add(new IsoDateTimeConverter()
         {
-            DateTimeFormat = "dd-MM-yyyy"
+            DateTimeFormat = "dd-MM-yyyy HH:mm:ss"
         });
         var invoicelistDto = JsonConvert.DeserializeObject<List<OrderItemDto>>(invoicelist);
         var orderDto = JsonConvert.DeserializeObject<OrderDetailDto>(order);

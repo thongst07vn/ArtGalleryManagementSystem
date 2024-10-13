@@ -48,20 +48,22 @@ export class AddtoCardComponent implements OnInit {
         for(let i=0; i<this.cartResult['result'].length; i++){
           const product = await this.productService.findProductIdWithSeller(this.cartResult['result'][i].productId);
           const checkdelete = await this.userService.findbyid(product['result'].sellerId)
-          if(checkdelete['result'].deletedAt == null){
-            this.cartItems.push({
-              id : product['result'].id,
-              name:product['result'].name,           
-              categoryId:product['result'].categoryId,
-              image:product['result'].image,
-              price:product['result'].price,
-              quantity: this.cartResult['result'][i].quantity,
-              cardid : this.cartResult['result'][i].id,
-              avatar: product['result'].avatar,
-              username: product['result'].username,
-              selectedindex: i,
-              selected:false
-            });
+          if(checkdelete['result'].deletedAt == null && product['result'].deletedAt==null){
+            // if(product['result'].quantity>0){
+              this.cartItems.push({
+                id : product['result'].id,
+                name:product['result'].name,           
+                categoryId:product['result'].categoryId,
+                image:product['result'].image,
+                price:product['result'].price,
+                quantity: this.cartResult['result'][i].quantity,
+                cardid : this.cartResult['result'][i].id,
+                avatar: product['result'].avatar,
+                username: product['result'].username,
+                selectedindex: i,
+                selected:false
+              });
+            // }
           }
           
         }
@@ -109,8 +111,16 @@ export class AddtoCardComponent implements OnInit {
   }
   deleteAll(){
     if(this.cartItems!=''){
-      this.cartService.deleteallItem(this.cartResult['result'][0].cartId)
-      // window.location.href = 'user/add-to-cart'
+      this.cartService.deleteallItem(this.cartResult['result'][0].cartId).then(
+        ()=>{
+          Swal.fire({
+            icon: 'success',
+            title: 'Delete Success',
+          }).then(()=>{
+            window.location.href = 'user/home'
+          })
+        }
+      )
     }else{
       Swal.fire({
         icon: 'warning',
@@ -172,7 +182,7 @@ export class AddtoCardComponent implements OnInit {
   BuyItems(){
     this.buyItems=[]
     sessionStorage.setItem('buyItems',JSON.stringify(this.buyItems))
-
+    console.log("Buyed")
     for(let i = 0; i < this.cartItems.length; i++){
       if(this.cartItems[i].selected){
         this.buyItems.push(this.cartItems[i]);
@@ -182,6 +192,12 @@ export class AddtoCardComponent implements OnInit {
       sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
       // console.log(sessionStorage.getItem('buyItems'));
       window.location.href = '../user/invoice'
+    }else{
+      Swal.fire({
+        icon:'info',
+        title:'Please Select Árt'
+      })
     }
+    
   }
 }

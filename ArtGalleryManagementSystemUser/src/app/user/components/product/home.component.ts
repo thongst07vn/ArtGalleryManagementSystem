@@ -18,6 +18,7 @@ import { Wishlist } from '../../entities/wishlist.entity';
 import { WishlistService } from '../../services/wishlist.service';
 import Swal from 'sweetalert2';
 import { Category } from '../../entities/category.entity';
+import { Review } from '../../entities/review.entity';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
   totalItems: number = 0;
   itemsPerPage: number = 12;
   currentPage: number = 1;
+  totalPages:number = 0;
   userId:any
   proId:number
   user:any
@@ -83,7 +85,8 @@ export class HomeComponent implements OnInit {
         const productswithsellerResult = res as ProductWithSeller[];
         productswithsellerResult.reverse()
         for(let i=0; i< productswithsellerResult.length; i++){
-          this.productswithseller.push({
+          if(productswithsellerResult[i].deletedAt == null){
+            this.productswithseller.push({
               id: productswithsellerResult[i].id,
               sellerId: productswithsellerResult[i].sellerId,
               name:productswithsellerResult[i].name,
@@ -98,9 +101,14 @@ export class HomeComponent implements OnInit {
               avatar:productswithsellerResult[i].avatar,
               liked:false
           });
+          }
+          
         }
         this.totalItems = this.productswithseller?.length || 0; // Assuming products length
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log(this.totalPages)
         this.updateDisplayedProducts();
+
         for(let i =0; i< this.productswithseller.length; i++){
           for(let j =0;j<this.wishlists.length;j++){
             const product = await this.productService.findProductId(this.wishlists[j].productId) as ProductWithSeller
@@ -167,8 +175,8 @@ export class HomeComponent implements OnInit {
     
     
     this.wishlistsSelect = new Set(wishlistResult['result'].map(wishlist => wishlist.name));
-    
     // this.conect.reloadPage()
+    
   }
   selectValueLowHigh(evt:any){
     const inputmin = document.getElementById('input-number-min') as HTMLInputElement  
@@ -243,10 +251,10 @@ export class HomeComponent implements OnInit {
     return text; 
   }
   getPageNumbers(): number[] {
-    const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     const visiblePages = 5; // Adjust as needed
     const startPage = Math.max(this.currentPage - Math.floor(visiblePages / 2), 1);
-    const endPage = Math.min(startPage + visiblePages - 1, totalPages);
+    const endPage = Math.min(startPage + visiblePages - 1, this.totalPages);
     const pageNumbers: number[] = [];
   
     for (let i = startPage; i <= endPage; i++) {
@@ -261,7 +269,7 @@ export class HomeComponent implements OnInit {
 
     this.productsToDisplay = this.productswithseller.slice(startIndex, endIndex);
   }
-
+  
   // Event handlers for pagination interactions (implement in your component)
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
@@ -283,6 +291,36 @@ export class HomeComponent implements OnInit {
   }
   next(){
     return Math.ceil(this.totalItems / this.itemsPerPage)
+  }
+  shouldShowFirstEllipsis(): boolean {
+    const visiblePages = 5; // Adjust as needed
+    // this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    return visiblePages > 1
+  }
+  isFirstPageVisible(): boolean {
+    const visiblePages = 5; // Adjust as needed
+
+    return this.currentPage === 1 || // Show on current page is last page
+              (visiblePages + 2) > 1; // Show if more than 2 pages hidden
+  }
+  goToFirstPage(){
+    this.currentPage = 1;
+    this.updateDisplayedProducts();
+  }
+  shouldShowEllipsis(): boolean {
+    const visiblePages = 5; // Adjust as needed
+    // this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    return visiblePages < this.totalPages
+  }
+  isLastPageVisible(): boolean {
+    const visiblePages = 5; // Adjust as needed
+
+    return this.currentPage === this.totalPages || // Show on current page is last page
+           this.totalPages > (visiblePages + 2); // Show if more than 2 pages hidden
+  }
+  goToLastPage(){
+    this.currentPage = this.totalPages;
+    this.updateDisplayedProducts();
   }
   sortbycategory(event:any){
     if(event.target.value == '' || event.target.value == null){
@@ -313,34 +351,84 @@ export class HomeComponent implements OnInit {
   }
   async addToCart(productID:any){
     await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser"))).then(
-      res=>{
+      async res=>{
         if(res['result']){
           this.user = res['result'] as User;
+          const product = await this.productService.findProductId(productID) as Product
+          // const cart = await this.cartService.findcartbyproductid(productID) as CartItem
           const cartItem = new CartItem();
           cartItem.cartId = this.user.id;
           cartItem.productId = productID;
           cartItem.quantity = 1;
           cartItem.createdAt = formatDate(new Date(),'dd-MM-yyyy','en-us');
           console.log(cartItem)
-          this.cartService.addToCart(cartItem).then(
-            res => {
-              if(res['result']){
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Add To Cart Success',
-                })
-              }
-              else{
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Add To Cart Fail',
-                })
-              }
-            },
-            error => {
-              console.log(error);
+          console.log(product)
+          // console.log(cart['result'])
+          // if(cart['result']==null){
+            if(product.quantity<1){
+              Swal.fire({
+                icon: 'error',
+                title: 'Product quantity is not sufficient',
+              })
             }
-          )
+            else{
+              console.log(product)
+              this.cartService.addToCart(cartItem).then(
+                res => {
+                  if(res['result']){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Add To Cart Success',
+                    })
+                  }
+                  else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Add To Cart Fail',
+                    })
+                  }
+                },
+                error => {
+                  console.log(error);
+                }
+              )
+            }
+            
+          // }
+          // else{
+          //   if(product.quantity <= cart['result'].quantity){
+          //     Swal.fire({
+          //       icon: 'error',
+          //       title: 'Product quantity is not sufficient',
+          //     })
+          //   }
+          //   else{
+          //     console.log("đã add")
+          //     this.cartService.addToCart(cartItem).then(
+          //       res => {
+          //         if(res['result']){
+          //           Swal.fire({
+          //             icon: 'success',
+          //             title: 'Add To Cart Success',
+          //           })
+          //         }
+          //         else{
+          //           Swal.fire({
+          //             icon: 'error',
+          //             title: 'Add To Cart Fail',
+          //           })
+          //         }
+          //       },
+          //       error => {
+          //         console.log(error);
+          //       }
+          //     )
+          //   }
+          // }
+          
+          
+          
+          
         }
       },
       error=>{

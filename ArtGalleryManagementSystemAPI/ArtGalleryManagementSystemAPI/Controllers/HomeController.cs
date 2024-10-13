@@ -234,8 +234,102 @@ public class HomeController : Controller
             return BadRequest();
         }
     }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("editart")]
+    public IActionResult Editart(IFormFile image, string productInfo, string attributeInfo)
+    {
+        var setting = new JsonSerializerSettings();
+        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd-MM-yyyy" });
+        var productAttributeDto = JsonConvert.DeserializeObject<List<ProductAttributeDto>>(attributeInfo);
+        var productDto = JsonConvert.DeserializeObject<ProductWithAttributesDto>(productInfo);
+        var imagePro = productService.FindById(productDto.Id);
 
+        if (image != null && image.Length > 0)
+        {
+            var newFileName = FileHelper.generateFileName(image.FileName);
+            var path = Path.Combine(webHostEnvironment.WebRootPath, "images", newFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                image.CopyTo(fileStream);
+            }
+            productDto.Image = newFileName;
+        }
+        else
+        {
+            productDto.Image = imagePro.Image;
 
+        }
+        productDto.ProductAttributes = productAttributeDto;
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.EditArt(productDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Consumes("multipart/form-data")]
+    [Produces("application/json")]
+    [HttpPost("addreview")]
+    public IActionResult Addreview(string reviewinfor)
+    {
+        var setting = new JsonSerializerSettings();
+        setting.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "dd-MM-yyyy HH:mm:ss" });
+        var reviewDto = JsonConvert.DeserializeObject<ReviewDto>(reviewinfor);
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.AddReview(reviewDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    [HttpPost("findreviewbyproid")]
+    public IActionResult Findreviewbyproid([FromBody] ReviewedDto values)
+    {
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.FindReviewByProId(values.proId, values.userId, values.createdAt)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [HttpGet("findreviewbyuserid/{userId}")]
+    public IActionResult Findreviewbyuserid(int userId)
+    {
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.FindReviewByUserId(userId)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
     [Produces("application/json")]
     [HttpGet("findallauctionproductwithseller")]
     public IActionResult FindAllAuctionProductWithSeller()
@@ -249,6 +343,68 @@ public class HomeController : Controller
         {
             return BadRequest();
         }
+    }
+
+    [Produces("application/json")]
+    [HttpGet("findallreview")]
+    public IActionResult Findallreview()
+    {
+        try
+        {
+
+
+            return Ok(new
+            {
+                result = productService.FindAllReview()
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [HttpGet("findallreviewbyproid/{proId}")]
+    public IActionResult Findallreviewbyproid(int proId)
+    {
+        try
+        {
+
+            return Ok(new
+            {
+                result = productService.FindAllReviewByProId(proId)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+    [Produces("application/json")]
+    [Consumes("multipart/form-data")]
+    [HttpPut("delete")]
+    public IActionResult delete(string deleteAt)
+    {
+        try
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Converters.Add(new IsoDateTimeConverter()
+            {
+                DateTimeFormat = "dd-MM-yyyy"
+            });
+            var productDto = JsonConvert.DeserializeObject<ProductDto>(deleteAt);
+
+
+            return Ok(new
+            {
+                Result = productService.Delete(productDto)
+            });
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
     }
 }
 
