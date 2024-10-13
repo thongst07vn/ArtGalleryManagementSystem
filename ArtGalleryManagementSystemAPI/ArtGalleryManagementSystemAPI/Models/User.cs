@@ -41,7 +41,7 @@ public partial class User
 
     public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
 
-    public virtual ICollection<BidOrder> BidOrders { get; set; } = new List<BidOrder>();
+    public virtual ICollection<BidOrderUser> BidOrderUsers { get; set; } = new List<BidOrderUser>();
 
     public virtual Cart Cart { get; set; }
 

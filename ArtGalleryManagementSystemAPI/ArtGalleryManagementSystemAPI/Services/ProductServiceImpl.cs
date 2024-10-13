@@ -161,6 +161,10 @@ public class ProductServiceImpl : ProductService
 
     }
 
+    public List<ProductWithSellerDto> AllAuctionProductWithSeller()
+    {
+        return mapper.Map<List<ProductWithSellerDto>>(db.Products.Where(p => p.Seller.IdNavigation.DeletedAt == null && p.Type == 2).ToList());
+    }
     public bool AddReview(ReviewDto reviewDto)
     {
         var review = mapper.Map<Review>(reviewDto);
@@ -195,7 +199,6 @@ public class ProductServiceImpl : ProductService
         db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         return db.SaveChanges() > 0;
     }
-
 
 }
 

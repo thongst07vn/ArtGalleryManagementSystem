@@ -17,6 +17,9 @@ public interface ProductService
     public List<ProductWithSellerDto> SearchByKeyword(string value);
     public List<CategoryDto> FindAllCategory();
     public bool PostArt(ProductWithAttributesDto productWithAttributesDto);
+
+    public List<ProductWithSellerDto> AllAuctionProductWithSeller();
+
     public bool EditArt(ProductWithAttributesDto productWithAttributesDto);
 
     public bool AddReview(ReviewDto reviewDto);
@@ -26,6 +29,7 @@ public interface ProductService
     public ReviewDto FindReviewByProId(int proId, int userId, string createdAt);
     public List<ReviewDto> FindReviewByUserId(int userId);
     public bool Delete(ProductDto productDto);
+
 
 }
 

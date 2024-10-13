@@ -331,11 +331,27 @@ public class HomeController : Controller
         }
     }
     [Produces("application/json")]
+    [HttpGet("findallauctionproductwithseller")]
+    public IActionResult FindAllAuctionProductWithSeller()
+    {
+
+        try
+        {
+            return Ok(productService.AllAuctionProductWithSeller());
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [Produces("application/json")]
     [HttpGet("findallreview")]
     public IActionResult Findallreview()
     {
         try
         {
+
 
             return Ok(new
             {

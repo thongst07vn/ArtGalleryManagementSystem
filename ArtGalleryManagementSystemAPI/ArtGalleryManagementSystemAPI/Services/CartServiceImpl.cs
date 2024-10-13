@@ -44,6 +44,9 @@ public class CartServiceImpl : CartService
                 item.CreatedAt = orderDetailDto.CreatedAt;
                 item.OrderId = orderDetail.Id;
                 var orderItem = mapper.Map<OrderItem>(item);
+                var product = db.Products.Find(orderItem.ProductId);
+                product.Quantity -= orderItem.Quantity;
+                db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.OrderItems.Add(orderItem);
                 if (db.SaveChanges() > 0)
                 {
@@ -77,6 +80,7 @@ public class CartServiceImpl : CartService
 
     public bool DeleteAllItem(int cartId)
     {
+
         var item = db.CartItems.Where(c => c.CartId == cartId).ToList();
         var cartproduct = db.CartItemProducts.Where(c => c.CartItemProductNavigation.CartId == cartId).ToList();
         db.CartItemProducts.RemoveRange(cartproduct);
@@ -89,7 +93,6 @@ public class CartServiceImpl : CartService
         var item = db.CartItems.Find(id);
         var cartproduct = db.CartItemProducts.SingleOrDefault(c => c.CartItemProductId == id);
         db.CartItemProducts.Remove(cartproduct);
-
         db.CartItems.Remove(item);
         return db.SaveChanges() > 0;
     }

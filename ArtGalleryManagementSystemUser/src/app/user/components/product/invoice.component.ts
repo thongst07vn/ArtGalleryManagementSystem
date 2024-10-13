@@ -91,7 +91,7 @@ export class InvoiceComponent implements OnInit {
     console.log(document.getElementById('#changecurrentaddress'));
     this.imageUrl=this.baseURLService.IMAGE_URL
     this.invoiceList = JSON.parse(sessionStorage.getItem('buyItems'))
-    console.log(this.invoiceList);
+    sessionStorage.removeItem('buyItems')
     this.subtotal=0;
     
     this.total=0;

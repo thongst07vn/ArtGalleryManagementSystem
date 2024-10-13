@@ -2,6 +2,7 @@ USE ARTGALLERY
 GO
 
 DROP TABLE IF EXISTS [reviews]
+DROP TABLE IF EXISTS [bid_order_user]
 DROP TABLE IF EXISTS [product_attributes_products]
 DROP TABLE IF EXISTS [wishlist_products]
 DROP TABLE IF EXISTS [wishlist_users]
@@ -47,7 +48,7 @@ GO
 CREATE TABLE [sellers](
 	[id] int primary key,
 	[income] float,
-	[created_at] datetime,
+	[created_at] datetime NOT NULL,
 	[deleted_at] datetime,
 	FOREIGN KEY ([id]) REFERENCES  [users]([id])
 )
@@ -71,7 +72,7 @@ CREATE TABLE [categories] (
   [id] integer PRIMARY KEY IDENTITY,
   [name] nvarchar(255),
   [description] nvarchar(255),
-  [created_at] datetime,
+  [created_at] datetime NOT NULL,
   [deleted_at] datetime
 )
 GO
@@ -86,7 +87,7 @@ CREATE TABLE [products] (
   [price] Float,
   [quantity] integer,
   [image] nvarchar(255),
-  [created_at] datetime,
+  [created_at] datetime NOT NULL,
   [deleted_at] datetime
 )
 GO
@@ -105,7 +106,7 @@ CREATE TABLE [wishlist] (
   [name] nvarchar(255),
   [user_id] integer,
   [product_id] integer,
-  [created_at] datetime,
+  [created_at] datetime NOT NULL,
   [deleted_at] datetime
 )
 GO
@@ -113,7 +114,7 @@ GO
 CREATE TABLE [cart] (
   [id] integer PRIMARY KEY ,
   [total] FLOAT,
-  [created_at] datetime,
+  [created_at] datetime NOT NULL,
   [updated_at] datetime
 )
 GO
@@ -123,7 +124,7 @@ CREATE TABLE [cart_item] (
 	[cart_id] integer,
 	[product_id] integer,
 	[quantity] integer,
-	[created_at] datetime,
+	[created_at] datetime NOT NULL,
 	[updated_at] datetime
 )
 GO
@@ -132,7 +133,7 @@ CREATE TABLE [order_details] (
 	[id] integer PRIMARY KEY IDENTITY,
 	[user_id] integer,
 	[total] FLOAT,  
-	[created_at] datetime,
+	[created_at] datetime NOT NULL,
 	[updated_at] datetime
 )
 GO
@@ -142,7 +143,7 @@ CREATE TABLE [order_item] (
 	[order_id] integer,
 	[product_id] integer,
 	[quantity] integer,
-	[created_at] datetime,
+	[created_at] datetime NOT NULL,
 	[updated_at] datetime
 )
 GO
@@ -150,7 +151,6 @@ GO
 
 CREATE TABLE [bid_order] (
 	[id] integer PRIMARY KEY IDENTITY,
-	[bidder_id] integer,
 	[product_id] integer,
 	[bid_start_time] datetime,
 	[bid_end_time] datetime,
@@ -158,10 +158,19 @@ CREATE TABLE [bid_order] (
 	[bid_sold_price] FLOAT,  
 	[increment_in_price] FLOAT,  
 	[increment_in_time] time,
-	[bid_transaction_time] datetime,
-	[bid_transaction_amount] FLOAT,  
+	
 	[bid_stamp] timestamp,
 )
+GO
+CREATE TABLE [bid_order_user](
+	[bid_order_user_id] integer,
+	[user_id] integer,
+	[bid_transaction_time] datetime,
+	[bid_transaction_amount] FLOAT,  
+	PRIMARY KEY ([bid_order_user_id], [user_id])
+)
+ALTER TABLE [bid_order_user] ADD FOREIGN KEY ([bid_order_user_id]) REFERENCES [bid_order] ([id]);
+ALTER TABLE [bid_order_user] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id]);
 GO
 CREATE TABLE [reviews](
 	[id] integer PRIMARY KEY IDENTITY,
@@ -216,7 +225,6 @@ ALTER TABLE [reviews] ADD CONSTRAINT reviews_product_id_fkey FOREIGN KEY ([produ
 ALTER TABLE [reviews] ADD CONSTRAINT reviews_user_id_fkey FOREIGN KEY ([user_id]) REFERENCES [users]([id]);
 
 ALTER TABLE [addresses] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id])
-ALTER TABLE [bid_order] ADD FOREIGN KEY ([bidder_id]) REFERENCES [users] ([id])
 ALTER TABLE [bid_order] ADD FOREIGN KEY ([product_id]) REFERENCES [products] ([id])
 ALTER TABLE [products] ADD FOREIGN KEY ([category_id]) REFERENCES [categories] ([id]) 
 
