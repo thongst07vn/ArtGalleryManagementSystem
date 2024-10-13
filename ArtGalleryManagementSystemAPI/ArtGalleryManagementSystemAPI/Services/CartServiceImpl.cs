@@ -41,57 +41,29 @@ public class CartServiceImpl : CartService
                 product.Quantity -= item.Quantity;
                 db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
-                var orderItemT = db.OrderItems.SingleOrDefault(i => i.ProductId == item.ProductId);
-                if (orderItemT != null)
+                item.CreatedAt = orderDetailDto.CreatedAt;
+                item.OrderId = orderDetail.Id;
+                var orderItem = mapper.Map<OrderItem>(item);
+                db.OrderItems.Add(orderItem);
+                if (db.SaveChanges() > 0)
                 {
-
-                    orderItemT.Quantity += item.Quantity;
-                    db.Entry(orderItemT).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    var OrderItems_Product = new OrderItemProduct();
+                    OrderItems_Product.ProductsId = (int)orderItem.ProductId;
+                    OrderItems_Product.OrderItemProductId = (int)orderItem.Id;
+                    db.OrderItemProducts.Add(OrderItems_Product);
                     if (db.SaveChanges() > 0)
                     {
                         var cartItems = FindAllCartItem((int)orderDetail.UserId);
                         foreach (var cartItem in cartItems)
                         {
-                            var cartItem_product = db.CartItemProducts.SingleOrDefault(i => i.ProductsId == orderItemT.ProductId && i.CartItemProductId == cartItem.Id);
+                            var cartItem_product = db.CartItemProducts.SingleOrDefault(i => i.ProductsId == orderItem.ProductId && i.CartItemProductId == cartItem.Id);
                             if (cartItem_product != null)
                             {
                                 db.CartItemProducts.Remove(cartItem_product);
                                 if (db.SaveChanges() > 0)
                                 {
-                                    var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItemT.ProductId && i.Id == cartItem.Id);
+                                    var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItem.ProductId && i.Id == cartItem.Id);
                                     db.CartItems.Remove(ci);
-                                }
-                            }
-                        }
-                    }
-
-                }
-                else
-                {
-                    item.CreatedAt = orderDetailDto.CreatedAt;
-                    item.OrderId = orderDetail.Id;
-                    var orderItem = mapper.Map<OrderItem>(item);
-                    db.OrderItems.Add(orderItem);
-                    if (db.SaveChanges() > 0)
-                    {
-                        var OrderItems_Product = new OrderItemProduct();
-                        OrderItems_Product.ProductsId = (int)orderItem.ProductId;
-                        OrderItems_Product.OrderItemProductId = (int)orderItem.Id;
-                        db.OrderItemProducts.Add(OrderItems_Product);
-                        if (db.SaveChanges() > 0)
-                        {
-                            var cartItems = FindAllCartItem((int)orderDetail.UserId);
-                            foreach (var cartItem in cartItems)
-                            {
-                                var cartItem_product = db.CartItemProducts.SingleOrDefault(i => i.ProductsId == orderItem.ProductId && i.CartItemProductId == cartItem.Id);
-                                if (cartItem_product != null)
-                                {
-                                    db.CartItemProducts.Remove(cartItem_product);
-                                    if (db.SaveChanges() > 0)
-                                    {
-                                        var ci = db.CartItems.SingleOrDefault(i => i.ProductId == orderItem.ProductId && i.Id == cartItem.Id);
-                                        db.CartItems.Remove(ci);
-                                    }
                                 }
                             }
                         }
@@ -137,7 +109,7 @@ public class CartServiceImpl : CartService
             ProductQuantity = oi.Quantity,
             SellerName = oi.OrderItemProducts.Select(op => op.Products.Seller.IdNavigation.Username).FirstOrDefault(),
             SellerAvatar = oi.OrderItemProducts.Select(op => op.Products.Seller.IdNavigation.Avatar).FirstOrDefault(),
-            CreatedAt = oi.CreatedAt.ToString("dd/MM/yyyy"),
+            CreatedAt = oi.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss"),
             ProductId = (int)oi.ProductId
         }).ToList());
     }

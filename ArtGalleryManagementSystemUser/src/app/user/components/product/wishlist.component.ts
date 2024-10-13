@@ -52,7 +52,7 @@ export class WishlistComponent implements OnInit {
           const product = await this.productService.findProductIdWithSeller(this.wishlistResult['result'][i].productId);
           console.log(product)
           const checkdelete = await this.userService.findbyid(product['result'].sellerId)
-          if(checkdelete['result'].deletedAt == null){
+          if(checkdelete['result'].deletedAt == null && product['result'].deletedAt==null){
             this.wishlistItems.push({
               id : this.wishlistResult['result'][i].id,
               name : this.wishlistResult['result'][i].name,

@@ -13,6 +13,8 @@ import { formatDate } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import Swal from 'sweetalert2';
 import { Category } from '../../entities/category.entity';
+import { ProductWithAttributes } from '../../entities/productwithattributes.entity';
+import { BaseURLService } from '../../services/baseURL.service';
 
 @Component({
   standalone: true,
@@ -35,13 +37,16 @@ export class EditArtComponent implements OnInit {
   attribute: any
   categories:any
   product:any
+  proId:any
+  imageUrl:any
   constructor(
     private conect : Conect,
     private activatedRoute: ActivatedRoute,
     private conectActive: ConectActive,
     private formBuilder : FormBuilder,
     private userService : UserService,
-    private productService:ProductService
+    private productService:ProductService,
+    private baseURLService : BaseURLService
   ){
     this.postArtForm = this.formBuilder.group({
       sellerId: [''],
@@ -59,7 +64,9 @@ export class EditArtComponent implements OnInit {
       origin:['']
     })
   }
-  ngOnInit(){
+  async ngOnInit(){
+    this.imageUrl = this.baseURLService.IMAGE_URL
+
     this.activatedRoute.data.subscribe(
       params => {
         this.conectActive.setData(params['addActive'])
@@ -79,13 +86,15 @@ export class EditArtComponent implements OnInit {
     )
     this.activatedRoute.paramMap.subscribe(
       async param=>{
-        const productIdResult = await this.productService.findbyid(parseInt(param.get('productId')))
-        if(productIdResult!=null){
-          this.product = productIdResult as Product
-          console.log(this.product)
-        }
+        this.proId = parseInt(param.get('productId'))
+        // if(productIdResult!=null){
+        //   this.product = productIdResult
+        // }
+        // console.log(productIdResult)
       }
     )
+    this.product = await this.productService.findbyid(this.proId) as ProductWithAttributes
+    
     this.conect.removeScript('src/plugins/src/editors/quill/quill.js')
     this.conect.removeScript('src/plugins/src/tagify/tagify.min.js')
     this.conect.removeScript('src/assets/js/apps/ecommerce-create.js')
@@ -131,23 +140,48 @@ export class EditArtComponent implements OnInit {
       placeholder: 'Write product description...',
       theme: 'snow'  // or 'bubble'
     });
-    this.postArtForm = this.formBuilder.group({
-      sellerId: [''],
-      name:['',Validators.required],
-      // description:[this.descriptionText.getText()],
-      price:['',[Validators.required,Validators.pattern(/[0-9]/)]],
-      quantity:['',[Validators.required,Validators.pattern(/100|[1-9]\d?/)]],
-      createdAt:[''],
-      deletedAt:[''],
-      categoryId:['',Validators.required],
-      size:['',Validators.required],
-      paint:['',Validators.required],
-      material:['',Validators.required],
-      type:['',Validators.required],
-      origin:['',Validators.required]
-    })
+    if(this.product.image.substring(0,5)=="https"){
+      this.imageArt = this.product.image
+    }else{
+      this.imageArt = this.imageUrl+this.product.image
+    }
     
+    this.descriptionText.setText(this.product.description);
+    this.product.productAttributes.forEach(element => {
+      if(element.type == 'Size' || element.type == 'size'){
+        this.postArtForm.value.size = element.value
+      }
+      if(element.type == 'Paint'||element.type == 'paint'){
+        this.postArtForm.value.paint = element.value
+      }
+      if(element.type == 'Material'||element.type == 'material'){
+        this.postArtForm.value.material = element.value
+      }
+      if(element.type == 'Origin'||element.type == 'origin'){
+        this.postArtForm.value.origin = element.value
+      }
+    });
+    this.postArtForm = this.formBuilder.group({
+      id:[this.product.id],
+      sellerId: [this.product.sellerId],
+      name:[this.product.name,Validators.required],
+      // description:[this.descriptionText.getText()],
+      price:[this.product.price,[Validators.required,Validators.pattern(/[0-9]/)]],
+      quantity:[this.product.quantity,[Validators.required,Validators.pattern(/100|[1-9]\d?/)]],
+      createdAt:[this.product.createdAt],
+      deletedAt:[''],
+      categoryId:[this.product.categoryId,Validators.required],
+      size:[this.postArtForm.value.size,Validators.required],
+      paint:[this.postArtForm.value.paint,Validators.required],
+      material:[this.postArtForm.value.material,Validators.required],
+      type:[1],
+      origin:[this.postArtForm.value.origin,Validators.required]
+    })
+    console.log(this.product.productAttributes)
+    
+    console.log(this.postArtForm.value)
   }
+  
   selectFile(event:any){
     this.selectedFile = event.target.files[0];
     const target = event.target as HTMLInputElement;
@@ -159,11 +193,6 @@ export class EditArtComponent implements OnInit {
       reader.readAsDataURL(target.files[0]);
     } else {
       this.imageArt = null;
-    }
-  }
-  clickDescription(){
-    if(this.descriptionText.getText()==''){
-      this.description = false
     }
   }
   post(){
@@ -199,23 +228,24 @@ export class EditArtComponent implements OnInit {
     let a = JSON.stringify(this.attribute)
     console.log(u)
     console.log(a)
+    console.log(this.selectedFile)
     let fromData = new FormData()
     fromData.append('image', this.selectedFile)
     fromData.append('productInfo',u)
     fromData.append('attributeInfo',a)
-    this.productService.postart(fromData).then(
+    this.productService.editart(fromData).then(
       res=>{
         if(res['result']){
           Swal.fire({
             icon: 'success',
-            title: 'Post Art Success',
+            title: 'Edit Árt Success',
           }).then(()=>{
             window.location.href = '/user/home'
           })
         }else{
           Swal.fire({
             icon: 'error',
-            title: 'Post Art Fail',
+            title: 'Edit Árt Fail',
           })
         }
       }

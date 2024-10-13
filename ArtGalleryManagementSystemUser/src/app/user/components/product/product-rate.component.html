@@ -2,7 +2,7 @@
 
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         <div class="widget-content widget-content-area br-8">
-            <table id="invoice-list" class="table dt-table-hover" style="width:100%">
+            <table id="zero-config" class="table dt-table-hover" style="width:100%">
                 <thead>
                     <tr class="text-center">
                         <th>Image</th>
@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     @if(orders!=null){
-                        @for(order of orders;track order){
+                        @for(order of orders;track order;let i = $index){
                             <tr class="text-center">
                                 <td>
                                     @if(order.productImage.substring(0,5)=="https"){
@@ -46,9 +46,9 @@
                                 </td>
                                 <td><span>{{order.createdAt}}</span></td>
                                 <td>
-                                    <button type="button" (click)="showReview(order.productName,order.productImage)" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                                        data-bs-target="#reviewModal">
-                                        Review Product
+                                    <button type="button"  class="btn btn-success btn-lg" (click)="showReview(order.productName,order.productImage,order.productId,order.createdAt)" data-bs-toggle="modal"
+                                    data-bs-target="#reviewModal" >
+                                    Review Product
                                     </button>
                                 </td>
                             </tr>
@@ -57,13 +57,15 @@
                     
                 </tbody>
             </table>
+            <div class="col-4 mb-2 btn-lg">
+                <button class="btn btn-warning mb-2 btn-lg" style="padding-left: 55px; padding-right: 55px;" (click)="Buy()">Continue Buy</button>
+            </div>
         </div>
-
+        
         
 
         <!-- Modal -->
-        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
-            aria-hidden="true">
+        <div class="modal fade no-add-rw" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark text-white">
@@ -84,15 +86,12 @@
                                             @else {
                                                 <img alt="ecommerce" src="{{imageUrl+productReviewImage}}">
                                             }
-                                           
                                         </div>
                                         <div class="col-md-0 mt-2 mb-2">
                                             <h3>Árt Name: {{productReviewName}}</h3>
                                             <!-- <h4 class="mb-0"></h4> -->
                                         </div>
-
                                     </div>
-                                   
                                 }
                             </div>
     
@@ -122,7 +121,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="close()">Close</button>
-                            <button type="submit" class="btn btn-success" >Send Review</button>
+                            <button type="submit" class="btn btn-success" [disabled]="reviewForm.invalid">Send Review</button>
                         </div>
                     </form>
                     

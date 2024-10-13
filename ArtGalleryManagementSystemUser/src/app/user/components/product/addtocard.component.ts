@@ -48,7 +48,7 @@ export class AddtoCardComponent implements OnInit {
         for(let i=0; i<this.cartResult['result'].length; i++){
           const product = await this.productService.findProductIdWithSeller(this.cartResult['result'][i].productId);
           const checkdelete = await this.userService.findbyid(product['result'].sellerId)
-          if(checkdelete['result'].deletedAt == null){
+          if(checkdelete['result'].deletedAt == null && product['result'].deletedAt==null){
             // if(product['result'].quantity>0){
               this.cartItems.push({
                 id : product['result'].id,
@@ -182,7 +182,7 @@ export class AddtoCardComponent implements OnInit {
   BuyItems(){
     this.buyItems=[]
     sessionStorage.setItem('buyItems',JSON.stringify(this.buyItems))
-
+    console.log("Buyed")
     for(let i = 0; i < this.cartItems.length; i++){
       if(this.cartItems[i].selected){
         this.buyItems.push(this.cartItems[i]);
@@ -192,6 +192,12 @@ export class AddtoCardComponent implements OnInit {
       sessionStorage.setItem('buyItems', JSON.stringify(this.buyItems))
       // console.log(sessionStorage.getItem('buyItems'));
       window.location.href = '../user/invoice'
+    }else{
+      Swal.fire({
+        icon:'info',
+        title:'Please Select Árt'
+      })
     }
+    
   }
 }

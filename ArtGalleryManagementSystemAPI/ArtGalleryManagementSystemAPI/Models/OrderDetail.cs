@@ -17,5 +17,5 @@ public partial class OrderDetail
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

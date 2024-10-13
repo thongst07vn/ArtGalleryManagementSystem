@@ -248,13 +248,28 @@
 </div>
 <div class="pagination-no_spacing">
     <ul class="pagination">
-        @if(currentPage > 1){
-            <li>
-                <a href="javascript:void(0);" class="prev" (click)="onPreviousPage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </a>
-            </li>
+        @if(currentPage >= 4){
+            @if(currentPage > 1){
+                <li>
+                    <a href="javascript:void(0);" class="prev" (click)="onPreviousPage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </a>
+                </li>
+            }
+            @if(isFirstPageVisible()){
+                <li>
+                    <a href="javascript:void(0);" (click)="goToFirstPage()">
+                        1
+                      </a>
+                </li>
+            }
+            @if(shouldShowFirstEllipsis()){
+                <li>
+                    <span>...</span>
+                </li>
+            }
         }
+        
         @for(pageNumber of getPageNumbers(); track pageNumber){
             <li>
                 <a href="javascript:void(0);" (click)="onPageChange(pageNumber)" [ngClass]="{ 'active': pageNumber === currentPage }">
@@ -262,12 +277,29 @@
                 </a>
             </li>
         }
-        @if(currentPage < next()){
-            <li>
-                <a href="javascript:void(0);" class="next" (click)="onNextPage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </a>
-            </li>
+        
+        @if(currentPage <= totalPages - 3 ){
+            @if(shouldShowEllipsis()){
+                <li>
+                    <span>...</span>
+                </li>
+            }
+            @if(isLastPageVisible()){
+                <li>
+                    <a href="javascript:void(0);" (click)="goToLastPage()">
+                        {{ totalPages }}
+                      </a>
+                </li>
+            }
+            @if(currentPage < next()){
+                <li>
+                    <a href="javascript:void(0);" class="next" (click)="onNextPage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                </li>
+            }
         }
+        
+        
     </ul>
 </div>
