@@ -13,9 +13,7 @@
                 <a [routerLink]="['home']" appReloadPage class="nav-link"> Árt </a>
             </li>
         </ul>
-        @if(bidOrdersInfo!= ''){
-            <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
-        }
+    
         <div class="search-animated toggle-search">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65" ></line></svg> -->
             <form class="form-inline search-full form-inline search" role="search" hidden> 
@@ -24,7 +22,6 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x search-close"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </div>
             </form>
-            
             <!-- <span class="badge badge-secondary" hidden>Ctrl + /</span> -->
         </div>
     
@@ -98,7 +95,7 @@
                         </a>
                     </div>
                     <div class="dropdown-item">
-                        <a href="javascript:void(0);">
+                        <a [routerLink]="['chatbox']">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> <span>Inbox</span>
                         </a>
                     </div>
@@ -114,7 +111,7 @@
                         </a>
                     </div> -->
                     <div class="dropdown-item">
-                        <a (click)="logOut()">
+                        <a  href="javascript:void(0);" (click)="logOut()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span>
                         </a>
                     </div>
@@ -140,9 +137,7 @@
                 <a [routerLink]="['/']" appReloadPage class="nav-link"> Árt </a>
             </li>
         </ul>
-        @if(bidOrdersInfo!= ''){
-            <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
-        }
+    
         <div class="search-animated toggle-search">
             <svg hidden xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65" ></line></svg>
             <form class="form-inline search-full form-inline search" role="search" hidden> 
@@ -152,7 +147,6 @@
                 </div>
             </form>
             <span class="badge badge-secondary" hidden>Ctrl + /</span>
-            
         </div>
     
         <ul class="navbar-item flex-row ms-lg-auto ms-0 action-area">

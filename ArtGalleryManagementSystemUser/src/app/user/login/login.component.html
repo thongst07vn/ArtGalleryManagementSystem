@@ -47,14 +47,14 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" [(ngModel)] = "username" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control" [(ngModel)] = "username" name="username" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Password</label>
                                     
                                     <div class="input-group mb-3">
-                                        <input [type]="typeInput" class="form-control" [(ngModel)] = "password" [ngModelOptions]="{standalone: true}"  aria-describedby="basic-addon2">
+                                        <input [type]="typeInput" class="form-control" [(ngModel)] = "password" name="password" [ngModelOptions]="{standalone: true}"  aria-describedby="basic-addon2">
                                         @if(typeInput == 'text'){
                                             <a href="javascript:void(0);" (click)="hide()" class="input-group-text-nohover" id="basic-addon2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-4">
-                                        <button class="btn btn-secondary w-100 {{wrong}}" (click)="login()">SIGN IN</button>
+                                        <button class="btn btn-secondary w-100 {{wrong}}"  (click)="login()">SIGN IN</button>
                                     </div>
                                 </div>
                             </form>
