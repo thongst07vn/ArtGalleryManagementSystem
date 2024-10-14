@@ -7,5 +7,5 @@ export class BidOrder{
     bidSoldPrice:number
     incrementInPrice:number
     IncrementInTime:number
-    bidStamp:number
+    bidStamp:number 
 }

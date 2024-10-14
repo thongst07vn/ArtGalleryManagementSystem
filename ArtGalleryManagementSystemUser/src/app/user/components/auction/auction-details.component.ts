@@ -17,15 +17,19 @@ import { User } from '../../entities/user.entity';
 import { BidOrderUser } from '../../entities/bidorderuser.entity';
 import Swal from 'sweetalert2';
 import { error } from 'jquery';
+import {IPayPalConfig, NgxPayPalModule, } from 'ngx-paypal';
+import { BidOrderDto2 } from '../../entities/bidorder2.entity';
 @Component({
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, NgxPayPalModule],
   templateUrl: './auction-details.component.html',
   host:{
     'collision': 'AuctionDetailsComponent'
   }
 })
 export class AuctionDetailsComponent implements OnInit {
+  public payPalConfig?: IPayPalConfig;
+
   subscription: Subscription;
   imageUrl:any
 
@@ -148,7 +152,7 @@ export class AuctionDetailsComponent implements OnInit {
       }
     }
     })
-    
+    this.findHistory();
   }
   async findHistory(){
     this.bidHistory = []
@@ -190,52 +194,156 @@ export class AuctionDetailsComponent implements OnInit {
   async Bid(){
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
     const user = userResult['result'] as User
+    if(this.bidInfo.productSellerId == user.id){
+      Swal.fire({
+        icon: 'error',
+        title: 'can not bid your own product',
+    })
+    } else {
+      const bidOrderUser = new BidOrderUser();
+      bidOrderUser.bidOrderUserId = this.bidInfo.id
+      bidOrderUser.userId = user.id
+      bidOrderUser.bidTransactionTime = formatDate(new Date(),'dd-MM-yyyy HH:mm:ss', 'en-GB')
+      bidOrderUser.bidTransactionAmount = (this.bidPlus+this.currentBid)
+      this.auctionService.CreateBidOrderUser(bidOrderUser).then(
+        res => {
+          if(res['result']){
+            Swal.fire({
+              icon: 'success',
+              title: 'Bid success, please watch the bid history',
+          }).then( async()=>{
+            this.bidHistory = []
+            const bidhistory = await this.auctionService.FindAllBidOrderUserById(this.bidInfo.id) as BidOrderUser[]
+            bidhistory.forEach(async bid=> {
+              let max:number = 0
+              if(max < bid.bidTransactionAmount){
+                max = bid.bidTransactionAmount
+              }
+              let userResult = await this.userService.findbyid(bid.userId);
+              let user= userResult['result'] as User
+              this.bidHistory.push({
+                bidOrderUserId: bid.bidOrderUserId,
+                userId: bid.userId,
+                bidTransactionTime: bid.bidTransactionTime,
+                bidTransactionAmount: bid.bidTransactionAmount,
+                username: user.username,
+                avatar: user.avatar
+              })
+              this.currentBid = max;
+              this.bidPlus = this.bidInfo.incrementInPrice
+            })
+          })    
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Bid failed',
+          })    
+          }
+        },
+        error => {
+          Swal.fire({
+            icon: 'error',
+            title: error,
+        })    
+        }
+      )
+    }
+    }
+    usePay(){
+      this.initConfig();
+    }
+    private initConfig(): void {
+        const bidinfomation = {         
+            Name: this.bidInfo.productName,
+            Price:this.bidInfo.bidSoldPrice,
+            quantity: 1       
+        }
+        this.payPalConfig = {
+            clientId: 'Ae6Y-DSVMPCs7f8-GdUCFkW5bDRL9pnrSOz4SVwwWpBzexBF9MBrtb-Vt6J6DUBX3aVPrLAR6JWWpgsX',
+            // for creating orders (transactions) on server see
+            // https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
+            createOrderOnServer: (data) => fetch('http://localhost:5204/createpayment',{
+              method: "post",
+              headers:{
+                "Content-Type":"application/json"
+              },
+              body: JSON.stringify([bidinfomation])
+            })
+                .then((res) => res.json())
+                .then((order) => order.token),
+            authorizeOnServer: (approveData:any) => {
+              console.log(approveData);
+                return fetch('http://localhost:5204/executepayment', {
+                method: 'post',
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  PayerId: approveData.payerID,
+                  PaymentId: approveData.paymentID
+                })
+              }).then((res) => {
+                this.saveBid()
+                return res.json();
+              }).then((details) => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Payment sucessfully' ,
+                }).then(() =>{}
+
+                )
+              });
+            },
+            onCancel: (data, actions) => {
+                console.log('OnCancel', data, actions);
+                // this.showCancel = true;
+            },
+            onError: err => {
+                console.log('OnError', err);
+                // this.showError = true;
+            },
+            onClick: (data, actions) => {
+              console.log(data);
+                console.log('onClick', data, actions);
+                // this.resetStatus();
+          },
+      };     
+    }
+
+    async saveBid(){
+    const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")));
+    const user = userResult['result'] as User
     const bidOrderUser = new BidOrderUser();
     bidOrderUser.bidOrderUserId = this.bidInfo.id
     bidOrderUser.userId = user.id
     bidOrderUser.bidTransactionTime = formatDate(new Date(),'dd-MM-yyyy HH:mm:ss', 'en-GB')
-    bidOrderUser.bidTransactionAmount = (this.bidPlus+this.currentBid)
-    this.auctionService.CreateBidOrderUser(bidOrderUser).then(
-      res => {
-        if(res['result']){
-          Swal.fire({
-            icon: 'success',
-            title: 'Bid success, please watch the bid history',
-        }).then( async()=>{
-          this.bidHistory = []
-          const bidhistory = await this.auctionService.FindAllBidOrderUserById(this.bidInfo.id) as BidOrderUser[]
-          bidhistory.forEach(async bid=> {
-            let max:number = 0
-            if(max < bid.bidTransactionAmount){
-              max = bid.bidTransactionAmount
-            }
-            let userResult = await this.userService.findbyid(bid.userId);
-            let user= userResult['result'] as User
-            this.bidHistory.push({
-              bidOrderUserId: bid.bidOrderUserId,
-              userId: bid.userId,
-              bidTransactionTime: bid.bidTransactionTime,
-              bidTransactionAmount: bid.bidTransactionAmount,
-              username: user.username,
-              avatar: user.avatar
+    bidOrderUser.bidTransactionAmount = this.bidInfo.bidSoldPrice
+    await this.auctionService.CreateBidOrderUser(bidOrderUser).then(
+      async res => {
+        const bidOrderDto = new BidOrderDto2();
+        bidOrderDto.bidStamp = ((new Date()).getTime()).toString();
+        bidOrderDto.id = (this.bidInfo.id).toString();
+        console.log(bidOrderDto)
+        await this.auctionService.UpdateBidOrder(bidOrderDto).then(
+          res =>{
+    
+          },
+          error => {
+            Swal.fire({
+              icon: 'error',
+              title: error ,
             })
-            this.currentBid = max;
-            this.bidPlus = this.bidInfo.incrementInPrice
-          })
-        })    
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Bid failed',
-        })    
-        }
+          }
+        )
       },
       error => {
         Swal.fire({
           icon: 'error',
-          title: error,
-      })    
+          title: error ,
+        })
       }
     )
-  }
+
+   
+    }
 }

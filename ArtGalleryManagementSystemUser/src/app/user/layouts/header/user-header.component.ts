@@ -6,6 +6,12 @@ import { UserService } from '../../services/user.service';
 import { CartService } from '../../services/cart.service';
 import { BaseURLService } from '../../services/baseURL.service';
 import Swal from 'sweetalert2';
+
+import { AuctionService } from '../../services/auction.service';
+import { BidOrder } from '../../entities/bidorder.entity';
+import { error } from 'jquery';
+import moment from 'moment';
+
 import { SignalrService } from '../../../signalr.service';
 
 
@@ -19,10 +25,12 @@ import { SignalrService } from '../../../signalr.service';
   }
 })
 export class UserHeaderComponent implements OnInit {
-  user: any
-  theme: boolean
-  cartItems: any
-  imageUrl: any
+
+  user:any
+  theme:boolean
+  cartItems :any
+  imageUrl:any
+  bidOrdersInfo:number
   constructor(
     private conect: Conect,
     private userService: UserService,
@@ -31,6 +39,24 @@ export class UserHeaderComponent implements OnInit {
     public signalrService: SignalrService
   ) { }
   async ngOnInit() {
+    this.bidOrdersInfo = 0;
+    this.auctionService.FindAllAuction().then(
+      res => {
+        const bidOrders = res as BidOrder[];
+        let now = new Date();
+        if(bidOrders.length>=1){
+          bidOrders.forEach(element => {
+            if(now < moment(element.bidEndTime, 'DD-MM-YYYY HH:mm:ss').toDate()){
+              this.bidOrdersInfo +=1;
+            }
+          })      
+        }
+      },
+      error => {
+        console.log(error);
+      }
+
+    );
     this.conect.addStyle("src/plugins/src/sweetalerts2/sweetalerts2.css")
 
     this.conect.addStyle("src/plugins/css/light/sweetalerts2/custom-sweetalert.css")

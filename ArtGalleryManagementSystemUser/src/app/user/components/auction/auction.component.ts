@@ -104,7 +104,7 @@ export class AuctionComponent implements OnInit {
 
         if (element.bidStartTime > now) {
           element.auctionInfomation = 'Auction start in '
-            let timeRemain = now.getTime() - element.bidStartTime.getTime();
+            let timeRemain =  element.bidStartTime.getTime() - now.getTime();
           console.log('Auction start in: '+timeRemain)
 
             element.auctionHour = Math.floor(timeRemain / 3600000);
