@@ -1,6 +1,8 @@
 ﻿using ArtGalleryManagementSystemAPI.Dtos;
 using ArtGalleryManagementSystemAPI.Models;
 using AutoMapper;
+using System.Diagnostics;
+using System.Text;
 
 namespace ArtGalleryManagementSystemAPI.Services;
 
@@ -19,7 +21,7 @@ public class AuctionServiceImpl : AuctionService
     public bool AddBidOrder(List<ProductWithSellerDto> bidlist, BidOrderDto bidinfo)
     {
         var bidorder = mapper.Map<BidOrder>(bidinfo);
-        bidorder.BidStamp = BitConverter.GetBytes(0);
+        bidorder.BidStamp = Encoding.UTF8.GetBytes("0000000000");
         foreach (var pro in bidlist)
         {
             bidorder.ProductId = pro.Id;
@@ -74,8 +76,14 @@ public class AuctionServiceImpl : AuctionService
         var bidOrders = db.BidOrders;
         foreach (var bidOrder in bidOrders)
         {
-            if (BitConverter.ToInt32(bidOrder.BidStamp, 0) < 1)
+            Debug.WriteLine("byte to int:" + BitConverter.ToInt64(bidOrder.BidStamp));
+            Debug.WriteLine(BitConverter.ToString(bidOrder.BidStamp));
+            byte[] bytes = BitConverter.ToString(bidOrder.BidStamp).Split('-').Select(hex => Convert.ToByte(hex, 16)).ToArray();
+            Debug.WriteLine(BitConverter.ToInt32(bytes, 1));
+
+            if (BitConverter.ToInt32(bytes, 0) < 1)
             {
+
                 validBidOrders.Add(mapper.Map<BidOrderDto>(bidOrder));
             }
         }
@@ -95,6 +103,14 @@ public class AuctionServiceImpl : AuctionService
             product.Type = 3;
         }
         db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        return db.SaveChanges() > 0;
+    }
+
+    public bool UpdateBidOrder(BidOrderDto bidOrderDto)
+    {
+        var bidOrder = db.BidOrders.Find(bidOrderDto.Id);
+        bidOrder.BidStamp = bidOrderDto.BidStamp;
+        db.Entry(bidOrder).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         return db.SaveChanges() > 0;
     }
 }

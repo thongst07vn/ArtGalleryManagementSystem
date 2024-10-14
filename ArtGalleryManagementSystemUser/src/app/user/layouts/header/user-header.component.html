@@ -13,8 +13,11 @@
                 <a [routerLink]="['home']" appReloadPage class="nav-link"> Árt </a>
             </li>
         </ul>
-        @if(bidOrdersInfo!= ''){
-            <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
+        @if(bidOrdersInfo>0){
+            <div>
+                <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
+
+            </div>
         }
         <div class="search-animated toggle-search">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65" ></line></svg> -->
@@ -140,8 +143,10 @@
                 <a [routerLink]="['/']" appReloadPage class="nav-link"> Árt </a>
             </li>
         </ul>
-        @if(bidOrdersInfo!= ''){
-            <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
+        @if(bidOrdersInfo>0){
+            <div>
+                <marquee><p>There is {{bidOrdersInfo}} upcoming Auction Product, Please visit the Auction site</p></marquee>
+            </div>
         }
         <div class="search-animated toggle-search">
             <svg hidden xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65" ></line></svg>

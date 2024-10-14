@@ -13,5 +13,6 @@ public interface AuctionService
 
     public bool AddBidOrderUser(BidOrderUserDto bidorderuserdto);
     public List<BidOrderUserDto> FindAllBidOrderUserById(int id);
+    public bool UpdateBidOrder(BidOrderDto bidOrderDto);
 
 }

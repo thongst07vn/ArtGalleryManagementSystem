@@ -4,6 +4,7 @@ using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Text;
 
 namespace ArtGalleryManagementSystemAPI.Controllers;
 [Route("api/auction")]
@@ -173,6 +174,25 @@ public class AuctionController : Controller
         try
         {
             return Ok(auctionService.FindAllBidOrderUserById(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
+    }
+
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [HttpPost("updatebidorder")]
+    public IActionResult UpdateBidOrder([FromBody] BidOrderDto2 bidOrderDto)
+    {
+        var bidorderdto = new BidOrderDto();
+        bidorderdto.Id = int.Parse(bidOrderDto.Id);
+        bidorderdto.BidStamp = Encoding.UTF8.GetBytes(bidOrderDto.BidStamp);
+        try
+        {
+            return Ok(auctionService.UpdateBidOrder(bidorderdto));
         }
         catch
         {

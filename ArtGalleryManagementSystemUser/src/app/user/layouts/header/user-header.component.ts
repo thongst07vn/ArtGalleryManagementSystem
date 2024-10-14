@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { AuctionService } from '../../services/auction.service';
 import { BidOrder } from '../../entities/bidorder.entity';
 import { error } from 'jquery';
+import moment from 'moment';
 
 @Component({
   selector: 'user-header',
@@ -24,7 +25,7 @@ export class UserHeaderComponent implements OnInit {
   theme:boolean
   cartItems :any
   imageUrl:any
-  bidOrdersInfo:any
+  bidOrdersInfo:number
   constructor(
     private conect : Conect,
     private userService : UserService,
@@ -33,11 +34,18 @@ export class UserHeaderComponent implements OnInit {
     private auctionService: AuctionService
   ){}
   async ngOnInit() {
-    this.bidOrdersInfo = '';
+    this.bidOrdersInfo = 0;
     this.auctionService.FindAllAuction().then(
       res => {
         const bidOrders = res as BidOrder[];
-        this.bidOrdersInfo = bidOrders.length;
+        let now = new Date();
+        if(bidOrders.length>=1){
+          bidOrders.forEach(element => {
+            if(now < moment(element.bidEndTime, 'DD-MM-YYYY HH:mm:ss').toDate()){
+              this.bidOrdersInfo +=1;
+            }
+          })      
+        }
       },
       error => {
         console.log(error);

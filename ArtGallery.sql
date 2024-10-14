@@ -2,6 +2,7 @@ USE ARTGALLERY
 GO
 
 DROP TABLE IF EXISTS [reviews]
+DROP TABLE IF EXISTS [connections]
 DROP TABLE IF EXISTS [bid_order_user]
 DROP TABLE IF EXISTS [product_attributes_products]
 DROP TABLE IF EXISTS [wishlist_products]
@@ -44,7 +45,15 @@ CREATE TABLE [users] (
   [deleted_at] datetime
 )
 GO
-
+CREATE TABLE connections
+(
+	id uniqueidentifier PRIMARY KEY DEFAULT NEWID(),
+	userId integer NOT NULL,
+	signalrId nvarchar(22) NOT NULL,
+	timeStamp datetime NOT NULL
+	FOREIGN KEY (userId) REFERENCES [users](id)
+)
+GO
 CREATE TABLE [sellers](
 	[id] int primary key,
 	[income] float,

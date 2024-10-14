@@ -24,4 +24,7 @@ export class AuctionService{
     async FindAllBidOrderUserById(id:number){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'auction/findallbidorderuserbyid/'+id))
     }
+    async UpdateBidOrder(bidOrderDto:any){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'auction/updatebidorder',bidOrderDto))
+    }
 }
