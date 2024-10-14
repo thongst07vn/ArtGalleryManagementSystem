@@ -1,4 +1,5 @@
 using ArtGalleryManagementSystemAPI.Dtos;
+using ArtGalleryManagementSystemAPI.HubConfig;
 using ArtGalleryManagementSystemAPI.Models;
 using ArtGalleryManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,25 @@ builder.Services.AddScoped<AdminService, AdminServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 builder.Services.AddScoped<WishLishService, WishListServiceImpl>();
 builder.Services.AddScoped<PayPalService, PayPalServiceImpl>();
-builder.Services.AddScoped<AuctionService, AuctionServiceImpl>();
 
-
+builder.Services.AddSignalR(
+    options =>
+    {
+        options.EnableDetailedErrors = true;
+    }
+);
 
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
+app.UseRouting();
+
+
 
 app.MapPost("/createpayment", ([FromBody] IEnumerable<ItemDto> items, IConfiguration configuration, HttpContext context) =>
 {
@@ -45,6 +59,13 @@ app.UseCors(builder => builder
             );
 
 app.UseStaticFiles();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<MyHub>("/toastr");
+
+});
 
 app.MapControllerRoute(
     name: "default",
