@@ -23,7 +23,7 @@ import { NotFoundComponent } from './user/not-found/not-found.component';
 import { ProductRateComponent } from './user/components/product/product-rate.component';
 import { ForgotPasswordComponent } from './user/login/forgotPassword.component';
 import { ResetPasswordComponent } from './user/login/resetPassword.component';
-import { EditArtComponent } from './user/components/post/editart.component';
+import { ChatComponent } from './user/components/chat/chat.component';
 
 export const routes: Routes = [
     // Route cho người dùng đã đăng nhập
@@ -119,7 +119,7 @@ export const routes: Routes = [
             ,
             {
                 path: 'edit-art',
-                component: EditArtComponent,
+                component: PostcartComponent,
                 data: {
                     addActive: 'editArt',
                 }
@@ -136,6 +136,13 @@ export const routes: Routes = [
                 component: ProductRateComponent,
                 data: {
                     addActive: 'review',
+                }
+            },
+            {
+                path:'chatbox',
+                component: ChatComponent,
+                data: {
+                    addActive: 'chat',
                 }
             }
         ]
