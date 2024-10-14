@@ -130,4 +130,54 @@ public class AuctionController : Controller
         }
 
     }
+
+    [Produces("application/json")]
+    [HttpGet("findauctionbyid/{id}")]
+    public IActionResult FindAuctionById(int id)
+    {
+        try
+        {
+            return Ok(auctionService.FindAuctionById(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
+    }
+
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [HttpPost("createbidorderuser")]
+    public IActionResult CreateBidOrderUser([FromBody] BidOrderUserDto bidoreruserdto)
+    {
+        try
+        {
+            return Ok(new
+            {
+                result = auctionService.AddBidOrderUser(bidoreruserdto)
+            });
+
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
+    }
+
+    [Produces("application/json")]
+    [HttpGet("findallbidorderuserbyid/{id}")]
+    public IActionResult FindAllBidOrderUserById(int id)
+    {
+        try
+        {
+            return Ok(auctionService.FindAllBidOrderUserById(id));
+        }
+        catch
+        {
+            return BadRequest();
+        }
+
+    }
 }

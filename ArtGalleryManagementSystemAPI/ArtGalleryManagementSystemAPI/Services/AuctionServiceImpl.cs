@@ -34,6 +34,13 @@ public class AuctionServiceImpl : AuctionService
         return db.SaveChanges() > 0;
     }
 
+    public bool AddBidOrderUser(BidOrderUserDto bidorderuserdto)
+    {
+        var bidOrderUser = mapper.Map<BidOrderUser>(bidorderuserdto);
+        db.BidOrderUsers.Add(bidOrderUser);
+        return db.SaveChanges() > 0;
+    }
+
     public bool AuctionToProduct(int id)
     {
         var product = db.Products.Find(id);
@@ -56,18 +63,28 @@ public class AuctionServiceImpl : AuctionService
         return db.SaveChanges() > 0;
     }
 
+    public List<BidOrderUserDto> FindAllBidOrderUserById(int id)
+    {
+        return mapper.Map<List<BidOrderUserDto>>(db.BidOrderUsers.Where(b => b.BidOrderUserId == id).ToList());
+    }
+
     public List<BidOrderDto> FindAllValidAuction()
     {
         var validBidOrders = new List<BidOrderDto>();
         var bidOrders = db.BidOrders;
         foreach (var bidOrder in bidOrders)
         {
-            if (BitConverter.ToInt32(bidOrder.BidStamp, 0) < 1 && DateTime.Compare(DateTime.Now, bidOrder.BidEndTime) < 0)
+            if (BitConverter.ToInt32(bidOrder.BidStamp, 0) < 1)
             {
                 validBidOrders.Add(mapper.Map<BidOrderDto>(bidOrder));
             }
         }
         return validBidOrders;
+    }
+
+    public BidOrderDto FindAuctionById(int id)
+    {
+        return mapper.Map<BidOrderDto>(db.BidOrders.Find(id));
     }
 
     public bool RejectAuction(int id)

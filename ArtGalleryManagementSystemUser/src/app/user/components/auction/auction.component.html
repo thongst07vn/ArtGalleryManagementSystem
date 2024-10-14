@@ -23,13 +23,13 @@
     <div class="card style-2 mb-md-0 mb-4">
       <a
         class="card style-7"
-        [routerLink]="['../auction-detail',{productId:product.productId}]"
+        [routerLink]="['../auction-detail',{bidId:product.id}]"
       >
       @if(product.productImage.substring(0,5)=="https"){
-        <img [routerLink]="['../auction-detail',{productId:product.productId}]" src="{{product.productImage}}" class="card-img-top" alt="..." style="max-height: 20em; " />
+        <img [routerLink]="['../auction-detail',{bidId:product.id}]" src="{{product.productImage}}" class="card-img-top" alt="..." style="max-height: 20em; " />
       }
       @else {
-          <img [routerLink]="['../auction-detail',{productId:product.productId}]" src="{{imageUrl+product.productImage}}" class="card-img-top" alt="..." style="max-height: 20em; "/>
+          <img [routerLink]="['../auction-detail',{bidId:product.id}]" src="{{imageUrl+product.productImage}}" class="card-img-top" alt="..." style="max-height: 20em; "/>
       }
         <div class="card-footer">
           <div class="row">

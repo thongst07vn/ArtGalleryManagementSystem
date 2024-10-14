@@ -9,4 +9,9 @@ public interface AuctionService
     public bool AuctionToProductCancle(int id);
     public bool AddBidOrder(List<ProductWithSellerDto> bidlist, BidOrderDto bidinfo);
     public List<BidOrderDto> FindAllValidAuction();
+    public BidOrderDto FindAuctionById(int id);
+
+    public bool AddBidOrderUser(BidOrderUserDto bidorderuserdto);
+    public List<BidOrderUserDto> FindAllBidOrderUserById(int id);
+
 }
