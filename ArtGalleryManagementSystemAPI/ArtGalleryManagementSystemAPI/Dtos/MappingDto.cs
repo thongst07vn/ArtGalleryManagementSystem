@@ -362,6 +362,18 @@ public class MappingDto : Profile
                 des => des.BidEndTime,
                 src => src.MapFrom(src => DateTime.ParseExact(src.BidEndTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
            );
+
+        CreateMap<BidOrderUserDto, BidOrderUser>()
+            .ForMember(
+                des => des.BidTransactionTime,
+                src => src.MapFrom(src => DateTime.ParseExact(src.BidTransactionTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture))
+           );
+        CreateMap<BidOrderUser, BidOrderUserDto>()
+            .ForMember(
+                des => des.BidTransactionTime,
+                src => src.MapFrom(des => des.BidTransactionTime.ToString("dd-MM-yyyy HH:mm:ss"))
+            );
+
         CreateMap<Review, ReviewDto>()
            .ForMember(
                des => des.CreatedAt,

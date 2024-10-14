@@ -163,11 +163,12 @@ CREATE TABLE [bid_order] (
 )
 GO
 CREATE TABLE [bid_order_user](
+	[id] integer Identity,
 	[bid_order_user_id] integer,
 	[user_id] integer,
 	[bid_transaction_time] datetime,
 	[bid_transaction_amount] FLOAT,  
-	PRIMARY KEY ([bid_order_user_id], [user_id])
+	PRIMARY KEY ([id])
 )
 ALTER TABLE [bid_order_user] ADD FOREIGN KEY ([bid_order_user_id]) REFERENCES [bid_order] ([id]);
 ALTER TABLE [bid_order_user] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id]);

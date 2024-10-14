@@ -11,6 +11,7 @@ import { ProductWithAttributes } from '../../entities/productwithattributes.enti
 import { BaseURLService } from '../../services/baseURL.service';
 import { NgClass } from '@angular/common';
 import moment from 'moment';
+import { ProductWithSeller } from '../../entities/productwithseller.entity';
 @Component({
   standalone: true,
   imports: [RouterOutlet, RouterLink, NgClass],
@@ -61,19 +62,20 @@ export class AuctionComponent implements OnInit {
     this.auctionProducts = []
     const auctionProductss = await this.auctionService.FindAllAuction() as BidOrder[];
     auctionProductss.forEach(async auctionProduct => {
-      let product = await this.productService.findProductId(auctionProduct.productId) as ProductWithAttributes
+      let product = await this.productService.findProductIdWithSeller(auctionProduct.productId) 
+      let pro = product['result'] as ProductWithSeller 
       this.auctionProducts.push({
         id: auctionProduct.id,
         bidStartTime: moment(auctionProduct.bidStartTime, 'DD-MM-YYYY HH:mm:ss').toDate(),
         bidEndTime: moment(auctionProduct.bidEndTime, 'DD-MM-YYYY HH:mm:ss').toDate() ,
         bidBasePrice: auctionProduct.bidBasePrice,
         bidSoldPrice:auctionProduct.bidSoldPrice,
-        productId: product.id,
-        productSeller: product.username,
-        productSellerAvatar: product.avatar,
-        productName:product.name,
-        productImage:product.image,
-        productSellerId:product.sellerId,
+        productId: pro.id,
+        productSeller: pro.username,
+        productSellerAvatar: pro.avatar,
+        productName:pro.name,
+        productImage:pro.image,
+        productSellerId:pro.sellerId,
         auctionInfomation:'',
         auctionHour:0,
         auctionMin:0,
@@ -102,7 +104,7 @@ export class AuctionComponent implements OnInit {
 
         if (element.bidStartTime > now) {
           element.auctionInfomation = 'Auction start in '
-            let timeRemain = element.bidEndTime.getTime() - now.getTime();
+            let timeRemain = now.getTime() - element.bidStartTime.getTime();
           console.log('Auction start in: '+timeRemain)
 
             element.auctionHour = Math.floor(timeRemain / 3600000);

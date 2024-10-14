@@ -7,11 +7,13 @@ namespace ArtGalleryManagementSystemAPI.Models;
 
 public partial class BidOrderUser
 {
-    public int BidOrderUserId { get; set; }
+    public int Id { get; set; }
 
-    public int UserId { get; set; }
+    public int? BidOrderUserId { get; set; }
 
-    public DateTime? BidTransactionTime { get; set; }
+    public int? UserId { get; set; }
+
+    public DateTime BidTransactionTime { get; set; }
 
     public double? BidTransactionAmount { get; set; }
 

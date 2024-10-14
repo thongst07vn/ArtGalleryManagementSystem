@@ -14,5 +14,14 @@ export class AuctionService{
     async FindAllAuction(){
         return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'auction/findallauction'))
     }
+    async FindAuctionById(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'auction/findauctionbyid/'+id))
+    }
 
+    async CreateBidOrderUser(bidorderuser:any){
+        return lastValueFrom(this.httpClient.post(this.baseUrlService.BASE_URL+'auction/createbidorderuser',bidorderuser))
+    }
+    async FindAllBidOrderUserById(id:number){
+        return lastValueFrom(this.httpClient.get(this.baseUrlService.BASE_URL+'auction/findallbidorderuserbyid/'+id))
+    }
 }

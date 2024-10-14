@@ -44,9 +44,6 @@ public class CartServiceImpl : CartService
                 item.CreatedAt = orderDetailDto.CreatedAt;
                 item.OrderId = orderDetail.Id;
                 var orderItem = mapper.Map<OrderItem>(item);
-                var product = db.Products.Find(orderItem.ProductId);
-                product.Quantity -= orderItem.Quantity;
-                db.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.OrderItems.Add(orderItem);
                 if (db.SaveChanges() > 0)
                 {

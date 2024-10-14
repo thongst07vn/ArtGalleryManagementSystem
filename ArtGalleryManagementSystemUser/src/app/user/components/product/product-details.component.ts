@@ -113,8 +113,7 @@ export class ProductDetailsComponent implements OnInit {
                 icon: 'error',
                 title: 'Árt Has Been Deleted',
               }).then(()=>window.location.href='user/home')
-            }
-            
+            }            
           },
           error => {
             Swal.fire({

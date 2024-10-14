@@ -47,7 +47,7 @@ export class Conect implements OnDestroy{
         script.type = 'text/javascript';
         script.src = scriptSrc;
         // script.defer = true;
-        setTimeout(()=>{this.document.body.appendChild(script)},200)
+        setTimeout(()=>{this.document.body.appendChild(script)},2000)
     }
     public addStyle(styleSrc: string) {
         const link = this.document.createElement('link');
