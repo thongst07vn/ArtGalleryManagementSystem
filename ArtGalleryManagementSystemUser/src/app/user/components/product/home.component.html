@@ -101,20 +101,40 @@
                             
                             <!-- <h5 class="card-bottom-section">$95.00</h5> -->
                             <div class="media mt-4 mb-0 pt-1">
-                                <a [routerLink]="['../profile',{sellerId:product.sellerId}]" appReloadPage>
-                                    @if(product.avatar.substring(0,5)=="https"){
-                                        <img src="{{product.avatar}}" referrerpolicy="no-referrer" class="card-media-image me-3" alt="">
-                                    }
-                                    @else {
-                                        <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">
-                                    }
-                                </a>
-                                <div class="media-body">
-                                    <a [routerLink]="['../profile',{sellerId:product.sellerId}]">
-                                        <h4 class="media-heading mb-1">{{product.username}}</h4>
-                                        <p class="media-text">{{product.createdAt}}</p>
+                                @if(product.sellerId != userId){
+                                    <a [routerLink]="['../profile',{sellerId:product.sellerId}]" appReloadPage>
+                                        @if(product.avatar.substring(0,5)=="https"){
+                                            <img src="{{product.avatar}}" referrerpolicy="no-referrer" class="card-media-image me-3" alt="">
+                                        }
+                                        @else {
+                                            <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">
+                                        }
                                     </a>
-                                </div>
+                                    <div class="media-body">
+                                        <a [routerLink]="['../profile',{sellerId:product.sellerId}]">
+                                            <h4 class="media-heading mb-1">{{product.username}}</h4>
+                                            <p class="media-text">{{product.createdAt}}</p>
+                                        </a>
+                                    </div>
+                                }
+                                @else{
+                                    <a appReloadPage>
+                                        @if(product.avatar.substring(0,5)=="https"){
+                                            <img src="{{product.avatar}}" referrerpolicy="no-referrer" class="card-media-image me-3" alt="">
+                                        }
+                                        @else {
+                                            <img src="{{imageUrl+product.avatar}}" class="card-media-image me-3" alt="">
+                                        }
+                                    </a>
+                                    <div class="media-body">
+                                        <a>
+                                            <h4 class="media-heading mb-1">{{product.username}}</h4>
+                                            <p class="media-text">{{product.createdAt}}</p>
+                                        </a>
+                                    </div>
+                                }
+                                
+                                
                                 <div class="media-right-aligned">
                                     @if(product.sellerId != userId){
                                         @if(product.liked){

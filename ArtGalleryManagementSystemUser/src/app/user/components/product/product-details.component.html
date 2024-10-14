@@ -209,37 +209,42 @@
                                         <div class="col-xl-6 col-lg-6 col-sm-6" > Availability:</div>
                                     </div>
                                     <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
-                                    @if(product.quantity >=0){
-                                        <div >In stock </div> 
-                                    }
-                                    @else {
-                                        <div >Out of stock </div> 
-                                    }
+                                        @if(product.quantity < 1){
+                                            <div style="color: red; font-weight: 300;">Sold Out</div> 
+                                        }
+                                        @else{
+                                            <div style="color: green; font-weight: 300;">Avilable</div>
+                                        }
                                         
                                     </div>
 
                                     <br>
-                                    <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">
-                                        <div class="col-xl-6 col-lg-6 col-sm-6" > Quantity:</div>
-                                    </div>
-                                    <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
-                                    <div class="input-group mb-3">
-                                        <button class="btn btn-primary" type="button" (click)= "minusQuantity()">-</button>
-                                        
-                                        <div class="form-control" style="padding-left:0.5rem; padding-right: 0.5rem; text-align: center;" >{{buyQuantity}}</div>
-                                        <button class="btn btn-primary" type="button" (click)= "addQuantity()">+</button>
-                                    </div>
-                                    </div>
+                                    @if(product.quantity > 0){
+                                        <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4" style="text-align: left;">
+                                            <div class="col-xl-6 col-lg-6 col-sm-6" > Quantity:</div>
+                                        </div>
+                                        <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
+                                            <div class="input-group mb-3">
+                                                <button class="btn btn-primary" type="button" (click)= "minusQuantity()">-</button>
+                                                
+                                                <div class="form-control" style="padding-left:0.5rem; padding-right: 0.5rem; text-align: center;" >{{buyQuantity}}</div>
+                                                <button class="btn btn-primary" type="button" (click)= "addQuantity()">+</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                     
                                     @if(product.sellerId != userId){
-                                    
-                                    <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
-                                        <button class="btn btn-warning w-100 btn-lg icon-error" (click)="addToCart(product.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
-                                    </div>
-    
-                                    <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
-                                        <button class="btn btn btn-danger w-100 btn-lg" (click)="BuyItems()">Buy Now</button>
-                                    </div>
+                                        @if(product.quantity > 0){
+                                            <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
+                                                <button class="btn btn-warning w-100 btn-lg icon-error" (click)="addToCart(product.id)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
+                                            </div>
+            
+                                            <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
+                                                <button class="btn btn btn-danger w-100 btn-lg" (click)="BuyItems()">Buy Now</button>
+                                            </div>
+                                        }
+                                        
                                     }
                                     
                                     
@@ -802,18 +807,25 @@
                                         <div class="col-xl-6 col-lg-6 col-sm-6" > Availability:</div>
                                     </div>
                                     <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4  ">
-                                        <div >In stock </div> 
+                                        @if(product.quantity < 1){
+                                            <div style="color: red; font-weight: 300;">Sold Out</div> 
+                                        }
+                                        @else{
+                                            <div style="color: green; font-weight: 300;">Avilable</div>
+                                        }
                                         <!-- CHỖ NÀY CÓ ĐỔI MÀU: XANH - CÒN HÀNG, ĐỎ HẾT HÀNG -->
                                     </div>
                                     
                                     @if(product.sellerId != userId){
-                                        <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
-                                            <button class="btn btn-warning w-100 btn-lg icon-error" (click)="login()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
-                                        </div>
-        
-                                        <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
-                                            <button class="btn btn btn-danger w-100 btn-lg" (click)="login()">Buy Now</button>
-                                        </div>
+                                        @if(product.quantity > 0){
+                                            <div class="col-xxl-7 col-xl-7 col-sm-6 mb-sm-0 mb-3 mt-4">
+                                                <button class="btn btn-warning w-100 btn-lg icon-error" (click)="login()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> <span class="btn-text-inner">Add To Cart</span></button>
+                                            </div>
+            
+                                            <div class="col-xxl-5 col-xl-5 col-sm-6 mt-4">
+                                                <button class="btn btn btn-danger w-100 btn-lg" (click)="login()">Buy Now</button>
+                                            </div>
+                                        }
                                     }
                                     
                                     

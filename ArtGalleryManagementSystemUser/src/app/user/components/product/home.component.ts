@@ -437,27 +437,50 @@ export class HomeComponent implements OnInit {
     )
   }
   chooseProduct(productID:number){
-    if(this.wishlists!=null){
-      for(let i = 0; i < this.wishlists.length;i++){
-        if(this.wishlists[i].productId == productID){
+    this.productService.findProductId(productID).then(
+      res => {
+        const pro = res as Product
+        if(pro.quantity<1){
           const popup = document.querySelector(".no-add-wl") as HTMLElement
           popup.style.display = "none";
           Swal.fire({
-            icon: 'info',
-            title: 'Item Already In WishList',
+            icon: 'error',
+            title: 'Product quantity is not sufficient',
           }).then(async()=>{  
             const backdrop = document.querySelector('.modal-backdrop');
             backdrop.parentNode.removeChild(backdrop);
             const body = document.body
             body.style.overflowY = 'scroll';
           })
-          // this.proId = null
+        }
+        else{
+          if(this.wishlists!=null){
+            for(let i = 0; i < this.wishlists.length;i++){
+              if(this.wishlists[i].productId == productID){
+                const popup = document.querySelector(".no-add-wl") as HTMLElement
+                popup.style.display = "none";
+                Swal.fire({
+                  icon: 'info',
+                  title: 'Item Already In WishList',
+                }).then(async()=>{  
+                  const backdrop = document.querySelector('.modal-backdrop');
+                  backdrop.parentNode.removeChild(backdrop);
+                  const body = document.body
+                  body.style.overflowY = 'scroll';
+                })
+                // this.proId = null
+              }
+            }
+          }
+          this.proId = productID
         }
       }
-    }
-      this.proId = productID
+    )
+    
   }
   chooseWishList(event:any){
+    
+
     this.createWishList = this.formBuilder.group({
       userId:[this.userId],
       name:[event.target.value,[Validators.required]],

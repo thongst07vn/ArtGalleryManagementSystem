@@ -11,6 +11,8 @@ import { ProductWithSeller } from '../../entities/productwithseller.entity';
 import { ProductService } from '../../services/product.service';
 import Swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
+import { Order } from '../../entities/order.entity';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   standalone: true,
@@ -26,6 +28,7 @@ export class ProfileComponent implements OnInit {
   imageUrl:any
   star:any
   serviceStar:any
+  orders:any
   reviewForm:FormGroup
   productswithsellers:any
   productItems:any
@@ -36,6 +39,7 @@ export class ProfileComponent implements OnInit {
     private userService:UserService,
     private baseURLService : BaseURLService,
     private formBuilder: FormBuilder,
+    private cartService:CartService,
     private productService : ProductService
   ){
     this.reviewForm = this.formBuilder.group({
@@ -82,19 +86,25 @@ export class ProfileComponent implements OnInit {
     const userResult = await this.userService.findbyemail(JSON.parse(sessionStorage.getItem("loggedInUser")))
     this.user = userResult['result'] as User;
     this.activatedRoute.paramMap.subscribe(
-      param=>{
+      async param=>{
         console.log(param.get('sellerId'))
-        const sellerResult = this.userService.findbyid(parseInt(param.get('sellerId')))
+        const sellerResult = await this.userService.findbyid(param.get('sellerId'))
         if(sellerResult['result']!=null){
           if(sellerResult['result'].role == 2){
             this.user = null
             this.seller = sellerResult['result'] as User
+            this.productswithsellers = await this.productService.findallbyseller(this.seller.id) as ProductWithSeller[]
           }
         }
         
       }
     )
     console.log(this.user)
+    console.log(this.seller)
+    if(this.user != null){
+      const result = await this.cartService.findallorder(this.user.id);
+      this.orders = result['result'] as Order[]
+    }
     this.productswithsellers = await this.productService.findallbyseller(this.user.id) as ProductWithSeller[]
     console.log(this.productswithsellers)
   }
@@ -238,4 +248,5 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
+  
 }
