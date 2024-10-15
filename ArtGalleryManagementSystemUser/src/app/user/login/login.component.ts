@@ -107,6 +107,12 @@ export class LoginComponent implements OnInit {
                     sessionStorage.setItem("loggedInUser", JSON.stringify([this.username]));
                     window.location.href = 'user/home';
                   }
+                },
+                () => {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Login failed wrong email or password',
+                  });
                 }
               );
             }).catch(err => {

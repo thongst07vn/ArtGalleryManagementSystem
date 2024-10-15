@@ -21,6 +21,8 @@ builder.Services.AddScoped<AdminService, AdminServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 builder.Services.AddScoped<WishLishService, WishListServiceImpl>();
 builder.Services.AddScoped<PayPalService, PayPalServiceImpl>();
+builder.Services.AddScoped<AuctionService, AuctionServiceImpl>();
+
 
 builder.Services.AddSignalR(
     options =>

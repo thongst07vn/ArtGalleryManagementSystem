@@ -265,7 +265,7 @@ export class AuctionCreateComponent {
       formData.append('bidinfo', JSON.stringify(this.bidForm.value))
       formData.append('bidlist', JSON.stringify(bidList))
       console.log(this.bidForm.value);
-      console.log(bidList);
+      console.log(bidList); 
       this.auctionService.addBidOrder(formData).then(
         res =>{
           Swal.fire({
