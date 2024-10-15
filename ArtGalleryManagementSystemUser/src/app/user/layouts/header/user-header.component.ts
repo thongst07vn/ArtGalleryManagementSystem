@@ -36,7 +36,8 @@ export class UserHeaderComponent implements OnInit {
     private userService: UserService,
     private cartService: CartService,
     private baseURLService: BaseURLService,
-    public signalrService: SignalrService
+    public signalrService: SignalrService,
+    private auctionService: AuctionService
   ) { }
   async ngOnInit() {
     this.bidOrdersInfo = 0;

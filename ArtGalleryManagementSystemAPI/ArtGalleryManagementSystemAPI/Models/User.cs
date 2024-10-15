@@ -45,6 +45,8 @@ public partial class User
 
     public virtual Cart Cart { get; set; }
 
+    public virtual ICollection<Connection> Connections { get; set; } = new List<Connection>();
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Seller Seller { get; set; }
